@@ -15,6 +15,10 @@
  * 更新日　:2016/02/04
  * 更新者　:k.koki
  * 内容　　:PreparedStatementに関するメソッドを追加
+ * *************************
+ * 更新日　:2016/11/03
+ * 更新者　:k.koki
+ * 内容　　:プリペアドステイトメント関係のクラス、メソッドを追加。
  * *************************/
 
 
@@ -325,4 +329,43 @@ public class DBManager {
 		return returnList;
 	}
 	//update k.koki 2016/02/04 end
+	//update k.koki 2016/11/03 start
+	/**
+	 * 特定の文字列を変換します。基本的なSQLインジェクションは回避されます。
+	 * @author 浩生
+	 *
+	 */
+	public class PreparedStatementByKoki{
+		private String sql;
+		public PreparedStatementByKoki(String sql) {
+			// TODO 自動生成されたコンストラクター・スタブ
+			this.sql=sql;
+		}
+		private void replace(String key,String val){
+			key=replaceSQL(val);
+			this.sql=sql.replaceAll(key, val);
+		}
+		public void setString(String key,String val){
+			this.replace(key,"'"+val+"'");
+		}
+		public void setInt(String key,int val){
+			this.replace(key, String.valueOf(val));
+		}
+		public ArrayList<ArrayList<String>> Select() throws SQLException{
+			return runSelect(this.sql);
+		}
+		public int update() throws SQLException{
+			return DBManager.this.update(sql);
+		}
+	}
+	/**
+	 * SQL文をPreparedStatementByKokiクラスに変換して返します。
+	 * @param sql
+	 * @return
+	 */
+	public PreparedStatementByKoki getStatementByKoki(String sql){
+		return new PreparedStatementByKoki(sql);
+	}
+
+	//update k.koki 2016/11/03 end
 }
