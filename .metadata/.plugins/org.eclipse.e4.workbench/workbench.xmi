@@ -432,7 +432,7 @@
           <tags>removeOnHide</tags>
         </children>
         <children xsi:type="basic:Part" xmi:id="_EEz5cKHIEeaQd9hgo0j0dA" elementId="org.eclipse.e4.ui.compatibility.editor" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityEditor" label="OrderRecodeList.sql" iconURI="platform:/plugin/org.eclipse.datatools.sqltools.sqlscrapbook/images/qrydoc.gif" closeable="true">
-          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor&quot; name=&quot;OrderRecodeList.sql&quot; partName=&quot;OrderRecodeList.sql&quot; title=&quot;OrderRecodeList.sql&quot; tooltip=&quot;Sugukuru/WebContent/WEB-INF/sql/OrderRecodeList.sql&quot;>&#xD;&#xA;&lt;input connInfoName=&quot;Oracle_9:::&quot; editorInputType=&quot;SQLScrapbookEditorInput&quot; factoryID=&quot;org.eclipse.datatools.sqltools.internal.sqlscrapbook.editor.SQLScrapbookEditorInputFactory&quot; path=&quot;/Sugukuru/WebContent/WEB-INF/sql/OrderRecodeList.sql&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;420&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
+          <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;editor id=&quot;org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor&quot; name=&quot;OrderRecodeList.sql&quot; partName=&quot;OrderRecodeList.sql&quot; title=&quot;OrderRecodeList.sql&quot; tooltip=&quot;Sugukuru/WebContent/WEB-INF/sql/OrderRecodeList.sql&quot;>&#xD;&#xA;&lt;input connInfoName=&quot;Oracle_9:::&quot; editorInputType=&quot;SQLScrapbookEditorInput&quot; factoryID=&quot;org.eclipse.datatools.sqltools.internal.sqlscrapbook.editor.SQLScrapbookEditorInputFactory&quot; path=&quot;/Sugukuru/WebContent/WEB-INF/sql/OrderRecodeList.sql&quot;/>&#xD;&#xA;&lt;editorState selectionHorizontalPixel=&quot;0&quot; selectionLength=&quot;0&quot; selectionOffset=&quot;1587&quot; selectionTopPixel=&quot;0&quot;/>&#xD;&#xA;&lt;/editor>"/>
           <tags>Editor</tags>
           <tags>org.eclipse.datatools.sqltools.sqlscrapbook.SQLScrapbookEditor</tags>
           <tags>removeOnHide</tags>
@@ -566,6 +566,7 @@
       <persistedState key="memento" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;view CommonNavigator.LINKING_ENABLED=&quot;0&quot;/>"/>
       <tags>View</tags>
       <tags>categoryTag:&#x30b5;&#x30fc;&#x30d0;&#x30fc;</tags>
+      <tags>highlighted</tags>
       <menus xmi:id="_ruftUKGwEeaey6Ux5ECh6w" elementId="org.eclipse.wst.server.ui.ServersView">
         <tags>ViewMenu</tags>
         <tags>menuContribution:menu</tags>
@@ -690,7 +691,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_cdSNEKGwEeaey6Ux5ECh6w" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_0_GJcaHFEeaQd9hgo0j0dA" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="&#x5370;&#x5237;" enabled="false" command="_cB54xqGwEeaey6Ux5ECh6w"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_g5N6IKHiEeacIfAdCfVz9g" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="&#x5370;&#x5237;" enabled="false" command="_cB54xqGwEeaey6Ux5ECh6w"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_cdSNEaGwEeaey6Ux5ECh6w" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -735,7 +736,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_cdTbMKGwEeaey6Ux5ECh6w" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_0_OFQqHFEeaQd9hgo0j0dA" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="&#x30a8;&#x30c7;&#x30a3;&#x30bf;&#x30fc;&#x306e;&#x30d4;&#x30f3;&#x7559;&#x3081;" type="Check" command="_cB5RnqGwEeaey6Ux5ECh6w"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_g5Y5QKHiEeacIfAdCfVz9g" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="&#x30a8;&#x30c7;&#x30a3;&#x30bf;&#x30fc;&#x306e;&#x30d4;&#x30f3;&#x7559;&#x3081;" type="Check" command="_cB5RnqGwEeaey6Ux5ECh6w"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_cdTbMaGwEeaey6Ux5ECh6w" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>

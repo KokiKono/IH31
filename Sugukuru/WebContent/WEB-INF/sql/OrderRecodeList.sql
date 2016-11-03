@@ -56,4 +56,4 @@ AND
 HAVING
 	/* 顧客名 */
 	user_name LIKE USER_NAME
-;s
+;
