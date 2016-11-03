@@ -1,0 +1,28 @@
+/* 受注テーブルから受注データを取得する。 */
+SELECT
+ order_table.order_id		/*受注ID*/
+,order_table.customer_id	/*顧客ID*/
+/* 顧客ごとの名称を取得する。 */
+,CASE
+	WHEN SUBSTRING( order_table.customer_id, 1, 1) <=> '0'
+		/* 法人 */ THEN
+		(
+			SELECT
+				/* 法人略称を取得する */
+				corporation_customer_master.abbreviation
+			FROM
+				corporation_customer_master
+			WHERE
+				corporation_customer_master.customer_id = CUSTOMER_ID
+			ORDER BY generation DESC
+		) AS user_name
+	ELSE
+		/* 個人 */
+		(
+			SELECT
+				/* 個人顧客名を取得する。 */
+				personal_customer_master.customer_name
+			FROM
+				personal_customer_master
+
+		)
