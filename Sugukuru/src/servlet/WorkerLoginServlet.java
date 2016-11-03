@@ -50,7 +50,7 @@ public class WorkerLoginServlet extends HttpServlet {
 		if(session.getAttribute("LoginDao.session")==null){
 			//ログイン処理
 			try {
-				session.setAttribute("LoginDao.session", new LoginEmployment("test","test"));
+				session.setAttribute("LoginDao.session", new LoginEmployment(this,"test","test"));
 			} catch (LoginException e) {
 				// TODO 自動生成された catch ブロック
 			}

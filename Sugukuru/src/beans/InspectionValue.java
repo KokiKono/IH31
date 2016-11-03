@@ -54,6 +54,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServlet;
+
 /**
  * @author 浩生
  * @param
@@ -636,8 +638,9 @@ public class InspectionValue {
 	}
 	//update k.koki 2016/08/22 end
 	//update k.koki 2016/11/01 start
-	public static String readSql(String path){
-		path=""+path;
+	public static String readSql(HttpServlet servlet,String path){
+
+		path=servlet.getServletContext().getRealPath("/WEB-INF/sql/"+path);
 		StringBuilder builder=new StringBuilder();
 
 		try{
@@ -653,5 +656,6 @@ public class InspectionValue {
 		}
 		return builder.toString();
 	}
+
 	//update k.koki 2016/11/01 end
 }

@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -25,6 +26,7 @@ public abstract class LoginDao implements Database{
 	private String sqlPath;
 	private boolean loginState;
 	private ArrayList<ArrayList<String>> dbList;
+	private HttpServlet servlet;
 	{
 		this.loginState=false;
 	}
@@ -35,7 +37,7 @@ public abstract class LoginDao implements Database{
 	 * @param sqlPath
 	 * @throws LoginException
 	 */
-	public LoginDao(String loginId,String password,String sqlPath) throws LoginException {
+	public LoginDao(HttpServlet servlet,String loginId,String password,String sqlPath) throws LoginException {
 		// TODO 自動生成されたコンストラクター・スタブ
 		if(this.check(loginId,password)==false){
 			throw new LoginException();
@@ -43,6 +45,7 @@ public abstract class LoginDao implements Database{
 		this.loginId=loginId;
 		this.password=password;
 		this.sqlPath=sqlPath;
+		this.servlet=servlet;
 	}
 
 	/**
@@ -51,7 +54,7 @@ public abstract class LoginDao implements Database{
 	 * @param sqlPath
 	 * @throws LoginException
 	 */
-	public LoginDao(HttpServletRequest request,String sqlPath) throws LoginException{
+	public LoginDao(HttpServlet servlet,HttpServletRequest request,String sqlPath) throws LoginException{
 		if(this.check(loginId,password)==false){
 			throw new LoginException();
 		}
@@ -59,6 +62,7 @@ public abstract class LoginDao implements Database{
 		this.loginId=(String) session.getAttribute("LoginDao.loginId");
 		this.password=(String)session.getAttribute("LoginDao.password");
 		this.sqlPath=sqlPath;
+		this.servlet=servlet;
 	}
 	/**
 	 * ログインID、パスワードに関する桁数チェックなどを行ってください。
@@ -94,7 +98,7 @@ public abstract class LoginDao implements Database{
 		//DB接続
 		DBManager dbManager=new DBManager(DBName);
 		//SQLパラメータの設定
-		PreparedStatement sql=dbManager.getPreparedStatement(InspectionValue.readSql(this.sqlPath));
+		PreparedStatement sql=dbManager.getPreparedStatement(InspectionValue.readSql(this.servlet,this.sqlPath));
 		sql.setString(1, this.loginId);
 		sql.setString(2, this.password);
 		//ログイン状態の確認

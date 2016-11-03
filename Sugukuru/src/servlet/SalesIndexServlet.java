@@ -31,9 +31,7 @@ public class SalesIndexServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF-8");
-		PrintWriter out = response.getWriter();
-		out.println(request.getContextPath()+request.getRealPath("user.dir"));
+		doPost(request, response);
 	}
 
 	/**
@@ -43,7 +41,7 @@ public class SalesIndexServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();
-		out.println(InspectionValue.readSql("test.sql"));
+		out.println(InspectionValue.readSql(this, "test.sql"));
 
 
 	}

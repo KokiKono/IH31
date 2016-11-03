@@ -6,6 +6,8 @@
  * *************************/
 package beans;
 
+import javax.servlet.http.HttpServlet;
+
 import dao.LoginDao;
 
 public class LoginEmployment extends LoginDao{
@@ -13,8 +15,8 @@ public class LoginEmployment extends LoginDao{
 	private static final String SqlPath="login_employment.sql";
 
 
-	public LoginEmployment(String loginId,String password) throws LoginException{
-		super(loginId, password, SqlPath);
+	public LoginEmployment(HttpServlet servlet,String loginId,String password) throws LoginException{
+		super(servlet,loginId, password, SqlPath);
 	}
 
 
