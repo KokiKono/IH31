@@ -342,7 +342,7 @@ public class DBManager {
 			this.sql=sql;
 		}
 		private void replace(String key,String val){
-			key=replaceSQL(val);
+			val=replaceSQL(val);
 			this.sql=sql.replaceAll(key, val);
 		}
 		public void setString(String key,String val){
@@ -356,6 +356,9 @@ public class DBManager {
 		}
 		public int update() throws SQLException{
 			return DBManager.this.update(sql);
+		}
+		public String out(){
+			return this.sql;
 		}
 	}
 	/**

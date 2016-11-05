@@ -1,9 +1,0 @@
-computeSourcePath=true
-contextsDir=C\:/eclipse/pleiades/tomcat/7/conf/Catalina/localhost
-eclipse.preferences.version=1
-fixTomcatHomeBug=fixed
-managerUrl=http\://localhost\:8080/manager
-tomcatConfigFile=C\:/eclipse/pleiades/tomcat/7/conf/server.xml
-tomcatDir=C\:/eclipse/pleiades/tomcat/7
-tomcatJRE=1223692840796
-tomcatVersion=tomcatV7
