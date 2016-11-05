@@ -1,11 +1,53 @@
 /***************************
- * 学籍番号:40313
- * 作成者　:k.koki
- * 作成日　:2016/11/05
- * 内容　　:
+ * 学籍番号:40024
+ * 作成者　:t.ueshima
+ * 作成日　:2016/11/02
+ * 内容　　:入金情報を管理する
  * *************************/
 package dtd;
 
-public class Payment {
+import beans.CalendarByKoki;
 
+public class Payment {
+	/**
+	 * @auther Tester
+	 * 2016/11/05
+	 * @param settlementId int 決済ID
+	 */
+	public int settlementId;
+	
+	/**
+	 * @auther Tester
+	 * 2016/11/05
+	 * @param num int 行番号
+	 */
+	public int num;
+	
+	/**
+	 * @auther Tester
+	 * 2016/11/05
+	 * @param paymentDeadline CalendarByKoki 入金期限
+	 */
+	public CalendarByKoki paymentDeadline;
+	
+	/**
+	 * @auther Tester
+	 * 2016/11/05
+	 * @param paymentDate CalendarByKoki 入金日
+	 */
+	public CalendarByKoki paymentDate;
+	
+	/**
+	 * @auther Tester
+	 * 2016/11/05
+	 * @param paymentWay int　入金方法
+	 */
+	public int paymentWay;
+	
+	/**
+	 * @auther Tester
+	 * 2016/11/05
+	 * @param paidPrice int　入金額
+	 */
+	public int paidPrice;
 }
