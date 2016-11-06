@@ -1,8 +1,13 @@
+<%@page import="beans.Constants.Page"%>
+<%@page import="java.io.File"%>
+<%@page import="beans.Constants"%>
+<%@page import="common.ActionInterface"%>
 <%@page import="beans.LoginEmployment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-
+	//コンスタント作成。
+	Constants constants=new Constants(this,request);
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -10,7 +15,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>営業部</title>
+<title><%=constants.getConstant("01").value %></title>
 <!-- BootstrapのCSS読み込み -->
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <!-- jQuery読み込み -->
@@ -50,7 +55,7 @@
 				</button>
 
 				<!-- タイトルなどのテキスト -->
-				<a class="navbar-brand" href="#">営業部</a>
+				<a class="navbar-brand" href="#"><%=constants.getConstant("01").value %></a>
 			</div>
 
 			<!-- グローバルナビの中身 -->
@@ -83,7 +88,8 @@
 						<ul class="dropdown-menu">
 							<li><a href="#">パスワード変更</a></li>
 							<li class="divider"></li>
-							<li><a href="http://localhost:8080/Sugukuru/SalesIndexServlet">ログアウト</a></li>
+							<li><a
+								href="http://localhost:8080/Sugukuru/SalesIndexServlet">ログアウト</a></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -160,36 +166,35 @@
 			<div class="content-message content">メッセージ</div>
 			<div class="content-search content">
 				検索
-				<form class="search_form">
+				<form class="search_form"
+					action="http://localhost:8080/Sugukuru/OrderRecodeListServlet"
+					method="post">
 					<div class="member_id search_content">
 						<span class="member_id_text">顧客ID</span> <input type="text"
-							size="10" class="input-text">
+							name="customer_id" size="10" class="input-text form-input">
 					</div>
 					<div class="member_name search_content">
-						<span class="member_name_text">略称</span> <input type="text"
-							class="input-text">
+						<span class="member_name_text">顧客名</span> <input type="text"
+							name="customer_name" class="input-text form-input">
 					</div>
 					<div class="create_date search_content">
-						<span>作成日</span> <input type="text" size="4" placeholder="2016"><span>年</span>
-						<input type="text" size="2" placeholder="2"><span>月</span>
-						<input type="text" size="2" placeholder="2"><span>日</span>
+						<span>受注日</span> <input type="text" size="4" placeholder="2016"
+							name="create_year" class="form-input"><span>年</span> <input type="text"
+							size="2" placeholder="2" name="create_month" class="form-input"><span>月</span>
+						<input type="text" size="2" placeholder="2" name="create_day" class="form-input"><span>日</span>
 					</div>
 					<div class="drop_content">
 						<div class="dispatch_state search_content">
 							<div class="row">
 								<div class="col-lg-12">
-									<div class="button-group">
-										<button type="button"
-											class="btn btn-default btn-sm dropdown-toggle"
-											data-toggle="dropdown">
-											発送状態<span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a href="#" class="small" data-value="option1"
-												tabIndex="-1"><input type="checkbox" />完了</a></li>
-											<li><a href="#" class="small" data-value="option1"
-												tabIndex="-1"><input type="checkbox" />未完了</a></li>
-										</ul>
+									<div class="form-group">
+										<div class="col-xs-3">
+											<select name="dispatch_state" class="form-input">
+												<option value="0">発送状態</option>
+												<option value="1">未完了</option>
+												<option value="2">完了</option>
+											</select>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -197,18 +202,14 @@
 						<div class="claim_state  search_content">
 							<div class="row">
 								<div class="col-lg-12">
-									<div class="button-group">
-										<button type="button"
-											class="btn btn-default btn-sm dropdown-toggle"
-											data-toggle="dropdown">
-											請求状態<span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a href="#" class="small" data-value="option1"
-												tabIndex="-1"><input type="checkbox" />完了</a></li>
-											<li><a href="#" class="small" data-value="option1"
-												tabIndex="-1"><input type="checkbox" />未完了</a></li>
-										</ul>
+									<div class="form-group">
+										<div class="col-xs-3">
+											<select name="claim_state" class="form-input">
+												<option value="0">請求状態</option>
+												<option value="1">未完了</option>
+												<option value="2">完了</option>
+											</select>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -219,7 +220,6 @@
 					</div>
 				</form>
 			</div>
-
 		</div>
 		<div class="container">
 			<table class="table table-striped table-bordered">
