@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">倉庫部</string>
+    <string name="tv_title">ピッキングリスト</string>
+    <string name="bt_show">個別表示</string>
+    <string name="ch_incomplete">未完了のみ</string>
+    <string name="ch_flg">フラグ付のみ</string>
+
+    <string name="lv_shape">＃</string>
+    <string name="lv_product_number">商品番号</string>
+    <string name="lv_product_name">商品名</string>
+    <string name="lv_rack_number">棚番号</string>
+    <string name="lv_needs">必要数</string>
+    <string name="lv_picking">ピッキング数</string>
+    <string name="lv_state">状態</string>
+
+    <string name="state_yes">完了</string>
+    <string name="state_no">未完了</string>
+    <string name="state_flg">未完了</string>
+
+    <string-array name="list">
+    <item>A型</item>
+    <item>B型</item>
+    <item>O型</item>
+    <item>AB型</item>
+</string-array>
+</resources>
