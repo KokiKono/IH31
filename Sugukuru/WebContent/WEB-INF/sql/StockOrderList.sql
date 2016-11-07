@@ -48,15 +48,15 @@ WHERE
 /*if(ORDER_ID)start*/
 	order_table.order_id = ORDER_ID
 /*if(ORDER_ID)end*/
-	/*if(CUSTOMER_ID_AND)start*/
-	AND
-	/*if(CUSTOMER_ID_AND)end*/
+/*if(ORDER_ID_AND)start*/
+AND
+/*if(ORDER_ID_AND)end*/
 /*if(CUSTOMER_ID)start*/
 	order_table.customer_id = CUSTOMER_ID
 /*if(CUSTOMER_ID)end*/
-/*if(DELIVERY_DATE_AND)start*/
-	AND
-/*if(DELIVERY_DATE_AND)end*/
+/*if(CUSTOMER_ID_AND)start*/
+AND
+/*if(CUSTOMER_ID_AND)end*/
 /*if(DELIVERY_DATE)start*/
 	order_table.delivery_date = DELIVERY_DATE
 /*if(DELIVERY_DATE)end*/

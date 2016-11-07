@@ -109,6 +109,13 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 				statementByKoki.setString("DELIVERY_DATE",
 						shipmentCalendar.outSQLDate());
 			}
+			//SQLクリーン
+			if(statementByKoki.ifToNull("ORDER_ID","CUSTOMER_ID","DELIVERY_DATE")){
+				//where、各and削除
+				statementByKoki.toNull("ORDER_ID_AND");
+				statementByKoki.toNull("CUSTOMER_ID_AND");
+				statementByKoki.toNull("WHERE");
+			}
 		} catch (Exception e) {
 
 		}

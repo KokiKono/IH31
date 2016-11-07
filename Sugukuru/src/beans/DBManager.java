@@ -373,6 +373,12 @@ public class DBManager {
 		private static final String OR = "OR";
 		private static final String HAVING = "HAVING";
 		private String sql;
+		/**
+		 * toNull()、toNullAll()を実行したときのkeyログ
+		 * @auther 浩生
+		 * 2016/11/08
+		 * @param toNullKeys ArrayList<String>
+		 */
 		private ArrayList<String> toNullKeys;
 		{
 			this.toNullKeys = new ArrayList<String>();
@@ -428,8 +434,8 @@ public class DBManager {
 			}
 			String startKey = IF + "(" + key + ")" + START;
 			String endKey = IF + "(" + key + ")" + END;
-			int startIndex = endLine(startKey);
-			int endIndex = startLine(endKey);
+			int startIndex = startLine(startKey);
+			int endIndex = endLine(endKey);
 			if (startIndex == -1 || endIndex == -1) {
 				return -1;
 			}
@@ -500,8 +506,7 @@ public class DBManager {
 		 */
 		public void toNullAll(String key) {
 			int index = 0;
-			while (toNull(key) > 0)
-				;
+			while (toNull(key) > 0);
 
 		}
 
@@ -541,39 +546,29 @@ public class DBManager {
 		 *
 		 */
 		public void cleanSql() {
-			for (String key : this.toNullKeys) {
-				// keyよりも前にand,orがあれば削除する。
-				String ifkey = "/*if(" + key + ")start*/";
-				int keyIndex = this.sql.indexOf(ifkey);
-				// ifkeyをなめる
-				while (keyIndex > 0) {
-					// ifkeyまでの文字列
-					String before = this.sql.substring(0, keyIndex);
-					int and = before.indexOf(AND);
-					// andからkeyIndexまでが半角スペースならANDを削除する
-					if (and > 0) {
-						if (ifBlank(this.sql.substring(and, keyIndex))) {
-							// 削除
-							this.sql = this.sql.substring(0, and)
-									+ this.sql.substring(keyIndex,
-											this.sql.length());
-						}
-					}
-					// andと同様のOR
-					int or = before.indexOf(OR);
-					if (or > 0) {
-						if (ifBlank(this.sql.substring(or, keyIndex))) {
-							// 削除
-							this.sql = this.sql.substring(0, or)
-									+ this.sql.substring(keyIndex,
-											this.sql.length());
-						}
-					}
-					keyIndex=this.sql.indexOf(key,keyIndex+10);
-				}
+			this.sql=commentDelete();
+			String wheres[]={"WHERE\\s*AND","WHERE\\s*OR"};
+			String havings[]={"HAVING\\s*AND","HAVING\\s*OR","WHERE\\s*HAVING"};
+			for(String where:wheres){
+				this.sql=this.sql.replaceAll(where, "WHERE");
 			}
-		}
+			for(String having:havings){
+				this.sql=this.sql.replaceAll(having, "HAVING");
+			}
+			this.sql=this.sql.replaceAll("WHERE\\s;", "");
+			this.sql=this.sql.replace("HAVING\\s;","");
 
+		}
+		/**
+		 * コメント文を全て削除します。
+		 * @auther 浩生
+		 * 2016/11/08
+		 * @return
+		 */
+		private String commentDelete(){
+			String regex="/\\*/?([^/]|[^*]/)*\\*/";
+			return this.sql.replaceAll(regex, "");
+		}
 		/**
 		 * 文字列が半角スペースで構成されているかをチェックします。
 		 *
@@ -586,6 +581,19 @@ public class DBManager {
 				if (str.charAt(count) != " ".charAt(0)) {
 					return false;
 				}
+			}
+			return true;
+		}
+		/**
+		 * 引数配列keyがtoNull()、toNullAll()で使用されたかを検索しbooleanを返します。
+		 * @auther 浩生
+		 * 2016/11/08
+		 * @param keys
+		 * @return
+		 */
+		public boolean ifToNull(String... keys){
+			for(String key:keys){
+				if(!this.toNullKeys.contains(key))return false;
 			}
 			return true;
 		}

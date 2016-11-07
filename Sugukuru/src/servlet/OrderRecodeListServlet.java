@@ -42,7 +42,18 @@ public class OrderRecodeListServlet extends HttpServlet implements Database {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		try{
+			DBManager dbManager=new DBManager(DBName);
+			PreparedStatementByKoki statementByKoki=dbManager.getStatementByKoki(InspectionValue.readSql(this, "OrderRecodeList.sql",""));
+			statementByKoki.toNullAll("CUSTOMER_ID");
+			statementByKoki.toNull("ORDER_DATE");
+			statementByKoki.cleanSql();
+			response.setCharacterEncoding("utf8");
+			response.setContentType("text/html");
+			response.getWriter().println(statementByKoki.out());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	/**
