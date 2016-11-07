@@ -35,12 +35,12 @@ public class Order {
 	 * @param orderDate CalendarByKoki 受注日時
 	 */
 	public CalendarByKoki orderDate;
-	@Request
 	/**
 	 * @auther Tester
 	 * 2016/11/02
 	 * @param customerId String 顧客ID
 	 */
+	@Request
 	public String customerId;
 	@Request
 	/**

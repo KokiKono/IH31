@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,11 +10,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.CalendarByKoki;
+import beans.Constants;
 import beans.DBManager;
 import beans.DBManager.PreparedStatementByKoki;
 import beans.InspectionValue;
 
 import common.Database;
+
+import dtd.OrderRecodeList;
 
 /**
  * Servlet implementation class OrderRecodeListServlet
@@ -36,6 +42,7 @@ public class OrderRecodeListServlet extends HttpServlet implements Database {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -47,74 +54,107 @@ public class OrderRecodeListServlet extends HttpServlet implements Database {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		
-		// 検索条件の取得
-		// 顧客ID
-		String strCustomerID = (String) request.getParameter("customer_id");
-		// 顧客名
-		String strCustomerName = (String) request.getParameter("customer_name");
-		// 作成年
-		String strCreate_year = (String) request.getParameter("create_year");
-		// 作成月
-		String strCreate_month = (String) request.getParameter("create_year");
-		// 作成日
-		String strCreate_day = (String) request.getParameter("create_day");
-		// 発送状態
-		String strDispatch_state = (String) request
-				.getParameter("dispatch_state");
-		// 請求状態
-		String strClaim_state = (String) request.getParameter("claim_state");
+		Constants constants=new Constants(this, request);
+		OrderRecodeList orderRecodeList=new OrderRecodeList();
+		//検索条件の取得
+		orderRecodeList=(OrderRecodeList) constants.superDecodeRequest(orderRecodeList);
+		DBManager dbManager=null;
 		try {
 		////////////////////////////////////////////////////////////////////
 		// DB接続
 		//-------------------------------------------------------------------
-		DBManager dbManager=new DBManager(DBName);
+		dbManager=new DBManager(DBName);
 		PreparedStatementByKoki statementByKoki=dbManager.getStatementByKoki(InspectionValue.readSql(this, "OrderRecodeList.sql"));
 			//////////////////////////////////////////////////
 			// 入力チェック
 			// -------------------------------------------------
 			// 顧客IDの数値チェック
 			boolean errFlg = false;
-			if (strCustomerID.isEmpty()) {
+			if(orderRecodeList.customerId==null){
+				//顧客IDが取得不能
+				statementByKoki.toNullAll("CUSTOMER_ID");
+				statementByKoki.toNull("2");
+			}else if(orderRecodeList.customerId.isEmpty()){
 				// 顧客IDが未入力の場合。whereを省く
 				statementByKoki.toNullAll("CUSTOMER_ID");
 				statementByKoki.toNull("2");
-
-			} else if (!InspectionValue.inspectionInteger(strCustomerID)) {
+			} else if (!InspectionValue.inspectionInteger(orderRecodeList.customerId)) {
 				// エラー
 				errFlg = true;
 			}else{
 				//成功時パラメータをセットする。
-				statementByKoki.setString("CUSTOMER_ID", strCustomerID);
+				statementByKoki.setString("CUSTOMER_ID", orderRecodeList.customerId);
 			}
 			// 作成年月日の数値チェック
-			if(!strCreate_year.isEmpty() && !strCreate_month.isEmpty() && !strCreate_day.isEmpty()){
+			CalendarByKoki createDate=null;
+			if(orderRecodeList.createYear==null || orderRecodeList.createMonth==null || orderRecodeList.createDay==null){
+				//作成年月日が取得不能
+			}else if(!orderRecodeList.createYear.isEmpty() && !orderRecodeList.createMonth.isEmpty() && !orderRecodeList.createDay.isEmpty()){
 				//空白でない時
 				//作成年月日チェックフラグ：trueで成功
 				boolean createFlg=true;
-				if (!InspectionValue.inspectionInteger(strCreate_year)) {
+				if (!InspectionValue.inspectionInteger(orderRecodeList.createYear)) {
 					createFlg=false;
 				}
-				if (!InspectionValue.inspectionInteger(strCreate_month)) {
+				if (!InspectionValue.inspectionInteger(orderRecodeList.createMonth)) {
 					createFlg=false;
 				}
-				if (!InspectionValue.inspectionInteger(strCreate_day)) {
+				if (!InspectionValue.inspectionInteger(orderRecodeList.createDay)) {
 					createFlg=false;
 				}
 				if(createFlg){
 					//成功時パラメータを設定
-					statementByKoki.setString("ORDER_DATE",strCreate_year+"-"+strCreate_month+"-"+strCreate_day);
+					createDate=new CalendarByKoki(Integer.parseInt(orderRecodeList.createYear), Integer.parseInt(orderRecodeList.createMonth), Integer.parseInt(orderRecodeList.createDay));
+					statementByKoki.setString("ORDER_DATE",createDate.outSQLDate());
 				}else{
 					//数値以外の値が来た場合、where削除
 					statementByKoki.toNull("ORDER_DATE");
 				}
 			}
-
-		} catch (Exception e) {
+			//作成年月日の入力チェック終了
+			//---------------------------------------------------------------
+			ArrayList<ArrayList<String>> list=statementByKoki.select();
+			if(list.size()==0){
+				//検索結果無し
+			}else{
+				//リクエスト格納処理
+				ArrayList<OrderRecodeList> resultList=new ArrayList<OrderRecodeList>();
+				for(ArrayList<String> row:list){
+					OrderRecodeList rowList=new OrderRecodeList();
+					rowList.orderId=Integer.parseInt(row.get(0));
+					rowList.estimateId=Integer.parseInt(row.get(1));
+					rowList.customerId=row.get(2);
+					rowList.customerName=row.get(3);
+					rowList.orderDate=new CalendarByKoki(row.get(4));
+					rowList.shipment.shipmentFlg=Integer.parseInt(row.get(5));
+					if(row.get(6)==null){
+						//未請求状態
+						rowList.settlement=null;
+					}
+					resultList.add(rowList);
+				}
+				//リクエスト格納
+				request.setAttribute("order_recode", resultList);
+			}
+		}catch(SQLException e){
+			//sqlエラー
+			e.printStackTrace();
+		}catch(ClassNotFoundException e){
+			//driverエラー
 			e.printStackTrace();
 		}finally{
-			//ページ遷移処理
+			try{
+			dbManager.closeDB();
+			}catch(SQLException e){
+				//closeエラー
+				e.printStackTrace();
+			}
 		}
+
+		//検索DTDリクエスト設定
+		request.setAttribute("orderRecodeList", orderRecodeList);
+		//フォワード処理
+		constants.forward(request, response);
 
 
 	}

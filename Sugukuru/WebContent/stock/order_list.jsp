@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dtd.OrderRecodeList"%>
 <%@page import="beans.Constants.Page"%>
@@ -5,8 +7,6 @@
 <%@page import="beans.Constants"%>
 <%@page import="common.ActionInterface"%>
 <%@page import="beans.LoginEmployment"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
 <%
 	//コンスタント作成。
 	Constants constants=new Constants(this,request);
@@ -163,7 +163,7 @@
 				</ul>
 				<ul class="content-paging">
 					<li class="paging-prev texter"><<</li>
-					<li class="texter"><</li>
+					<li class="texter"></li>
 					<li class="texter">1</li>
 					<li class="texter">2</li>
 					<li class="texter">3</li>
@@ -176,8 +176,13 @@
 			<div class="content-search content">
 				検索
 				<form class="search_form"
-					action="http://localhost:8080/Sugukuru/OrderRecodeListServlet"
+					action="<%=constants.getServletUrl() %>"
 					method="post">
+					<div class="search_content">
+						<span><%=constants.getConstant("08").value %></span>
+						<input type="text"
+							name="<%=constants.getConstant("08").pgName %>" size="10" class="input-text form-input">
+					</div>
 					<div class="member_id search_content">
 						<span class="member_id_text"><%=constants.getConstant("02").value %></span> <input type="text"
 							name="<%=constants.getConstant("02").pgName %>" size="10" class="input-text form-input">
@@ -187,42 +192,10 @@
 							name="<%=constants.getConstant("03").pgName %>" class="input-text form-input">
 					</div>
 					<div class="create_date search_content">
-						<span>受注日</span> <input type="text" size="4" placeholder="2016"
-							name="<%=constants.getConstant("04").pgName %>" class="form-input"><span><%=constants.getConstant("04").value %></span> <input type="text"
-							size="2" placeholder="2" name="create_month" class="form-input"><span>月</span>
-						<input type="text" size="2" placeholder="2" name="create_day" class="form-input"><span>日</span>
-					</div>
-					<div class="drop_content">
-						<div class="dispatch_state search_content">
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-group">
-										<div class="col-xs-3">
-											<select name="dispatch_state" class="form-input">
-												<option value="0">発送状態</option>
-												<option value="1">未完了</option>
-												<option value="2">完了</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="claim_state  search_content">
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-group">
-										<div class="col-xs-3">
-											<select name="claim_state" class="form-input">
-												<option value="0">請求状態</option>
-												<option value="1">未完了</option>
-												<option value="2">完了</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						<span><%=constants.getConstant("04").value %></span> <input type="text" size="4" placeholder="2016"
+							name="<%=constants.getConstant("05").pgName %>" class="form-input"><span><%=constants.getConstant("05").value %></span> <input type="text"
+							size="2" placeholder="2" name="<%=constants.getConstant("06").pgName %>" class="form-input"><span><%=constants.getConstant("06").value %></span>
+						<input type="text" size="2" placeholder="2" name="<%=constants.getConstant("07").pgName %>" class="form-input"><span><%=constants.getConstant("07").value %></span>
 					</div>
 					<div class="search_submit">
 						<button class="btn btn btn-primary">検索</button>
@@ -235,17 +208,18 @@
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>顧客ID</th>
-						<th>略称</th>
-						<th>作成日</th>
-						<th>発送状態</th>
-						<th>請求状態</th>
+						<th><%=constants.getConstant("08").value %></th>
+						<th><%=constants.getConstant("02").value %></th>
+						<th><%=constants.getConstant("03").value %></th>
+						<th><%=constants.getConstant("09").value %></th>
+						<th><%=constants.getConstant("10").value %></th>
+						<th><%=constants.getConstant("11").value %></th>
 					</tr>
 				</thead>
 				<tbody>
 				<%if(list.size()==0){ %>
 					<tr>
-						<td colspan="6">検索結果がありませんでした。</td>
+						<td colspan="7">検索結果がありませんでした。</td>
 					</tr>
 				<%}else{ %>
 					<%int count=1; for(OrderRecodeList recodeList:list){ %>

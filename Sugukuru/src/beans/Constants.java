@@ -8,6 +8,8 @@ package beans;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -24,15 +26,16 @@ import dtd.Request;
 
 
 public class Constants implements Database{
-
 	/**
 	 * 遷移元、遷移先、DB№を管理します。
 	 * @author 浩生
 	 *
 	 */
 	public enum Page{
+		OrderList_jsp("order_list.jsp","StockOrderListServlet","02"),
+		OrderList_ser("StockOrderListServlet","stock/order_list.jsp","02"),
 		OrderRecodeList_jsp("order_recode_list.jsp","OrderRecodeListServlet","01"),
-		OrderRecodeList_ser("OrderRecodeListServlet","order_recode_list","01");
+		OrderRecodeList_ser("OrderRecodeListServlet","sales/order_recode_list","01");
 		/**
 		 * 呼び出し元ページを示します。
 		 * @auther 浩生
@@ -59,6 +62,14 @@ public class Constants implements Database{
 			this.to=servlet;
 			this.index=index;
 		}
+		/**
+		 * ページからそれに対応する定数を返します。
+		 * null指定でcommon変数を変えします。
+		 * @auther 浩生
+		 * 2016/11/07
+		 * @param from
+		 * @return
+		 */
 		public static Page indexOf(String from){
 			for(Page page:values()){
 				if(page.from.equals(from)){
@@ -111,7 +122,6 @@ public class Constants implements Database{
 		this.page=Page.indexOf(getPage(request.getRequestURI()));
 		//DBから値を取得し、コンスタントリストに格納する。
 		getConstants();
-
 	}
 	/**
 	 * xxxx/xxx/xxで示されたURIの末尾を返します。
@@ -120,7 +130,7 @@ public class Constants implements Database{
 	 */
 	private String getPage(String uri){
 		String uris[]=uri.split("/");
-		return uris[uris.length];
+		return uris[uris.length-1];
 	}
 	/**
 	 * DBからコンスタントリストを取得しフィールドに格納します。
@@ -184,25 +194,37 @@ public class Constants implements Database{
 	 * @throws ServletException
 	 */
 	public void forward(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		RequestDispatcher rd=request.getRequestDispatcher(this.page.to);
+		String forwardUrl="http://"+InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort()+request.getContextPath()+this.page.to;
+		RequestDispatcher rd=request.getRequestDispatcher(forwardUrl);
 		rd.forward(request, response);
 	}
 	/**
 	 * requestからdtdインスタンスへ値をセットするメソッド
 	 * このメソッドはRequestクラスの該当フィールド(String)にdtdアノテーションを付与し
 	 * pgNameとフィールド名が一致しないとセットされません。
-	 * @param dtd
+	 * @param object
 	 * @return
 	 */
-	public Object decodeRequest(Object dtd){
-		Field[] fields=dtd.getClass().getDeclaredFields();
+	public Object decodeRequest(Object object){
+		//オブジェクトクラスに変数設定
+		object=settingField(object, object.getClass().getDeclaredFields());
+		return object;
+	}
+	/**
+	 * objectにfieledsを設定する。
+	 * @param object
+	 * @param fields
+	 * @return
+	 */
+	private Object settingField(Object object,Field[] fields){
 		for(Field field:fields){
 			if(field.getAnnotation(Request.class)!=null){
 				for(Constant constant:this.constantList){
+					System.out.println(constant.pgName+"=="+field.getName());
 					if(constant.pgName.equals(field.getName())){
 						field.setAccessible(true);
 						try {
-							field.set(dtd, (String)this.request.getParameter(constant.pgName));
+							field.set(object, (String)this.request.getParameter(constant.pgName));
 						} catch (IllegalArgumentException
 								| IllegalAccessException e) {
 							// TODO 自動生成された catch ブロック
@@ -212,6 +234,33 @@ public class Constants implements Database{
 				}
 			}
 		}
-		return dtd;
+		return object;
 	}
+
+	/**
+	 * superクラスがなくなるまで探索する。
+	 * @param object
+	 * @return
+	 */
+	public Object superDecodeRequest(Object object){
+		object=settingField(object, object.getClass().getDeclaredFields());
+		Class superClass=object.getClass().getSuperclass();
+		while(superClass!=null && !superClass.equals(Object.class)){
+			object=settingField(object, superClass.getDeclaredFields());
+			superClass=superClass.getSuperclass();
+		}
+		//object=settingField(object, object.getClass().getSuperclass().getDeclaredFields());
+		return object;
+	}
+	/**
+	 * 送信先サーブレット先のURLを取得します。
+	 * @auther 浩生
+	 * 2016/11/07
+	 * @return
+	 * @throws UnknownHostException
+	 */
+	public String getServletUrl() throws UnknownHostException{
+		return "http://"+InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort()+request.getContextPath()+this.page.to;
+	}
+
 }
