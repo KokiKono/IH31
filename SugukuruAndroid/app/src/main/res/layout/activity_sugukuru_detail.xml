@@ -211,6 +211,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="340dp">
+
+        <TextView
+            android:layout_width="600dp"
+            android:layout_height="50dp"
+            android:textSize="20sp"
+            android:text="@string/tv_note"
+            android:textAlignment="center"
+            android:background="@drawable/simple_border"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/dNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:minLines="9"
+            android:gravity="top|left"
+            android:textSize="15sp"
+            android:background="@drawable/simple_border" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="340dp">
 
@@ -248,23 +278,21 @@
             <TextView
                 android:id="@+id/dNeeds"
                 android:layout_width="400dp"
-                android:layout_height="180dp"
-                android:text=""
-                android:textSize="20sp"
+                android:layout_height="130dp"
+                android:text="９９９９"
+                android:textSize="30sp"
                 android:textAlignment="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="40dp"
                 android:background="@drawable/simple_border"/>
 
             <TextView
                 android:id="@+id/dPiking"
                 android:layout_width="400dp"
-                android:layout_height="180dp"
-                android:text=""
-                android:textSize="20sp"
+                android:layout_height="130dp"
+                android:text="9999"
+                android:textSize="30sp"
                 android:textAlignment="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="40dp"
                 android:background="@drawable/simple_border"/>
 
         </LinearLayout>
@@ -293,49 +321,27 @@
                 android:layout_width="400dp"
                 android:layout_height="180dp"
                 android:orientation="horizontal"
-                android:background="@drawable/simple_border">
+                android:background="@drawable/simple_border"
+                android:weightSum="1">
 
                 <Button
-                    android:layout_width="50dp"
-                    android:layout_height="160dp" />
+                    android:layout_width="150dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:text="↓"/>
 
                 <Button
-                    android:layout_width="50dp"
-                    android:layout_height="160dp" />
+                    android:layout_width="150dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="40dp"
+                    android:text="↑"
+                    android:id="@+id/button" />
 
             </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="right"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="340dp">
-
-        <TextView
-            android:layout_width="600dp"
-            android:layout_height="50dp"
-            android:textSize="20sp"
-            android:text="@string/tv_note"
-            android:textAlignment="center"
-            android:background="@drawable/simple_border"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"/>
-
-        <EditText
-            android:id="@+id/dNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:minLines="9"
-            android:gravity="top|left"
-            android:textSize="15sp"
-            android:background="@drawable/simple_border" />
 
     </LinearLayout>
 
