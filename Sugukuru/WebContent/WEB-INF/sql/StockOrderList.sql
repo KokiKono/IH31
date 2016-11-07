@@ -38,6 +38,7 @@ END AS user_name														/* 顧客名 */
 ,order_details_table.amount												/* 数量 */
 ,order_details_table.step												/* 作業ステップ */
 ,order_table.delivery_date												/* 納品日 */
+,order_details_table.product_delivered_flg								/* 納品受領フラグ */
 FROM
 	order_table
 INNER JOIN order_details_table

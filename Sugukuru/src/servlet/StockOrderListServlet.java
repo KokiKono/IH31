@@ -7,6 +7,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -110,14 +111,19 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 						shipmentCalendar.outSQLDate());
 			}
 			//SQLクリーン
-			if(statementByKoki.ifToNull("ORDER_ID","CUSTOMER_ID","DELIVERY_DATE")){
-				//where、各and削除
-				statementByKoki.toNull("ORDER_ID_AND");
-				statementByKoki.toNull("CUSTOMER_ID_AND");
-				statementByKoki.toNull("WHERE");
-			}
-		} catch (Exception e) {
+			statementByKoki.cleanSql();
+			//SQL実行
 
+		}catch(SQLException e){
+			//SQLエラー
+			e.printStackTrace();
+
+		}catch(ClassNotFoundException e){
+			//ロードエラー
+			e.printStackTrace();
+		}catch(Exception e){
+			//どうしようもないエラー
+			e.printStackTrace();
 		}
 	}
 }
