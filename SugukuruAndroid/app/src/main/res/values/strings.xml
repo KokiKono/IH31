@@ -16,9 +16,10 @@
     <string name="lv_picking">ピッキング数</string>
     <string name="lv_state">状態</string>
 
-    <string name="state_yes">完了</string>
-    <string name="state_no">未完了</string>
-    <string name="state_flg">未完了</string>
+    <string name="state_no_touch">未着手</string>
+    <string name="state_picked">ピッキング済み</string>
+    <string name="state_inspect">検品済み</string>
+    <string name="state_package">小分け済み</string>
 
     <string-array name="list">
     <item>A型</item>
