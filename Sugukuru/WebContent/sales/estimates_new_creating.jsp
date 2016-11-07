@@ -19,6 +19,8 @@
   	<link href="../css/dropdowns-enhancement.css" rel="stylesheet">
   	<script src="../js/dropdowns-enhancement.js"></script>
   	<link href="css/order_drafting.css" rel="stylesheet">
+  	<!-- bootstrap調整用css読み込み -->
+  	<link href="css/estimates_new_creating.css" rel="stylesheet">
     </head>
   <body>
     <nav class="navbar navbar-default" role="navigation">
@@ -141,9 +143,9 @@
 						<tbody>
 							<tr>
 								<th>顧客ID</th>
-								<td class="col-xs-1"><input type="text" maxlength="6" class="form-control input-sm input-block"></td>
+								<td style="padding:0px"><input type="text" maxlength="6" class="form-control input-sm table-textbox-big"></td>
 								<th class="width-100">顧客名</th>
-								<td colspan="5">あいうえおあいうえおかきくけこかきくけこさしすせそさしすせそたちつてとたちつてとなにぬねのなにぬねの</td>
+								<td colspan="5" style="padding:0px"><input type="text" maxlength="50" class="form-control input-sm table-textbox-big" style="width: 650px;"></td>
 								<th>与信オーバー額</th>
 								<td class="price">999,999,999,999</td>
 							</tr>
@@ -161,16 +163,6 @@
 							</tr>
 						</tbody>
 				</table>
-<!-- 						<tbody> -->
-<!-- 							<tr> -->
-<!-- 								<td colspan="8" class="table-midlle">↓</td> -->
-<!-- 							</tr> -->
-<!-- 						</tbody> -->
-<!-- 						<thead> -->
-<!-- 							<tr> -->
-<!-- 								<th colspan="8" class="table-header">新規受注書</th> -->
-<!-- 							</tr> -->
-<!-- 						</thead> -->
 				<table class="table table-striped table-bordered table-up">
 						<tbody>
 							<tr>
@@ -185,7 +177,7 @@
 								<th>税込み小計</th>
 							</tr>
 							<tr>
-								<td>9999999</td>
+								<td style="padding:0px"><input type="text" maxlength="7" class="form-control input-sm text-center" style="height: 35px; font-size: 13px; padding:0px; border-radius: 0px"></td>
 								<td>あいうえおあいうえお</td>
 								<td class="price">999</td>
 								<td class="price">999</td>
