@@ -14,8 +14,10 @@ SELECT
 				corporation_customer_master.abbreviation_name
 			FROM
 				corporation_customer_master
+/*if(CUSTOMER_ID)start*/
 			WHERE
 				corporation_customer_master.customer_id = CUSTOMER_ID
+/*if(CUSTOMER_ID)end*/
 			ORDER BY generation DESC
 		)
 	ELSE
@@ -26,8 +28,10 @@ SELECT
 				personal_customer_master.customer_name
 			FROM
 				personal_customer_master
+/*if(CUSTOMER_ID)start*/
 			WHERE
 				personal_customer_master.customer_id = CUSTOMER_ID
+/*if(CUSTOMER_ID)end*/
 		)
 END AS user_name
 ,order_table.order_date															/* 受注日時 */
@@ -47,13 +51,23 @@ ON order_table.customer_id = customers_distinction_master.customer_id
 LEFT OUTER JOIN
 	settlement_table
 ON order_table.order_id = settlement_table.order_id
+/*if(1)start*/
 WHERE
+/*if(1)end*/
+/*if(CUSTOMER_ID)start*/
 	/* 顧客ID */
 	order_table.customer_id = CUSTOMER_ID
 AND
+/*if(CUSTOMER_ID)end*/
+/*if(ORDER_DATE)start*/
 	/* 受注日時 */
 	order_table.order_date = ORDER_DATE
+/*if(ORDER_DATE)end*/
+/*if(3)start*/
 HAVING
+/*if(3)end*/
+/*if(USER_NAME)start*/
 	/* 顧客名 */
 	user_name LIKE USER_NAME
+/*if(USER_NAME)end*/
 ;

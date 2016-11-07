@@ -19,6 +19,10 @@
  * 更新日　:2016/11/03
  * 更新者　:k.koki
  * 内容　　:プリペアドステイトメント関係のクラス、メソッドを追加。
+  * *************************
+ * 更新日　:2016/11/05
+ * 更新者　:k.koki
+ * 内容　　:プリペアドステイトメントクラスにメソッド追加。
  * *************************/
 
 
@@ -342,21 +346,101 @@ public class DBManager {
 			this.sql=sql;
 		}
 		private void replace(String key,String val){
-			key=replaceSQL(val);
 			this.sql=sql.replaceAll(key, val);
 		}
 		public void setString(String key,String val){
+			val=replaceSQL(val);
 			this.replace(key,"'"+val+"'");
 		}
 		public void setInt(String key,int val){
 			this.replace(key, String.valueOf(val));
 		}
-		public ArrayList<ArrayList<String>> Select() throws SQLException{
+		public ArrayList<ArrayList<String>> select() throws SQLException{
 			return runSelect(this.sql);
 		}
 		public int update() throws SQLException{
 			return DBManager.this.update(sql);
 		}
+		public String out(){
+			return this.sql;
+		}
+		//update k.koki 2016/11/05 start
+		private String START="start";
+		private String END="end";
+		private String IF="if";
+		private int nowIndex=0;
+		/**
+		 * SQL文でif(key)startからif(key)endまでくくった個所を削除します。
+		 * 他のメソッドの干渉もあるのでif(key)はコメント化してください。
+		 * @param key
+		 */
+		public void toNull(String key){
+			int startIndex=startLine(IF+"("+key+")"+START);
+			int endIndex=endLine(IF+"("+key+")"+END);
+			if(startIndex==-1 || endIndex==-1){
+				return;
+			}
+			//削除処理
+			String start=this.sql.substring(0, startIndex);
+			String end=this.sql.substring(endIndex, this.sql.length());
+			this.sql=start+end;
+		}
+		/**
+		 * コメント文の末尾を求める時の最大半角数
+		 * コメント末尾で２文字必要なので、if(key)の)後の許容数
+		 */
+		private int maxLine=10;
+		/**
+		 * if(key)の末尾のインデックスを取得します。
+		 * @param ifcode
+		 * @return
+		 */
+		private int endLine(String ifcode){
+			int endIndex=this.sql.indexOf(ifcode, nowIndex);
+			if(endIndex==-1){
+				return -1;
+			}
+			endIndex=endIndex+ifcode.length();
+			//末尾のコメントを求める
+			loop:for(int i=0;i<maxLine;i++){
+				if(this.sql.substring(endIndex, endIndex+i).equals("*/")){
+					//コメント末尾発見
+					endIndex=endIndex+i;
+					break loop;
+				}
+			}
+			return endIndex;
+		}
+		/**
+		 * if(key)の先頭のインデックスを取得します。
+		 * @param ifcode
+		 * @return
+		 */
+		private int startLine(String ifcode){
+			int startIndex=this.sql.indexOf(ifcode, nowIndex);
+			if(startIndex==-1){
+				return -1;
+			}
+			//先頭のコメントを検索する。
+			loop:for(int i=0;i<maxLine;i++){
+				if(this.sql.substring(startIndex-i, startIndex).equals("/*")){
+					//先頭コメント発見
+					startIndex=startIndex-i;
+					break loop;
+				}
+			}
+			return startIndex;
+		}
+		/**
+		 * 該当するif(key)文を全て削除します。
+		 * @param key
+		 */
+		public void toNullAll(String key){
+			while(this.sql.indexOf(key)>=0){
+				toNull(key);
+			}
+		}
+		//update k.koki 2016/11/05 end
 	}
 	/**
 	 * SQL文をPreparedStatementByKokiクラスに変換して返します。
