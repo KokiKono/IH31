@@ -2,8 +2,11 @@
     <string name="app_name">倉庫部</string>
     <string name="tv_title">ピッキングリスト</string>
     <string name="bt_show">個別表示</string>
+    <string name="bt_show2">全体表示</string>
     <string name="ch_incomplete">未完了のみ</string>
     <string name="ch_flg">フラグ付のみ</string>
+    <string name="tv_flg">フラグ</string>
+    <string name="tv_note">備考</string>
 
     <string name="lv_shape">＃</string>
     <string name="lv_product_number">商品番号</string>
@@ -13,9 +16,10 @@
     <string name="lv_picking">ピッキング数</string>
     <string name="lv_state">状態</string>
 
-    <string name="state_yes">完了</string>
-    <string name="state_no">未完了</string>
-    <string name="state_flg">未完了</string>
+    <string name="state_no_touch">未着手</string>
+    <string name="state_picked">ピッキング済み</string>
+    <string name="state_inspect">検品済み</string>
+    <string name="state_package">小分け済み</string>
 
     <string-array name="list">
     <item>A型</item>
