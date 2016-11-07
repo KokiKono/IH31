@@ -5,6 +5,8 @@
     <string name="bt_show2">全体表示</string>
     <string name="ch_incomplete">未完了のみ</string>
     <string name="ch_flg">フラグ付のみ</string>
+    <string name="tv_flg">フラグ</string>
+    <string name="tv_note">備考</string>
 
     <string name="lv_shape">＃</string>
     <string name="lv_product_number">商品番号</string>
