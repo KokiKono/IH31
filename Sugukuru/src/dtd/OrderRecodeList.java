@@ -6,6 +6,9 @@
  * *************************/
 package dtd;
 
+
+
+
 public class OrderRecodeList extends Order{
 	/**
 	 * 発送状態
@@ -48,4 +51,47 @@ public class OrderRecodeList extends Order{
 	 */
 	@Request
 	public String claimState;
+
+	/**
+	 * 請求状態を管理する。
+	 * @auther 浩生
+	 * 2016/11/07
+	 * @param settlement Settlement
+	 */
+	public Settlement settlement;
+	/**
+	 * 発送状態を管理する。
+	 * @auther 浩生
+	 * 2016/11/07
+	 * @param shipment Shipment
+	 */
+	public Shipment shipment;
+	{
+		this.shipment=new Shipment();
+		this.settlement=new Settlement();
+	}
+	/**
+	 * 発送状態の画面用文字列を取得する。
+	 * @auther 浩生
+	 * 2016/11/07
+	 * @return
+	 */
+	public String getShipmentState(){
+		if(this.shipment==null)return "未完了";
+		if(this.shipment.shipmentFlg==shipment.AFTER)return "完了";
+		return "未完了";
+	}
+	/**
+	 * 請求状態の画面用文字列を取得する。
+	 * @auther 浩生
+	 * 2016/11/07
+	 * @return
+	 */
+	public String getSettlemntState(){
+		if(this.settlement==null)return "未完了";
+		return "完了";
+	}
+
+
+
 }

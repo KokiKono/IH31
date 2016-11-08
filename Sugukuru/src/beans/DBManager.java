@@ -19,12 +19,11 @@
  * 更新日　:2016/11/03
  * 更新者　:k.koki
  * 内容　　:プリペアドステイトメント関係のクラス、メソッドを追加。
-  * *************************
+ * *************************
  * 更新日　:2016/11/05
  * 更新者　:k.koki
  * 内容　　:プリペアドステイトメントクラスにメソッド追加。
  * *************************/
-
 
 package beans;
 
@@ -52,22 +51,24 @@ public class DBManager {
 	private int _ColumnCount;
 
 	public void SetDB() throws ClassNotFoundException, SQLException {
-		//closeDB();
-		//System.out.println("forName:" + _forName);
-		//System.out.println("DriverURL:" + _DriverURL);
-			Class.forName(_forName);
-			this._con = DriverManager.getConnection(_DriverURL + _DBName,
-					DBManager._User, _Password);
-			this._st = this._con.createStatement();
+		// closeDB();
+		// System.out.println("forName:" + _forName);
+		// System.out.println("DriverURL:" + _DriverURL);
+		Class.forName(_forName);
+		this._con = DriverManager.getConnection(_DriverURL + _DBName,
+				DBManager._User, _Password);
+		this._st = this._con.createStatement();
 	}
 
 	/**
 	 * デフォルトコンストラクタ Class.forName("com.mysql.jdbs.Driver")
 	 * DriverManager("jdbc:mysql://localhost:3306/任意のDB名,"root","")
+	 *
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public DBManager(String strDBName) throws ClassNotFoundException, SQLException {
+	public DBManager(String strDBName) throws ClassNotFoundException,
+			SQLException {
 		_DBName = strDBName;
 		SetDB();
 	}
@@ -75,10 +76,12 @@ public class DBManager {
 	/**
 	 * コンストラクタ Class.forName("任意のドライバーURL")
 	 * DriverManager("jdbc:mysql://localhost:3306/任意のDB名,"root","")
+	 *
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public DBManager(String strDBName,String strForName) throws ClassNotFoundException, SQLException {
+	public DBManager(String strDBName, String strForName)
+			throws ClassNotFoundException, SQLException {
 		_DBName = strDBName;
 		_forName = strForName;
 		_Password = "";
@@ -88,10 +91,12 @@ public class DBManager {
 	/**
 	 * コンストラクタ Class.forName("任意のドライバー名");
 	 * DriverManager("jdbc:mysql://localhost:3306/任意のDB名","任意のユーザー","")
+	 *
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public DBManager(String strDBName,String strForName,String strUser) throws ClassNotFoundException, SQLException {
+	public DBManager(String strDBName, String strForName, String strUser)
+			throws ClassNotFoundException, SQLException {
 		_DBName = strDBName;
 		_forName = strForName;
 		_User = strUser;
@@ -102,14 +107,17 @@ public class DBManager {
 	/**
 	 * コンストラクタ Class.forName("任意のドライバー名");
 	 * DriverManager("任意のDriverManager/任意のDB名","任意のユーザー","")
+	 *
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public DBManager(String strDBName,String strForName,String strUser,String strDriverManager) throws ClassNotFoundException, SQLException {
+	public DBManager(String strDBName, String strForName, String strUser,
+			String strDriverManager) throws ClassNotFoundException,
+			SQLException {
 		_DBName = strDBName;
 		_forName = strForName;
 		_User = strUser;
-		_DriverURL=strDriverManager;
+		_DriverURL = strDriverManager;
 		_Password = "";
 		SetDB();
 	}
@@ -117,32 +125,36 @@ public class DBManager {
 	/**
 	 * コンストラクタ Class.forName("任意のドライバー");
 	 * DriverManager("任意のDriverManager/任意のDB名","任意のユーザー","任意のパスワード")
+	 *
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public DBManager(String strDBName,String strForName,String strUser,String strDriverManager,String strPassword) throws ClassNotFoundException, SQLException {
+	public DBManager(String strDBName, String strForName, String strUser,
+			String strDriverManager, String strPassword)
+			throws ClassNotFoundException, SQLException {
 		_DBName = strDBName;
 		_forName = strForName;
 		_User = strUser;
-		_DriverURL=strDriverManager;
+		_DriverURL = strDriverManager;
 		_Password = strPassword;
 		SetDB();
 	}
 
 	/**
 	 * クローズ用メソッド
+	 *
 	 * @throws SQLException
 	 */
 	public void closeDB() throws SQLException {
-			if (this._rs != null) {
-				this._rs.close();
-			}
-			if (this._st != null) {
-				this._st.close();
-			}
-			if (this._con != null) {
-				this._con.close();
-			}
+		if (this._rs != null) {
+			this._rs.close();
+		}
+		if (this._st != null) {
+			this._st.close();
+		}
+		if (this._con != null) {
+			this._con.close();
+		}
 	}
 
 	/**
@@ -151,26 +163,27 @@ public class DBManager {
 	 * @return 二次元配列String型
 	 * @throws SQLException
 	 */
-	public ArrayList<ArrayList<String>> runSelect(String strSQL) throws SQLException {
-		//SQLインジェクション処理
-		//strSQL=replaceSQL(strSQL);
-		//SetDB();
+	public ArrayList<ArrayList<String>> runSelect(String strSQL)
+			throws SQLException {
+		// SQLインジェクション処理
+		// strSQL=replaceSQL(strSQL);
+		// SetDB();
 		// 戻り値用二次元可変長配列の生成。
 		ArrayList<ArrayList<String>> returnList = new ArrayList<ArrayList<String>>();
-			this._rs = this._st.executeQuery(strSQL);
-			_rsMeta = this._rs.getMetaData();
-			// 列数の数
-			this._ColumnCount = _rsMeta.getColumnCount();
-			// データの取得
-			while (this._rs.next()) {
-				// 一時格納用可変長配列の生成。
-				ArrayList<String> stockList = new ArrayList<String>();
-				for (int i = 1; i <= this._ColumnCount; i++) {
-					stockList.add(this._rs.getString(i));
-				}
-				returnList.add(stockList);
+		this._rs = this._st.executeQuery(strSQL);
+		_rsMeta = this._rs.getMetaData();
+		// 列数の数
+		this._ColumnCount = _rsMeta.getColumnCount();
+		// データの取得
+		while (this._rs.next()) {
+			// 一時格納用可変長配列の生成。
+			ArrayList<String> stockList = new ArrayList<String>();
+			for (int i = 1; i <= this._ColumnCount; i++) {
+				stockList.add(this._rs.getString(i));
 			}
-			//returnList=getResultSet(this._rs);
+			returnList.add(stockList);
+		}
+		// returnList=getResultSet(this._rs);
 		return returnList;
 	}
 
@@ -183,12 +196,12 @@ public class DBManager {
 	 * @throws SQLException
 	 */
 	public int update(String strSQL) throws SQLException {
-		//SQLインジェクション処理
-		//strSQL=replaceSQL(strSQL);
-		//SetDB();
+		// SQLインジェクション処理
+		// strSQL=replaceSQL(strSQL);
+		// SetDB();
 		int n = 0;
-			n = this._st.executeUpdate(strSQL);
-		//closeDB();
+		n = this._st.executeUpdate(strSQL);
+		// closeDB();
 		return n;
 	}
 
@@ -215,86 +228,97 @@ public class DBManager {
 	 * @throws SQLException
 	 */
 	public void setautoCommit(boolean autoCommit) throws SQLException {
-			this._con.setAutoCommit(autoCommit);
+		this._con.setAutoCommit(autoCommit);
 	}
 
 	/**
 	 * mysqlのautoCommitの状態を取得します。
+	 *
 	 * @throws SQLException
 	 */
 	public boolean getautoCommit() throws SQLException {
 		boolean bl = false;
-			bl=this._con.getAutoCommit();
+		bl = this._con.getAutoCommit();
 		return bl;
 	}
 
 	/**
-	 * mysqlのCommitを行います。
-	 * autoCommitがONの時はOFFにし再度実行しONにします。
+	 * mysqlのCommitを行います。 autoCommitがONの時はOFFにし再度実行しONにします。
+	 *
 	 * @throws SQLException
 	 */
 	public void runCommit() throws SQLException {
-			if (!getautoCommit()) {
-				this._con.commit();
-			}else{
-				setautoCommit(false);
-				runCommit();
-			}
+		if (!getautoCommit()) {
+			this._con.commit();
+		} else {
+			setautoCommit(false);
+			runCommit();
+		}
 
 	}
+
 	/**
 	 * mysqlのロールバックを行う機能です。
 	 * Connectionをcolseしていた場合又はautoCommitを自動にしていた場合何も処理されません。
+	 *
 	 * @throws SQLException
 	 */
-	public void rollback() throws SQLException{
-		//System.out.println("ロールバック");
-			if(!getautoCommit()){
-				if(this._con!=null){
-					this._con.rollback();
-				}
+	public void rollback() throws SQLException {
+		// System.out.println("ロールバック");
+		if (!getautoCommit()) {
+			if (this._con != null) {
+				this._con.rollback();
 			}
+		}
 	}
+
 	// update k.koki 2015/12/08 end
-	//update k.koki 2016/01/21 begin
-	public String replaceSQL(String strSQL){
-		strSQL=strSQL.replaceAll("<","&lt;" );
-		strSQL=strSQL.replaceAll(">", "&gt;");
-		strSQL=strSQL.replaceAll("\"", "&quot;");
-		strSQL=strSQL.replaceAll("&", "&amp;");
-		strSQL=strSQL.replaceAll("'", "&rsquo;");
+	// update k.koki 2016/01/21 begin
+	public String replaceSQL(String strSQL) {
+		strSQL = strSQL.replaceAll("<", "&lt;");
+		strSQL = strSQL.replaceAll(">", "&gt;");
+		strSQL = strSQL.replaceAll("\"", "&quot;");
+		strSQL = strSQL.replaceAll("&", "&amp;");
+		strSQL = strSQL.replaceAll("'", "&rsquo;");
 		return strSQL;
 	}
-	//update k.koki 2016/01/21 end
-	//updata k.koki 2016/02/04 begin
+
+	// update k.koki 2016/01/21 end
+	// updata k.koki 2016/02/04 begin
 	/**
-	 * 作成日:2016/02/04 11:43:30
-	 * 作成者:k.koki
-	 * @param String SQLをPrepardStatement形式に変更します。
+	 * 作成日:2016/02/04 11:43:30 作成者:k.koki
+	 *
+	 * @param String
+	 *            SQLをPrepardStatement形式に変更します。
 	 * @param strSQL
 	 * @return SQLExceptionが起きた場合、nullをreturnします。
 	 * @throws SQLException
 	 */
-	public PreparedStatement getPreparedStatement(String strSQL) throws SQLException{
-		//SetDB();
+	public PreparedStatement getPreparedStatement(String strSQL)
+			throws SQLException {
+		// SetDB();
 
 		return this._con.prepareStatement(strSQL);
 
 	}
+
 	/**
-	 * 作成日:2016/02/04 11:51:00
-	 * 作成者:k.koki
-	 * @param PrepardStatement更新処理を実行します。
+	 * 作成日:2016/02/04 11:51:00 作成者:k.koki
+	 *
+	 * @param PrepardStatement更新処理を実行します
+	 *            。
 	 * @param sql
 	 * @return 更新件数
 	 * @throws SQLException
 	 */
-	public int update(PreparedStatement sql) throws SQLException{
-		int count=0;
-		count= sql.executeUpdate();
+	public int update(PreparedStatement sql) throws SQLException {
+		int count = 0;
+		count = sql.executeUpdate();
 		return count;
 	}
-	private ArrayList<ArrayList<String>> getResultSet(ResultSet rs) throws SQLException{
+
+	private ArrayList<ArrayList<String>> getResultSet(ResultSet rs)
+			throws SQLException {
 		// 戻り値用二次元可変長配列の生成。
 		ArrayList<ArrayList<String>> returnList = new ArrayList<ArrayList<String>>();
 		ResultSetMetaData rsMeta = rs.getMetaData();
@@ -311,12 +335,14 @@ public class DBManager {
 		}
 		return returnList;
 	}
-	public ArrayList<ArrayList<String>> runSelect(PreparedStatement sql) throws SQLException{
-		//SetDB();
-		//戻り値用二次元配列の生成
-		ArrayList<ArrayList<String>> returnList=new ArrayList<>();
-		this._rs=sql.executeQuery();
-		//returnList=getResultSet(this._rs);
+
+	public ArrayList<ArrayList<String>> runSelect(PreparedStatement sql)
+			throws SQLException {
+		// SetDB();
+		// 戻り値用二次元配列の生成
+		ArrayList<ArrayList<String>> returnList = new ArrayList<>();
+		this._rs = sql.executeQuery();
+		// returnList=getResultSet(this._rs);
 		_rsMeta = this._rs.getMetaData();
 		// 列数の数
 		this._ColumnCount = _rsMeta.getColumnCount();
@@ -329,127 +355,266 @@ public class DBManager {
 			}
 			returnList.add(stockList);
 		}
-		//closeDB();
+		// closeDB();
 		return returnList;
 	}
-	//update k.koki 2016/02/04 end
-	//update k.koki 2016/11/03 start
+
+	// update k.koki 2016/02/04 end
+	// update k.koki 2016/11/03 start
 	/**
 	 * 特定の文字列を変換します。基本的なSQLインジェクションは回避されます。
+	 *
 	 * @author 浩生
 	 *
 	 */
-	public class PreparedStatementByKoki{
+	public class PreparedStatementByKoki {
+		private static final String WHERE = "WHERE";
+		private static final String AND = "AND";
+		private static final String OR = "OR";
+		private static final String HAVING = "HAVING";
 		private String sql;
+		/**
+		 * toNull()、toNullAll()を実行したときのkeyログ
+		 * @auther 浩生
+		 * 2016/11/08
+		 * @param toNullKeys ArrayList<String>
+		 */
+		private ArrayList<String> toNullKeys;
+		{
+			this.toNullKeys = new ArrayList<String>();
+		}
+
 		public PreparedStatementByKoki(String sql) {
 			// TODO 自動生成されたコンストラクター・スタブ
-			this.sql=sql;
+			this.sql = sql;
 		}
-		private void replace(String key,String val){
-			this.sql=sql.replaceAll(key, val);
+
+		private void replace(String key, String val) {
+			this.sql = sql.replaceAll(key, val);
 		}
-		public void setString(String key,String val){
-			val=replaceSQL(val);
-			this.replace(key,"'"+val+"'");
+
+		public void setString(String key, String val) {
+			val = replaceSQL(val);
+			this.replace(key, "'" + val + "'");
 		}
-		public void setInt(String key,int val){
+
+		public void setInt(String key, int val) {
 			this.replace(key, String.valueOf(val));
 		}
-		public ArrayList<ArrayList<String>> select() throws SQLException{
+
+		public ArrayList<ArrayList<String>> select() throws SQLException {
 			return runSelect(this.sql);
 		}
-		public int update() throws SQLException{
+
+		public int update() throws SQLException {
 			return DBManager.this.update(sql);
 		}
-		public String out(){
+
+		public String out() {
 			return this.sql;
 		}
-		//update k.koki 2016/11/05 start
-		private String START="start";
-		private String END="end";
-		private String IF="if";
-		private int nowIndex=0;
+
+		// update k.koki 2016/11/05 start
+		private String START = "start*/";
+		private String END = "end*/";
+		private String IF = "/*if";
+		private int nowIndex = 0;
+
 		/**
 		 * SQL文でif(key)startからif(key)endまでくくった個所を削除します。
 		 * 他のメソッドの干渉もあるのでif(key)はコメント化してください。
+		 *
 		 * @param key
 		 */
-		public void toNull(String key){
-			int startIndex=startLine(IF+"("+key+")"+START);
-			int endIndex=endLine(IF+"("+key+")"+END);
-			if(startIndex==-1 || endIndex==-1){
-				return;
+		public int toNull(String key) {
+			// toNullログ
+			if (!this.toNullKeys.contains(key)) {
+				this.toNullKeys.add(key);
+				this.nowIndex=0;
 			}
-			//削除処理
-			String start=this.sql.substring(0, startIndex);
-			String end=this.sql.substring(endIndex, this.sql.length());
-			this.sql=start+end;
+			String startKey = IF + "(" + key + ")" + START;
+			String endKey = IF + "(" + key + ")" + END;
+			int startIndex = endLine(startKey);
+			int endIndex = startLine(endKey);
+			if (startIndex == -1 || endIndex == -1) {
+				return -1;
+			}
+			System.out.println("削除");
+			// 削除処理
+			String start = this.sql.substring(0, startIndex);
+			String end = this.sql.substring(endIndex, this.sql.length());
+			this.sql = start + end;
+
+			this.nowIndex = endIndex;
+			return endIndex + endKey.length();
 		}
+
 		/**
-		 * コメント文の末尾を求める時の最大半角数
-		 * コメント末尾で２文字必要なので、if(key)の)後の許容数
+		 * コメント文の末尾を求める時の最大半角数 コメント末尾で２文字必要なので、if(key)の)後の許容数
 		 */
-		private int maxLine=10;
+		private int maxLine = 10;
+
 		/**
 		 * if(key)の末尾のインデックスを取得します。
+		 *
 		 * @param ifcode
 		 * @return
 		 */
-		private int endLine(String ifcode){
-			int endIndex=this.sql.indexOf(ifcode, nowIndex);
-			if(endIndex==-1){
+		private int endLine(String ifcode) {
+			int endIndex = this.sql.indexOf(ifcode, nowIndex);
+			if (endIndex == -1) {
 				return -1;
 			}
-			endIndex=endIndex+ifcode.length();
-			//末尾のコメントを求める
-			loop:for(int i=0;i<maxLine;i++){
-				if(this.sql.substring(endIndex, endIndex+i).equals("*/")){
-					//コメント末尾発見
-					endIndex=endIndex+i;
+			endIndex = endIndex + ifcode.length();
+			// 末尾のコメントを求める
+			loop: for (int i = 0; i < maxLine; i++) {
+				if (this.sql.substring(endIndex, endIndex + i).equals("*/")) {
+					// コメント末尾発見
+					endIndex = endIndex + i;
 					break loop;
 				}
 			}
 			return endIndex;
 		}
+
 		/**
 		 * if(key)の先頭のインデックスを取得します。
+		 *
 		 * @param ifcode
 		 * @return
 		 */
-		private int startLine(String ifcode){
-			int startIndex=this.sql.indexOf(ifcode, nowIndex);
-			if(startIndex==-1){
+		private int startLine(String ifcode) {
+			int startIndex = this.sql.indexOf(ifcode, nowIndex);
+			if (startIndex == -1) {
 				return -1;
 			}
-			//先頭のコメントを検索する。
-			loop:for(int i=0;i<maxLine;i++){
-				if(this.sql.substring(startIndex-i, startIndex).equals("/*")){
-					//先頭コメント発見
-					startIndex=startIndex-i;
+			// 先頭のコメントを検索する。
+			loop: for (int i = 0; i < maxLine; i++) {
+				if (this.sql.substring(startIndex - i, startIndex).equals("/*")) {
+					// 先頭コメント発見
+					startIndex = startIndex - i;
 					break loop;
 				}
 			}
 			return startIndex;
 		}
+
 		/**
 		 * 該当するif(key)文を全て削除します。
+		 *
 		 * @param key
 		 */
-		public void toNullAll(String key){
-			while(this.sql.indexOf(key)>=0){
-				toNull(key);
-			}
+		public void toNullAll(String key) {
+			int index = 0;
+			while (toNull(key) > 0);
+
 		}
-		//update k.koki 2016/11/05 end
+
+		/**
+		 * 検索しそのインデックスを返します。
+		 *
+		 * @auther 浩生 2016/11/07
+		 * @param key
+		 * @return
+		 */
+		public int indexOf(String key) {
+			return this.sql.indexOf(key);
+		}
+
+		/**
+		 * 複数の文字列を検索し存在するかをbooleanで返します。
+		 *
+		 * @auther 浩生 2016/11/07
+		 * @param keys
+		 * @return
+		 */
+		public boolean indexOfs(String... keys) {
+			int index = 0;
+			for (String key : keys) {
+				index = index + indexOf(key);
+			}
+			if (index > 0) {
+				return true;
+			}
+			return false;
+		}
+
+		/**
+		 * SQLをクリーンする（未実装）
+		 * @auther 浩生
+		 * 2016/11/07
+		 *
+		 */
+		public void cleanSql() {
+			this.sql=commentDelete();
+			while(clean()>0);
+			if(this.sql.indexOf(";")==-1){
+				this.sql=this.sql+";";
+			}
+			this.sql=this.sql.replaceAll("WHERE\\s*;", ";");
+			this.sql=this.sql.replaceAll("HAVING\\s*;",";");
+		}
+		private final String[] havings={"OR\\s*WHERE","AND\\s*WHERE","WHERE\\s*AND","WHERE\\s*OR","HAVING\\s*AND","HAVING\\s*OR","WHERE\\s*HAVING","AND\\s*;","OR\\s*;","WHEREHAVING","AND\\s*HAVING","OR\\s*HAVING"};
+		private int clean(){
+			int count=0;
+			for(String having:havings){
+				if(this.sql.indexOf(having)>0){
+					count++;
+				}
+				this.sql=this.sql.replaceAll(having, "HAVING");
+			}
+			return count;
+		}
+		/**
+		 * コメント文を全て削除します。
+		 * @auther 浩生
+		 * 2016/11/08
+		 * @return
+		 */
+		private String commentDelete(){
+			String regex="/\\*/?([^/]|[^*]/)*\\*/";
+			return this.sql.replaceAll(regex, "");
+		}
+		/**
+		 * 文字列が半角スペースで構成されているかをチェックします。
+		 *
+		 * @auther 浩生 2016/11/07
+		 * @param str
+		 * @return
+		 */
+		private boolean ifBlank(String str) {
+			for (int count = 0; count < str.length(); count++) {
+				if (str.charAt(count) != " ".charAt(0)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		/**
+		 * 引数配列keyがtoNull()、toNullAll()で使用されたかを検索しbooleanを返します。
+		 * @auther 浩生
+		 * 2016/11/08
+		 * @param keys
+		 * @return
+		 */
+		public boolean ifToNull(String... keys){
+			for(String key:keys){
+				if(!this.toNullKeys.contains(key))return false;
+			}
+			return true;
+		}
+		// update k.koki 2016/11/05 end
 	}
+
 	/**
-	 * SQL文をPreparedStatementByKokiクラスに変換して返します。
+	 * SQL文をPreparedStatementByKokiクラスに変換して返します。 SQL文の定型句は大文字にしてください。
+	 *
 	 * @param sql
 	 * @return
 	 */
-	public PreparedStatementByKoki getStatementByKoki(String sql){
+	public PreparedStatementByKoki getStatementByKoki(String sql) {
 		return new PreparedStatementByKoki(sql);
 	}
 
-	//update k.koki 2016/11/03 end
+	// update k.koki 2016/11/03 end
 }
