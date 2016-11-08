@@ -52,7 +52,7 @@ public class PickingList {
 	/**
 	 * @auther Tester
 	 * 2016/11/07
-	 * @param pickState int 作業ステップ
+	 * @param pickState String 作業ステップ
 	 */
-	public int pickState;
+	public String pickState;
 }
