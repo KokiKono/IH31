@@ -1,11 +1,22 @@
+/***************************
+ * 学籍番号:40281
+ * 作成者　:m.haruka
+ * 作成日　:2016/11/08
+ * 内容　　:新規見積書作成クラス。
+ * *************************/
 package servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import beans.Constants;
+import dtd.Estimate;
+import dtd.EstimateDetail;
 
 /**
  * Servlet implementation class EstimatesNewCreatingServlet
@@ -13,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/EstimatesNewCreatingServlet")
 public class EstimatesNewCreatingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -35,7 +46,31 @@ public class EstimatesNewCreatingServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		Constants constants = new Constants(this, request);
+		Estimate est = new Estimate();
+		EstimateDetail estDtl = new EstimateDetail();
+
+		//SQL読み込み
+		//PreparedStatementByKoki statementByKoki=dbManager.getStatementByKoki(InspectionValue.readSql(this, "OrderRecodeList.sql"));
+
+		/*
+		 * 入力チェック
+		 */
+
+
+
+		/*
+		 * 受注情報のInsert
+		 */
+
+
+		/*
+		 * 受注明細のInsert
+		 */
+
+
 	}
 
 }

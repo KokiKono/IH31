@@ -4,8 +4,8 @@
     pageEncoding="UTF-8"%>
 <%
 	//コンスタント
-	//Constants constants=new Constants(this,request);
-	//constants.getConstant("02");
+	Constants constants = new Constants(this,request);
+	//constants.getConstant("01").value;
 %>
 <!DOCTYPE html>
 <html lang="ja">
