@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.DBManager.PreparedStatementByKoki;
-
 import common.Database;
-
 import dtd.Request;
 
 
@@ -32,6 +30,8 @@ public class Constants implements Database{
 	 *
 	 */
 	public enum Page{
+		EstimatesNewCreating_jsp("estimates_new_creating.jsp","EstimatesNewCreatingServlet","03"),
+		EstimatesNewCreating_ser("EstimatesNewCreatingServlet","estimates_new_creating.jsp","03"),
 		OrderList_jsp("order_list.jsp","StockOrderListServlet","02"),
 		OrderList_ser("StockOrderListServlet","stock/order_list.jsp","02"),
 		OrderRecodeList_jsp("order_recode_list.jsp","OrderRecodeListServlet","01"),

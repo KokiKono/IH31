@@ -1,5 +1,12 @@
+<%@page import="beans.Constants"%>
+<%@page import="beans.Constants.Constant"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	//コンスタント
+	//Constants constants=new Constants(this,request);
+	//constants.getConstant("02");
+%>
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -22,7 +29,7 @@
   	<!-- bootstrap調整用css読み込み -->
   	<link href="css/estimates_new_creating.css" rel="stylesheet">
     </head>
-  <body>
+  <body style="font-size: 16px;">
     <nav class="navbar navbar-default" role="navigation">
   		<div class="container-fluid">
    		 <!-- スマートフォンサイズで表示されるメニューボタンとテキスト -->
@@ -84,46 +91,54 @@
 		  </div>
 		</nav>
 		<!-- 左側メニューのコンテンツ -->
-		<div class="left-menu">
-			<div class="accordion-group">
-  				<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" href="#estimates_1">見積書作成</a></div>
-  					<div id="estimates_1" class="accordion-body collapse">
-    					<ul class="accordion-inner">
-    						<li>検索</li>
-    						<li class="accordion-group">
-    							<div class="accordion-heading">
-    								<a class="accordion-toggle" data-toggle="collapse" href="#estimates_1_1">管理機能</a>
-    							</div>
-    							<div class="accordion-body collaose" id="estimates_1_1">
-    								<ul class="accordion-inner">
-    									<li>登録</li>
-    									<li>変更</li>
-    									<li>削除</li>
-    								</ul>
-    							</div>
-    						</li>
-    					</ul>
-  					</div>
-				<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" href="#orders_1">受注書作成</a></div>
-  				<div id="orders_1" class="accordion-body collapse">
-    				<ul class="accordion-inner">
-    					<li>検索</li>
-    					<li class="accordion-group">
-    						<div class="accordion-heading">
-    							<a class="accordion-toggle" data-toggle="collapse" data-parent"#post" href="#orders_1_1">管理機能</a>
-    						</div>
-    						<div class="accordion-body collaose" id="orders_1_1">   								<ul class="accordion-inner">
-   									<li>登録</li>
-   									<li>変更</li>
-   									<li>削除</li>
-   								</ul>
-   							</div>
-   						</li>
-   					</ul>
-				</div>
+	<div class="left-menu">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse"
+					href="#estimates_1">見積書作成</a>
+			</div>
+			<div id="estimates_1" class="accordion-body collapse">
+				<ul class="accordion-inner">
+					<li>検索</li>
+					<li class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse"
+								href="#estimates_1_1">管理機能</a>
+						</div>
+						<div class="accordion-body collaose" id="estimates_1_1">
+							<ul class="accordion-inner">
+								<li>登録</li>
+								<li>変更</li>
+								<li>削除</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="accordion-heading">
+				<a class="accordion-toggle" data-toggle="collapse" href="#orders_1">受注書作成</a>
+			</div>
+			<div id="orders_1" class="accordion-body collapse">
+				<ul class="accordion-inner">
+					<li>検索</li>
+					<li class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse"
+								data-parent"#post" href="#orders_1_1">管理機能</a>
+						</div>
+						<div class="accordion-body collaose" id="orders_1_1">
+							<ul class="accordion-inner">
+								<li>登録</li>
+								<li>変更</li>
+								<li>削除</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
-		<div class="center-content">
+	</div>
+	<div class="center-content">
 			<div class="center-content-header">
 				<div class="center-content-title">
 					<h2>見積書作成</h2>
@@ -134,47 +149,85 @@
 				</div>
 			</div>
 			<div class="container">
-				<table class="table table-striped table-bordered table-up">
-<!-- 					<thead> -->
-<!-- 						<tr> -->
-<!-- 							<th colspan="8" class="table-header">見積書</th> -->
-<!-- 						</tr> -->
-<!-- 					</thead> -->
+				<table class="table table-striped table-bordered table-up table-first">
 						<tbody>
 							<tr>
 								<th>顧客ID</th>
 								<td style="padding:0px; width: 100px"><input type="text" maxlength="6" class="form-control input-sm table-textbox-big"></td>
 								<th>顧客名</th>
 								<td colspan="5" style="padding:0px; width: 500px"></td>
+								<th>希望納品日</th>
+								<td style="width: 160px">9999/99/99</td>
+							</tr>
+							<tr>
+								<th rowspan="2">備考</th>
+								<td rowspan="2"  colspan="7" style="padding:0px;"><textarea name="kanso" rows="3" cols="90" class="note"></textarea></td>
+								<th>回収方法</th>
+								<td style="width: 150px">あいうえお</td>
+							</tr>
+							<tr>
 								<th>与信オーバー額</th>
-								<td class="price" style="width: 200px">999,999,999,999</td>
+								<td class="price" style="width: 160px">999,999,999,999</td>
 							</tr>
 							<tr>
 								<th>手数料</th>
 								<td class="price">99,999</td>
 								<th>商品代金</th>
-								<td class="price" style="width: 150px">99,999</td>
+								<td class="price" style="width: 160px">99,999</td>
 								<th>税抜合計</th>
-								<td class="price" style="width: 150px">9,999,999,999</td>
+								<td class="price" style="width: 160px">9,999,999,999</td>
 								<th>税</th>
-								<td class="price" style="width: 150px">99,999</td>
+								<td class="price" style="width: 160px">99,999</td>
 								<th>税込合計</th>
 								<td class="price">999,999,999,999</td>
 							</tr>
 						</tbody>
 				</table>
-				<table class="table table-striped table-bordered table-up">
+				<!-- 入力テーブルの子項目　※ヘッダーはこの下 -->
+				<div  class="table-overflow">
+					<table class="table table-bordered table-up maintable" >
 						<tbody>
 							<tr>
-								<th style="width: 70px">ID</th>
-								<th>単位</th>
-								<th style="width: 80px">数量</th>
-								<th style="width: 80px">在庫</th>
-								<th style="width: 150px">単価</th>
-								<th style="width: 150px">販売単価</th>
-								<th style="width: 150px">税抜き小計</th>
-								<th style="width: 150px">税</th>
-								<th style="width: 200px">税込み小計</th>
+								<td style="padding:0px; width: 70px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px; width: 80px;"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price" style="width: 80px;">999</td>
+								<td class="price" style="width: 130px;">99,999,999</td>
+								<td style="padding:0px;" style="width: 130px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price" style="width: 130px;">9,999,999,999</td>
+								<td class="price" style="width: 130px;">99,999,999</td>
+								<td class="price" style="width: 160px;">999,999,999,999</td>
+							</tr>
+							<tr>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
+							</tr>
+							<tr>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
 							</tr>
 							<tr>
 								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
@@ -332,6 +385,26 @@
 							</tr>
 						</tbody>
 					</table>
+				</div>
+				<!-- 入力テーブルのヘッダー -->
+				<table class="table table-bordered table-up table-second-header" >
+						<thead>
+							<tr>
+								<th style="width: 70px">ID</th>
+								<th>単位</th>
+								<th style="width: 80px">数量</th>
+								<th style="width: 80px">在庫</th>
+								<th style="width: 130px">単価</th>
+								<th style="width: 130px">販売単価</th>
+								<th style="width: 130px">税抜き小計</th>
+								<th style="width: 130px">税</th>
+								<th style="width: 160px">税込み小計</th>
+							</tr>
+						</thead>
+				</table>
+
+
+
 					<div class="button">
 						<button type="button" class="btn btn-danger cancel-btn">クリア</button>
 						<button type="button" class="btn btn-primary success-btn">確認</button>
