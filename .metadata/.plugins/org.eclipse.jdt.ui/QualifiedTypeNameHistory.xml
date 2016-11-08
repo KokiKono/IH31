@@ -5,14 +5,12 @@
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServlet"/>
 <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="common.Database"/>
 <fullyQualifiedTypeName name="java.lang.Exception"/>
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
+<fullyQualifiedTypeName name="beans.DBManager"/>
 <fullyQualifiedTypeName name="beans.DBManager.PreparedStatementByKoki"/>
 <fullyQualifiedTypeName name="beans.InspectionValue"/>
 <fullyQualifiedTypeName name="org.apache.jasper.tagplugins.jstl.core.Out"/>
-<fullyQualifiedTypeName name="beans.RequestPickingList"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="beans.DBManager"/>
-<fullyQualifiedTypeName name="dtd.PickingList"/>
-<fullyQualifiedTypeName name="common.Database"/>
 </qualifiedTypeNameHistroy>

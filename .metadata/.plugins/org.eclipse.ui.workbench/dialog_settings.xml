@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="WorkbenchPreferenceDialogSettings">
-		<item value="401" key="DIALOG_X_ORIGIN"/>
-		<item value="21" key="DIALOG_Y_ORIGIN"/>
+		<item value="13" key="DIALOG_X_ORIGIN"/>
+		<item value="13" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.ui.preferences.keysPreferencePage">
 		<item value="true" key="actionSetFilter"/>
@@ -13,8 +13,8 @@
 		<item value="false" key="EditorSelectionDialog.STORE_ID_INTERNAL_EXTERNAL"/>
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
-		<item value="500" key="dialogHeight"/>
-		<item value="800" key="dialogWidth"/>
+		<item value="933" key="dialogHeight"/>
+		<item value="1920" key="dialogWidth"/>
 		<list key="textEntries">
 		</list>
 		<list key="orderedElements">
@@ -32,15 +32,5 @@
 		<item value="1294" key="DIALOG_HEIGHT"/>
 		<item value="155" key="DIALOG_X_ORIGIN"/>
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
-	</section>
-	<section name="ImportExportAction">
-		<item value="org.eclipse.ui.wizards.import.ExternalProject" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
-		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
-			<item value="org.eclipse.ui.Basic"/>
-			<item value="org.eclipse.cdt.ui.importWizardCategory"/>
-			<item value="org.eclipse.egit.ui.internal.clone.gitclonecategory"/>
-			<item value="org.eclipse.m2e"/>
-			<item value="org.eclipse.team.ui.importWizards"/>
-		</list>
 	</section>
 </section>
