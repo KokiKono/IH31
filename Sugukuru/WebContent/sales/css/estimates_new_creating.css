@@ -7,3 +7,27 @@
 	border-radius: 0px;
 	text-align:center;
 }
+
+.table-selectbox {
+	width: 205px;
+	height: 35px;
+	font-size: 13px;
+	border-radius: 0px;
+}
+
+.table-textbox-small {
+	height: 35px;
+	font-size: 13px;
+	padding:0px 0 0 0;
+	border-radius: 0px;
+	text-align:center;
+}
+
+.table-textbox-small-num {
+	height: 35px;
+	font-size: 13px;
+	padding:0px 5 0 0;
+	border-radius: 0px;
+	text-align: right;
+}
+

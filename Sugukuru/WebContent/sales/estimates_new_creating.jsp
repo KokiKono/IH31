@@ -143,21 +143,21 @@
 						<tbody>
 							<tr>
 								<th>顧客ID</th>
-								<td style="padding:0px"><input type="text" maxlength="6" class="form-control input-sm table-textbox-big"></td>
-								<th class="width-100">顧客名</th>
-								<td colspan="5" style="padding:0px"><input type="text" maxlength="50" class="form-control input-sm table-textbox-big" style="width: 650px;"></td>
+								<td style="padding:0px; width: 100px"><input type="text" maxlength="6" class="form-control input-sm table-textbox-big"></td>
+								<th>顧客名</th>
+								<td colspan="5" style="padding:0px; width: 500px"></td>
 								<th>与信オーバー額</th>
-								<td class="price">999,999,999,999</td>
+								<td class="price" style="width: 200px">999,999,999,999</td>
 							</tr>
 							<tr>
-								<th>商品代金</th>
-								<td class="price">99,999</td>
 								<th>手数料</th>
 								<td class="price">99,999</td>
+								<th>商品代金</th>
+								<td class="price" style="width: 150px">99,999</td>
 								<th>税抜合計</th>
-								<td class="price">9,999,999,999</td>
+								<td class="price" style="width: 150px">9,999,999,999</td>
 								<th>税</th>
-								<td class="price">99,999</td>
+								<td class="price" style="width: 150px">99,999</td>
 								<th>税込合計</th>
 								<td class="price">999,999,999,999</td>
 							</tr>
@@ -166,78 +166,174 @@
 				<table class="table table-striped table-bordered table-up">
 						<tbody>
 							<tr>
-								<th>ID</th>
+								<th style="width: 70px">ID</th>
 								<th>単位</th>
-								<th>数量</th>
-								<th>在庫</th>
-								<th>単価</th>
-								<th>販売単価</th>
-								<th>税抜き小計</th>
-								<th>税</th>
-								<th>税込み小計</th>
+								<th style="width: 80px">数量</th>
+								<th style="width: 80px">在庫</th>
+								<th style="width: 150px">単価</th>
+								<th style="width: 150px">販売単価</th>
+								<th style="width: 150px">税抜き小計</th>
+								<th style="width: 150px">税</th>
+								<th style="width: 200px">税込み小計</th>
 							</tr>
 							<tr>
-								<td style="padding:0px"><input type="text" maxlength="7" class="form-control input-sm text-center" style="height: 35px; font-size: 13px; padding:0px; border-radius: 0px"></td>
-								<td>あいうえおあいうえお</td>
-								<td class="price">999</td>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
 								<td class="price">999</td>
 								<td class="price">99,999,999</td>
-								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
 								<td class="price">9,999,999,999</td>
 								<td class="price">99,999,999</td>
 								<td class="price">999,999,999,999</td>
 							</tr>
 							<tr>
-								<td>9999999</td>
-								<td>あいうえおあいうえお</td>
-								<td class="price">999</td>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
 								<td class="price">999</td>
 								<td class="price">99,999,999</td>
-								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
 								<td class="price">9,999,999,999</td>
 								<td class="price">99,999,999</td>
 								<td class="price">999,999,999,999</td>
 							</tr>
 							<tr>
-								<td>2</td>
-								<td>9-8-9</td>
-								<td>N-50-N</td>
-								<td>N-20-N</td>
-								<td>999</td>
-								<td class="price">9-8-9</td>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
 								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
 							</tr>
 							<tr>
-								<td>3</td>
-								<td><button class="btn btn-primary success-btn">選択</button></td>
-								<td>N-50-N</td>
-								<td>N-20-N</td>
-								<td><input type="text" placeholder="商品数" ></td>
-								<td class="price">9-8-9</td>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
 								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
 							</tr>
 							<tr>
-								<td colspan="8"><button class="btn btn-primary btn-place">＋</button></td>
-							</tr>
-							<tr>
-								<td colspan="6"></td>
-								<th>小計</th>
-								<td class="price">999,999,999</td>
-							</tr>
-							<tr>
-								<td colspan="6"></td>
-								<th>消費税（8%）</th>
-								<td class="price">9,999,999</td>
-							</tr>
-							<tr>
-								<td colspan="6"></td>
-								<th>合計</th>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
 								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
+							</tr>
+							<tr>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
+							</tr>
+							<tr>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
+							</tr>
+							<tr>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
+							</tr>
+							<tr>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
+							</tr>
+							<tr>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
+							</tr>
+							<tr>
+								<td style="padding:0px;"><input type="text" maxlength="7" class="form-control input-sm table-textbox-small"></td>
+								<td style="padding:0px;"><select class="table-selectbox">
+									<option>あいうえおあいうえお</option>
+									<option>aiueokak</option>
+								</select></td>
+								<td style="padding:0px"><input type="text" maxlength="3" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">999</td>
+								<td class="price">99,999,999</td>
+								<td style="padding:0px;"><input type="text" maxlength="12" class="form-control input-sm table-textbox-small-num"></td>
+								<td class="price">9,999,999,999</td>
+								<td class="price">99,999,999</td>
+								<td class="price">999,999,999,999</td>
 							</tr>
 						</tbody>
 					</table>
 					<div class="button">
-						<button type="button" class="btn btn-danger cancel-btn">キャンセル</button>
+						<button type="button" class="btn btn-danger cancel-btn">クリア</button>
 						<button type="button" class="btn btn-primary success-btn">確認</button>
 					</div>
 			</div>
