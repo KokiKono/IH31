@@ -111,9 +111,7 @@ CREATE TABLE earnings_detail_table
 	price int(8) NOT NULL,
 	tax_fee int(8) NOT NULL,
 	sold_amount int(4) NOT NULL,
-	PRIMARY KEY (num, earning_id),
-	UNIQUE (earning_id),
-	UNIQUE (puroduct_id)
+	PRIMARY KEY (num, earning_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -127,11 +125,7 @@ CREATE TABLE earnings_table
 	no_tax_total_fee int(10) NOT NULL,
 	tax_fee int(8) NOT NULL,
 	note text,
-	PRIMARY KEY (earning_id),
-	UNIQUE (earning_id),
-	UNIQUE (order_id),
-	UNIQUE (customer_id),
-	UNIQUE (employment_id)
+	PRIMARY KEY (earning_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -152,8 +146,7 @@ CREATE TABLE employment_master
 	leaving_date date,
 	note text,
 	PRIMARY KEY (employment_id),
-	UNIQUE (employment_id),
-	UNIQUE (login_id)
+	UNIQUE (employment_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -194,8 +187,7 @@ CREATE TABLE estimates_table
 	approvaled_date date,
 	note text,
 	PRIMARY KEY (estimates_id),
-	UNIQUE (estimates_id),
-	UNIQUE (customer_id)
+	UNIQUE (estimates_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -207,9 +199,7 @@ CREATE TABLE inventories_master
 	inventorie_amount int(5) NOT NULL,
 	finished_amount int(5) NOT NULL,
 	note text,
-	PRIMARY KEY (inventories_id),
-	UNIQUE (inventories_id),
-	UNIQUE (puroduct_id)
+	PRIMARY KEY (inventories_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -218,9 +208,7 @@ CREATE TABLE lending_detail_table
 	lone_id int(12) NOT NULL,
 	sample_id char(10) NOT NULL,
 	lone_amount int(3) NOT NULL,
-	PRIMARY KEY (lone_id, sample_id),
-	UNIQUE (lone_id),
-	UNIQUE (sample_id)
+	PRIMARY KEY (lone_id, sample_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -234,8 +222,7 @@ CREATE TABLE lone_table
 	lone_start_date date NOT NULL,
 	lone_end_date date,
 	PRIMARY KEY (lone_id),
-	UNIQUE (lone_id),
-	UNIQUE (customer_id)
+	UNIQUE (lone_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -279,9 +266,7 @@ CREATE TABLE order_details_table
 3…小分け済み',
 	product_delivered_flg int(1) DEFAULT 0,
 	note text,
-	PRIMARY KEY (num, order_id),
-	UNIQUE (order_id),
-	UNIQUE (puroduct_id)
+	PRIMARY KEY (num, order_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -298,10 +283,7 @@ CREATE TABLE order_table
 	delivery_date date NOT NULL,
 	settlement_id int(12),
 	PRIMARY KEY (order_id),
-	UNIQUE (order_id),
-	UNIQUE (estimates_id),
-	UNIQUE (customer_id),
-	UNIQUE (employment_id)
+	UNIQUE (order_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -313,8 +295,7 @@ CREATE TABLE payment_table
 	payment_date date,
 	payment_way int(1) NOT NULL,
 	paid_price int(12),
-	PRIMARY KEY (num, settlement_id),
-	UNIQUE (settlement_id)
+	PRIMARY KEY (num, settlement_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -339,9 +320,7 @@ CREATE TABLE product_unit_table
 	puroduct_id char(7) NOT NULL,
 	unit_id char(6) NOT NULL,
 	amount int(3) NOT NULL,
-	PRIMARY KEY (puroduct_id, unit_id),
-	UNIQUE (puroduct_id),
-	UNIQUE (unit_id)
+	PRIMARY KEY (puroduct_id, unit_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -359,7 +338,6 @@ CREATE TABLE puroduct_master
 	rack_id char(2) NOT NULL,
 	PRIMARY KEY (puroduct_id),
 	UNIQUE (puroduct_id),
-	UNIQUE (category_id),
 	UNIQUE (maker_id),
 	UNIQUE (rack_id)
 ) DEFAULT CHARACTER SET utf8;
@@ -381,8 +359,7 @@ CREATE TABLE reminder_table
 	dunning_date date NOT NULL,
 	dunning_flg int(1) DEFAULT 0 NOT NULL,
 	note text,
-	PRIMARY KEY (num, settlement_id),
-	UNIQUE (settlement_id)
+	PRIMARY KEY (num, settlement_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -393,9 +370,7 @@ CREATE TABLE sample_master
 	sample_name varchar(50) NOT NULL,
 	amount int(5) NOT NULL,
 	return_flg int(1) NOT NULL,
-	PRIMARY KEY (sample_id),
-	UNIQUE (sample_id),
-	UNIQUE (puroduct_id)
+	PRIMARY KEY (sample_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -420,9 +395,7 @@ CREATE TABLE stock_table
 	stock_amount int(5) DEFAULT 0 NOT NULL,
 	provision_stock int(5) DEFAULT 0 NOT NULL,
 	entry_date datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
-	PRIMARY KEY (stock_id),
-	UNIQUE (stock_id),
-	UNIQUE (puroduct_id)
+	PRIMARY KEY (stock_id)
 ) DEFAULT CHARACTER SET utf8;
 
 
@@ -569,7 +542,7 @@ ALTER TABLE earnings_table
 
 
 ALTER TABLE estimates_table
-	ADD FOREIGN KEY (employment_id)
+	ADD FOREIGN KEY (approvaled_employment_id)
 	REFERENCES employment_master (employment_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
@@ -577,7 +550,7 @@ ALTER TABLE estimates_table
 
 
 ALTER TABLE estimates_table
-	ADD FOREIGN KEY (approvaled_employment_id)
+	ADD FOREIGN KEY (employment_id)
 	REFERENCES employment_master (employment_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT

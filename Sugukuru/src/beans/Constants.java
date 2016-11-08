@@ -194,7 +194,8 @@ public class Constants implements Database{
 	 * @throws ServletException
 	 */
 	public void forward(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		String forwardUrl="http://"+InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort()+request.getContextPath()+this.page.to;
+		String forwardUrl=/*InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort()+request.getContextPath()+*/"/"+this.page.to;
+		System.out.println(forwardUrl);
 		RequestDispatcher rd=request.getRequestDispatcher(forwardUrl);
 		rd.forward(request, response);
 	}
@@ -260,7 +261,7 @@ public class Constants implements Database{
 	 * @throws UnknownHostException
 	 */
 	public String getServletUrl() throws UnknownHostException{
-		return "http://"+InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort()+request.getContextPath()+this.page.to;
+		return "http://"+InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort()+request.getContextPath()+"/"+this.page.to;
 	}
 
 }
