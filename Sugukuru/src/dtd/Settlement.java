@@ -15,32 +15,34 @@ public class Settlement {
 	 * @param settlementId int 決済ID
 	 */
 	public int settlementId;
-	
+
 	/**
 	 * @auther Tester
 	 * 2016/11/05
 	 * @param customerId String 顧客ID
 	 */
 	public String customerId;
-	
+
 	/**
 	 * @auther Tester
 	 * 2016/11/05
 	 * @param requestDate CalendarByKoki 請求日付
 	 */
 	public CalendarByKoki requestDate;
-	
+
 	/**
 	 * @auther Tester
 	 * 2016/11/05
 	 * @param totalFee int 合計金額(税抜)
 	 */
 	public int totalFee;
-	
+
 	/**
 	 * @auther Tester
 	 * 2016/11/05
 	 * @param consumptionTax int 消費税
 	 */
 	public int consumptionTax;
+
+
 }

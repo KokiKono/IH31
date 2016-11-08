@@ -15,6 +15,10 @@
  * 更新者:k,koki
  * 更新日:2016/06/28
  * 内容:カレンダーのカスタマイズクラスで二次元配列を生成するメソッド。
+ * *************************
+ * 更新者:k,koki
+ * 更新日:2016/011/07
+ * 内容:日付チェックに関するメソッド追加、列挙追加。
  * *************************/
 package beans;
 
@@ -593,6 +597,30 @@ public class CalendarByKoki {
 			plus=plus-getMaxDay();
 		}
 		setDate(year, month, plus);
+	}
+	/**
+	 * CalendarByKokiの新しいインスタンスを生成します。
+	 * 値に不整合な値がある場合はnullを返します。
+	 * @auther 浩生
+	 * 2016/11/07
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
+	public static final CalendarByKoki newInstance(String year,String month,String day){
+		if(year==null || month==null || day==null){
+			return null;
+		}
+		if(year.isEmpty())return null;
+		if(month.isEmpty())return null;
+		if(day.isEmpty())return null;
+		try{
+			return new CalendarByKoki(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+		}catch(NumberFormatException e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
 

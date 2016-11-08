@@ -639,7 +639,9 @@ public class InspectionValue {
 	//update k.koki 2016/08/22 end
 	//update k.koki 2016/11/01 start
 	public static String readSql(HttpServlet servlet,String path){
-
+		return readSql(servlet, path,"");
+	}
+	public static String readSql(HttpServlet servlet,String path,String line){
 		path=servlet.getServletContext().getRealPath("/WEB-INF/sql/"+path);
 		StringBuilder builder=new StringBuilder();
 
@@ -648,6 +650,7 @@ public class InspectionValue {
 			String string=reader.readLine();
 			while(string!=null){
 				builder.append(string);
+				builder.append(line);
 				string=reader.readLine();
 			}
 		}catch(IOException e){
@@ -656,6 +659,5 @@ public class InspectionValue {
 		}
 		return builder.toString();
 	}
-
 	//update k.koki 2016/11/01 end
 }

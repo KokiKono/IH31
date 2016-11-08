@@ -1,7 +1,21 @@
-<%@page import="beans.LoginEmployment"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="dtd.OrderRecodeList"%>
+<%@page import="beans.Constants.Page"%>
+<%@page import="java.io.File"%>
+<%@page import="beans.Constants"%>
+<%@page import="common.ActionInterface"%>
+<%@page import="beans.LoginEmployment"%>
 <%
+	//コンスタント作成。
+	Constants constants=new Constants(this,request);
+	//検索条件の取得
+	OrderRecodeList orderRecodeList=(OrderRecodeList)request.getAttribute("OrderRecodeList");
+	if(orderRecodeList==null)orderRecodeList=new OrderRecodeList();
+	//検索結果の取得
+	ArrayList<OrderRecodeList> list=(ArrayList<OrderRecodeList>)request.getAttribute("order_recode");
+	if(list==null)list=new ArrayList<OrderRecodeList>();
 
 %>
 <!DOCTYPE html>
@@ -10,7 +24,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>営業部</title>
+<title><%=constants.getConstant("01").value %></title>
 <!-- BootstrapのCSS読み込み -->
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <!-- jQuery読み込み -->
@@ -50,7 +64,7 @@
 				</button>
 
 				<!-- タイトルなどのテキスト -->
-				<a class="navbar-brand" href="#">営業部</a>
+				<a class="navbar-brand" href="#"><%=constants.getConstant("01").value %></a>
 			</div>
 
 			<!-- グローバルナビの中身 -->
@@ -83,7 +97,8 @@
 						<ul class="dropdown-menu">
 							<li><a href="#">パスワード変更</a></li>
 							<li class="divider"></li>
-							<li><a href="http://localhost:8080/Sugukuru/SalesIndexServlet">ログアウト</a></li>
+							<li><a
+								href="http://localhost:8080/Sugukuru/SalesIndexServlet">ログアウト</a></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -148,7 +163,7 @@
 				</ul>
 				<ul class="content-paging">
 					<li class="paging-prev texter"><<</li>
-					<li class="texter"><</li>
+					<li class="texter"></li>
 					<li class="texter">1</li>
 					<li class="texter">2</li>
 					<li class="texter">3</li>
@@ -160,160 +175,63 @@
 			<div class="content-message content">メッセージ</div>
 			<div class="content-search content">
 				検索
-				<form class="search_form">
+				<form class="search_form"
+					action="<%=constants.getServletUrl() %>"
+					method="post">
+					<div class="search_content">
+						<span><%=constants.getConstant("08").value %></span>
+						<input type="text"
+							name="<%=constants.getConstant("08").pgName %>" size="10" class="input-text form-input">
+					</div>
 					<div class="member_id search_content">
-						<span class="member_id_text">顧客ID</span> <input type="text"
-							size="10" class="input-text">
+						<span class="member_id_text"><%=constants.getConstant("02").value %></span> <input type="text"
+							name="<%=constants.getConstant("02").pgName %>" size="10" class="input-text form-input">
 					</div>
 					<div class="member_name search_content">
-						<span class="member_name_text">略称</span> <input type="text"
-							class="input-text">
+						<span class="member_name_text"><%=constants.getConstant("03").value %></span> <input type="text"
+							name="<%=constants.getConstant("03").pgName %>" class="input-text form-input">
 					</div>
 					<div class="create_date search_content">
-						<span>作成日</span> <input type="text" size="4" placeholder="2016"><span>年</span>
-						<input type="text" size="2" placeholder="2"><span>月</span>
-						<input type="text" size="2" placeholder="2"><span>日</span>
-					</div>
-					<div class="drop_content">
-						<div class="dispatch_state search_content">
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="button-group">
-										<button type="button"
-											class="btn btn-default btn-sm dropdown-toggle"
-											data-toggle="dropdown">
-											発送状態<span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a href="#" class="small" data-value="option1"
-												tabIndex="-1"><input type="checkbox" />完了</a></li>
-											<li><a href="#" class="small" data-value="option1"
-												tabIndex="-1"><input type="checkbox" />未完了</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="claim_state  search_content">
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="button-group">
-										<button type="button"
-											class="btn btn-default btn-sm dropdown-toggle"
-											data-toggle="dropdown">
-											請求状態<span class="caret"></span>
-										</button>
-										<ul class="dropdown-menu">
-											<li><a href="#" class="small" data-value="option1"
-												tabIndex="-1"><input type="checkbox" />完了</a></li>
-											<li><a href="#" class="small" data-value="option1"
-												tabIndex="-1"><input type="checkbox" />未完了</a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
+						<span><%=constants.getConstant("04").value %></span> <input type="text" size="4" placeholder="2016"
+							name="<%=constants.getConstant("05").pgName %>" class="form-input"><span><%=constants.getConstant("05").value %></span> <input type="text"
+							size="2" placeholder="2" name="<%=constants.getConstant("06").pgName %>" class="form-input"><span><%=constants.getConstant("06").value %></span>
+						<input type="text" size="2" placeholder="2" name="<%=constants.getConstant("07").pgName %>" class="form-input"><span><%=constants.getConstant("07").value %></span>
 					</div>
 					<div class="search_submit">
 						<button class="btn btn btn-primary">検索</button>
 					</div>
 				</form>
 			</div>
-
 		</div>
 		<div class="container">
 			<table class="table table-striped table-bordered">
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>顧客ID</th>
-						<th>略称</th>
-						<th>作成日</th>
-						<th>発送状態</th>
-						<th>請求状態</th>
+						<th><%=constants.getConstant("08").value %></th>
+						<th><%=constants.getConstant("02").value %></th>
+						<th><%=constants.getConstant("03").value %></th>
+						<th><%=constants.getConstant("09").value %></th>
+						<th><%=constants.getConstant("10").value %></th>
+						<th><%=constants.getConstant("11").value %></th>
 					</tr>
 				</thead>
 				<tbody>
+				<%if(list.size()==0){ %>
 					<tr>
-						<td>1</td>
-						<td>38392101</td>
-						<td>HAL大阪</td>
-						<td>2016年07月11日</td>
-						<td>未完了</td>
-						<td>未完</td>
+						<td colspan="7">検索結果がありませんでした。</td>
 					</tr>
+				<%}else{ %>
+					<%int count=1; for(OrderRecodeList recodeList:list){ %>
 					<tr>
-						<td>2</td>
-						<td>38392101</td>
-						<td>HAL大阪</td>
-						<td>2016年07月10日</td>
-						<td>完了</td>
-						<td>未完</td>
+						<td><%=count++ %></td>
+						<td><%=recodeList.customerId %></td>
+						<td><%=recodeList.customerName %></td>
+						<td><%=recodeList.orderDate.outOfJP() %></td>
+						<td><%=recodeList.getShipmentState() %></td>
+						<td><%=recodeList.getSettlemntState() %></td>
 					</tr>
-					<tr>
-						<td>3</td>
-						<td>38392101</td>
-						<td>HAL大阪</td>
-						<td>2016年07月4日</td>
-						<td>完了</td>
-						<td>未完</td>
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>38392101</td>
-						<td>HAL大阪</td>
-						<td>2016年07月4日</td>
-						<td>完了</td>
-						<td>未完</td>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td>38392101</td>
-						<td>HAL大阪</td>
-						<td>2016年07月4日</td>
-						<td>完了</td>
-						<td>未完</td>
-					</tr>
-					<tr>
-						<td>6</td>
-						<td>38392101</td>
-						<td>HAL大阪</td>
-						<td>2016年07月4日</td>
-						<td>完了</td>
-						<td>未完</td>
-					</tr>
-					<tr>
-						<td>7</td>
-						<td>38392101</td>
-						<td>HAL大阪</td>
-						<td>2016年07月4日</td>
-						<td>完了</td>
-						<td>未完</td>
-					</tr>
-					<tr>
-						<td>8</td>
-						<td>38392101</td>
-						<td>HAL大阪</td>
-						<td>2016年07月4日</td>
-						<td>完了</td>
-						<td>未完</td>
-					</tr>
-					<tr>
-						<td>9</td>
-						<td>38392101</td>
-						<td>HAL大阪</td>
-						<td>2016年07月4日</td>
-						<td>完了</td>
-						<td>未完</td>
-					</tr>
-					<tr>
-						<td>10</td>
-						<td>38392101</td>
-						<td>HAL大阪</td>
-						<td>2016年07月4日</td>
-						<td>完了</td>
-						<td>未完</td>
-					</tr>
+					<%}} %>
 				</tbody>
 			</table>
 		</div>

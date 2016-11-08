@@ -15,49 +15,48 @@ public class Order {
 	 * @param orderId int 受注ID
 	 */
 	public int orderId = 0;
-	
+
 	/**
 	 * @auther Tester
 	 * 2016/11/02
 	 * @param estimateId int 見積もりID
 	 */
 	public int estimateId = 0;
-	
+
 	/**
 	 * @auther Tester
 	 * 2016/11/02
 	 * @param employementId int 担当社員ID
 	 */
 	public int employementId = 0;
-	
 	/**
 	 * @auther Tester
 	 * 2016/11/02
 	 * @param orderDate CalendarByKoki 受注日時
 	 */
 	public CalendarByKoki orderDate;
-	
 	/**
 	 * @auther Tester
 	 * 2016/11/02
 	 * @param customerId String 顧客ID
 	 */
+	@Request
 	public String customerId;
-	
+	@Request
 	/**
 	 * @auther Tester
 	 * 2016/11/02
 	 * @param customerName String 顧客名
 	 */
 	public String customerName;
-	
+
 	/**
 	 * @auther Tester
 	 * 2016/11/02
 	 * @param deliveryAddress String 納品先住所
 	 */
 	public String deliveryAddress;
-	
+
 	/**
 	 * @auther Tester
 	 * 2016/11/02
