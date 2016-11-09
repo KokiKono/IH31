@@ -158,61 +158,7 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 				// 検索結果無し
 			} else {
 				// レスポンス用リスト変数
-				ArrayList<StockOrderList> stockOrderLists = new ArrayList<StockOrderList>();
-				// 検索結果を成形格納
-				try {
-					stock: for (int rowCount = 0; rowCount < list.size();) {
-						StockOrderList stockOrderList2 = new StockOrderList();
-						stockOrderList2.orderId = Integer.parseInt(list.get(
-								rowCount).get(0));
-						stockOrderList2.customerId = list.get(rowCount).get(1);
-						stockOrderList2.customerName = list.get(rowCount)
-								.get(2);
-						stockOrderList2.orderDate = CalendarByKoki
-								.newInstance(list.get(rowCount).get(13));
-						stockOrderList2.shipmentDate = CalendarByKoki
-								.newInstance(list.get(rowCount).get(14));
-						stockOrderList2.deliveryDate = CalendarByKoki
-								.newInstance(list.get(rowCount).get(10));
-						details: while (stockOrderList2.orderId == Integer
-								.parseInt(list.get(rowCount).get(0))) {
-							// 詳細を格納
-							OrderDetail detail = new OrderDetail();
-							detail.orderId = stockOrderList2.orderId;
-							detail.num = Integer.parseInt(list.get(rowCount)
-									.get(3));
-							detail.productId = list.get(rowCount).get(4);
-							detail.productName = list.get(rowCount).get(5);
-							detail.price = Integer.parseInt(list.get(rowCount)
-									.get(6));
-							detail.cunsumntionTax = Double.parseDouble(list
-									.get(rowCount).get(7));
-							detail.amount = Integer.parseInt(list.get(rowCount)
-									.get(8));
-							detail.step = Integer.parseInt(list.get(rowCount)
-									.get(9));
-							detail.productDeliveredFlg = Integer.parseInt(list
-									.get(rowCount).get(11));
-							detail.note = list.get(rowCount).get(12);
-
-							if (rowCount == list.size() - 1) {
-								// 最後の行処理
-								stockOrderList2.orderDetails.add(detail);
-								break details;
-							}
-							stockOrderList2.orderDetails.add(detail);
-							rowCount++;
-						}
-						stockOrderLists.add(stockOrderList2);
-						if (rowCount == list.size() - 1) {
-							break stock;
-						}
-					}
-				} catch (Exception e) {
-					// 格納失敗
-					e.printStackTrace();
-					// message.doErrer("01");
-				}
+				ArrayList<StockOrderList> stockOrderLists = getOrderList(list);
 				if (stockOrderLists.size() > 0) {
 					// リクエスト格納
 					request.setAttribute("stockOrderList", stockOrderLists);
@@ -236,5 +182,66 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 		}
 		// フォワード処理
 		constants.forward(request, response);
+	}
+	/**
+	 * StockOrderList.sqlで取得したリストデータを
+	 * StockOrderListリストに変換する。
+	 * @auther 浩生
+	 * 2016/11/09
+	 * @param list
+	 * @return
+	 */
+	protected static ArrayList<StockOrderList> getOrderList(ArrayList<ArrayList<String>> list){
+		// レスポンス用リスト変数
+		ArrayList<StockOrderList> stockOrderLists = new ArrayList<StockOrderList>();
+		// 検索結果を成形格納
+			stock: for (int rowCount = 0; rowCount < list.size();) {
+				StockOrderList stockOrderList2 = new StockOrderList();
+				stockOrderList2.orderId = Integer.parseInt(list.get(
+						rowCount).get(0));
+				stockOrderList2.customerId = list.get(rowCount).get(1);
+				stockOrderList2.customerName = list.get(rowCount)
+						.get(2);
+				stockOrderList2.orderDate = CalendarByKoki
+						.newInstance(list.get(rowCount).get(13));
+				stockOrderList2.shipmentDate = CalendarByKoki
+						.newInstance(list.get(rowCount).get(14));
+				stockOrderList2.deliveryDate = CalendarByKoki
+						.newInstance(list.get(rowCount).get(10));
+				details: while (stockOrderList2.orderId == Integer
+						.parseInt(list.get(rowCount).get(0))) {
+					// 詳細を格納
+					OrderDetail detail = new OrderDetail();
+					detail.orderId = stockOrderList2.orderId;
+					detail.num = Integer.parseInt(list.get(rowCount)
+							.get(3));
+					detail.productId = list.get(rowCount).get(4);
+					detail.productName = list.get(rowCount).get(5);
+					detail.price = Integer.parseInt(list.get(rowCount)
+							.get(6));
+					detail.cunsumntionTax = Double.parseDouble(list
+							.get(rowCount).get(7));
+					detail.amount = Integer.parseInt(list.get(rowCount)
+							.get(8));
+					detail.step = Integer.parseInt(list.get(rowCount)
+							.get(9));
+					detail.productDeliveredFlg = Integer.parseInt(list
+							.get(rowCount).get(11));
+					detail.note = list.get(rowCount).get(12);
+
+					if (rowCount == list.size() - 1) {
+						// 最後の行処理
+						stockOrderList2.orderDetails.add(detail);
+						break details;
+					}
+					stockOrderList2.orderDetails.add(detail);
+					rowCount++;
+				}
+				stockOrderLists.add(stockOrderList2);
+				if (rowCount == list.size() - 1) {
+					break stock;
+				}
+			}
+		return stockOrderLists;
 	}
 }
