@@ -1,3 +1,5 @@
+<%@page import="beans.Message"%>
+<%@page import="dtd.StockOrderList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
@@ -10,12 +12,12 @@
 <%
 	//コンスタント作成。
 	Constants constants=new Constants(this,request);
-	//検索条件の取得
-	OrderRecodeList orderRecodeList=(OrderRecodeList)request.getAttribute("OrderRecodeList");
-	if(orderRecodeList==null)orderRecodeList=new OrderRecodeList();
 	//検索結果の取得
-	ArrayList<OrderRecodeList> list=(ArrayList<OrderRecodeList>)request.getAttribute("order_recode");
-	if(list==null)list=new ArrayList<OrderRecodeList>();
+	ArrayList<StockOrderList> list=(ArrayList<StockOrderList>)request.getAttribute("stockOrderList");
+	if(list==null)list=new ArrayList<StockOrderList>();
+	//メッセージを取得
+	Message message=(Message)request.getAttribute("message");
+
 
 %>
 <!DOCTYPE html>
@@ -26,18 +28,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><%=constants.getConstant("01").value %></title>
 <!-- BootstrapのCSS読み込み -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
 <!-- jQuery読み込み -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- BootstrapのJS読み込み -->
-<script src="../js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath() %>/js/bootstrap.min.js"></script>
 <!-- テンプレート用CSSの読み込み -->
-<link href="../css/template.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/template.css" rel="stylesheet">
 <!-- サブメニュー用CSSの読み込み -->
-<link href="../css/dropdowns-enhancement.css" rel="stylesheet">
-<script src="../js/dropdowns-enhancement.js"></script>
-<link href="css/index.css" rel="stylesheet">
+<link href="<%=request.getContextPath() %>/css/dropdowns-enhancement.css" rel="stylesheet">
+<script src="<%=request.getContextPath() %>/js/dropdowns-enhancement.js"></script>
+<link href="<%=request.getContextPath() %>/stock/css/index.css" rel="stylesheet">
 <script>
 	$(document).ready(function() {
 		$(".dropdown-menu").click(function(e) {
@@ -64,7 +66,7 @@
 				</button>
 
 				<!-- タイトルなどのテキスト -->
-				<a class="navbar-brand" href="#"><%=constants.getConstant("01").value %></a>
+				<a class="navbar-brand" href="#"><%=Constants.getCommon("01").value %></a>
 			</div>
 
 			<!-- グローバルナビの中身 -->
@@ -172,7 +174,11 @@
 				</ul>
 
 			</div>
-			<div class="content-message content">メッセージ</div>
+			<div class="content-message content">メッセージ
+			<%if(message!=null){ %>
+			<%=message.getMessageArrayToStr("<span style=\"color:red\">", "</span>") %>
+			<%} %>
+			</div>
 			<div class="content-search content">
 				検索
 				<form class="search_form"
@@ -222,14 +228,15 @@
 						<td colspan="7">検索結果がありませんでした。</td>
 					</tr>
 				<%}else{ %>
-					<%int count=1; for(OrderRecodeList recodeList:list){ %>
+					<%int count=1; for(StockOrderList recodeList:list){ %>
 					<tr>
 						<td><%=count++ %></td>
+						<td><%=recodeList.orderId %></td>
 						<td><%=recodeList.customerId %></td>
 						<td><%=recodeList.customerName %></td>
-						<td><%=recodeList.orderDate.outOfJP() %></td>
-						<td><%=recodeList.getShipmentState() %></td>
-						<td><%=recodeList.getSettlemntState() %></td>
+						<td><%=recodeList.getDeliveryDate() %></td>
+						<td><%=recodeList.stepParsent() %></td>
+						<td><%=recodeList.getState() %></td>
 					</tr>
 					<%}} %>
 				</tbody>

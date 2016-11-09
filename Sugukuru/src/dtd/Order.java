@@ -63,4 +63,11 @@ public class Order {
 	 * @param deliveryDate CalendarByKoki　納品日
 	 */
 	public CalendarByKoki deliveryDate;
+	/**
+	 * 出荷日時
+	 * @auther 浩生
+	 * 2016/11/08
+	 * @param shipmentDate CalendarByKoki
+	 */
+	public CalendarByKoki shipmentDate;
 }

@@ -434,12 +434,11 @@ public class DBManager {
 			}
 			String startKey = IF + "(" + key + ")" + START;
 			String endKey = IF + "(" + key + ")" + END;
-			int startIndex = startLine(startKey);
-			int endIndex = endLine(endKey);
+			int startIndex = endLine(startKey);
+			int endIndex = startLine(endKey);
 			if (startIndex == -1 || endIndex == -1) {
 				return -1;
 			}
-			System.out.println("削除");
 			// 削除処理
 			String start = this.sql.substring(0, startIndex);
 			String end = this.sql.substring(endIndex, this.sql.length());
@@ -547,17 +546,45 @@ public class DBManager {
 		 */
 		public void cleanSql() {
 			this.sql=commentDelete();
-			String wheres[]={"WHERE\\s*AND","WHERE\\s*OR"};
-			String havings[]={"HAVING\\s*AND","HAVING\\s*OR","WHERE\\s*HAVING"};
+			while(clean()>0);
+			if(this.sql.indexOf(";")==-1){
+				this.sql=this.sql+";";
+			}
+			clean();
+			this.sql=this.sql.replaceAll("WHERE\\s*HAVING", HAVING);
+			this.sql=this.sql.replaceAll("WHERE\\s*;", ";");
+			this.sql=this.sql.replaceAll("HAVING\\s*;",";");
+		}
+
+		private final String[] flushs={"AND\\s*;","OR\\s*;"};
+		private final String[] havings={"HAVING\\s*AND","HAVING\\s*OR","AND\\s*HAVING","OR\\s*HAVING"};
+		private final String[] wheres={"OR\\s*WHERE","AND\\s*WHERE","WHERE\\s*AND","WHERE\\s*OR"};
+		private final String ands="AND\\s*AND";
+		private final String ors="OR\\s*OR";
+		private int clean(){
+			int count=0;
+
 			for(String where:wheres){
-				this.sql=this.sql.replaceAll(where, "WHERE");
+				if(this.sql.indexOf(where)>0){
+					count++;
+				}
+				this.sql=this.sql.replaceAll(where, WHERE);
 			}
 			for(String having:havings){
-				this.sql=this.sql.replaceAll(having, "HAVING");
+				if(this.sql.indexOf(having)>0){
+					count++;
+				}
+				this.sql=this.sql.replaceAll(having, HAVING);
 			}
-			this.sql=this.sql.replaceAll("WHERE\\s;", "");
-			this.sql=this.sql.replace("HAVING\\s;","");
-
+			for(String flush:flushs){
+				if(this.sql.indexOf(flush)>0)count++;
+				this.sql=this.sql.replaceAll(flush, "");
+			}
+			if(this.sql.indexOf(ands)>0)count++;
+			this.sql=this.sql.replaceAll(ands, AND);
+			if(this.sql.indexOf(ors)>0)count++;
+			this.sql=this.sql.replaceAll(ors, OR);
+			return count;
 		}
 		/**
 		 * コメント文を全て削除します。
