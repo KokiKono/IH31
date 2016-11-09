@@ -5,7 +5,7 @@
 <%
 	//コンスタント
 	Constants constants = new Constants(this,request);
-	//constants.getConstant("01").value;
+	System.out.println("0301="+constants.getConstant("01").value);
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -141,7 +141,7 @@
 	<div class="center-content">
 			<div class="center-content-header">
 				<div class="center-content-title">
-					<h2>見積書作成</h2>
+					<h2><%=constants.getConstant("01").value %></h2>
 				</div>
 				<div class="content-message content">
 					メッセージ<br>
