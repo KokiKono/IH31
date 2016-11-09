@@ -55,9 +55,9 @@ public abstract class LoginDao implements Database{
 	 * @throws LoginException
 	 */
 	public LoginDao(HttpServlet servlet,HttpServletRequest request,String sqlPath) throws LoginException{
-		if(this.check(loginId,password)==false){
+		/*if(this.check(loginId,password)==false){
 			throw new LoginException();
-		}
+		}*/
 		HttpSession session=request.getSession();
 		this.loginId=(String) session.getAttribute("LoginDao.loginId");
 		this.password=(String)session.getAttribute("LoginDao.password");

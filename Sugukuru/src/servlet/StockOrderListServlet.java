@@ -21,6 +21,8 @@ import beans.Constants;
 import beans.DBManager;
 import beans.DBManager.PreparedStatementByKoki;
 import beans.InspectionValue;
+import beans.Message;
+import beans.Message.MessageInterface.MODE;
 
 import common.Database;
 
@@ -62,6 +64,7 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		Constants constants = new Constants(this, request);
+		Message message=new Message(constants);
 		StockOrderList stockOrderList = new StockOrderList();
 		// 検索条件の取得
 		stockOrderList = (StockOrderList) constants
@@ -85,7 +88,7 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 					statementByKoki.setInt("ORDER_ID",
 							Integer.parseInt(stockOrderList.rOrderId));
 				} catch (NumberFormatException e) {
-					e.printStackTrace();
+					message.doWarnig("08","04");
 					statementByKoki.toNull("ORDER_ID");
 				}
 			}
@@ -99,7 +102,9 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 					statementByKoki.setString("CUSTOMER_ID",
 							stockOrderList.customerId);
 				} catch (NumberFormatException e) {
+					//顧客ID不整値
 					e.printStackTrace();
+					message.doWarnig("02","04");
 					statementByKoki.toNull("CUSTOMER_ID");
 				}
 			}
@@ -109,14 +114,20 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 					stockOrderList.shipmentDay);
 			if (shipmentCalendar == null) {
 				// 出荷日生成エラー
+				message.doWarnig("04","04");
 				statementByKoki.toNull("DELIVERY_DATE");
 			} else {
 				statementByKoki.setString("DELIVERY_DATE",
 						shipmentCalendar.outSQLDate());
 			}
+			if(message.nowMode()==MODE.WARNIG){
+				//不正な値あり
+				request.setAttribute("message", message);
+				constants.forward(request, response);
+				return;
+			}
 			// SQLクリーン
 			statementByKoki.cleanSql();
-			System.out.println(statementByKoki.out());
 			// SQL実行
 			ArrayList<ArrayList<String>> list = statementByKoki.select();
 			if (list.size() == 0) {
@@ -126,13 +137,16 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 				ArrayList<StockOrderList> stockOrderLists = new ArrayList<StockOrderList>();
 				// 検索結果を成形格納
 				try {
-					for (int rowCount = 0; rowCount < list.size(); rowCount++) {
+					stock:for (int rowCount = 0; rowCount < list.size();) {
 						StockOrderList stockOrderList2=new StockOrderList();
 						stockOrderList2.orderId = Integer.parseInt(list.get(
 								rowCount).get(0));
 						stockOrderList2.customerId = list.get(rowCount).get(1);
 						stockOrderList2.customerName = list.get(rowCount).get(2);
-						details: while (stockOrderList2.orderId == Integer
+						stockOrderList2.orderDate=CalendarByKoki.newInstance(list.get(rowCount).get(13));
+						stockOrderList2.shipmentDate=CalendarByKoki.newInstance(list.get(rowCount).get(14));
+						stockOrderList2.deliveryDate=CalendarByKoki.newInstance(list.get(rowCount).get(10));
+						details:while (stockOrderList2.orderId == Integer
 								.parseInt(list.get(rowCount).get(0))) {
 							// 詳細を格納
 							OrderDetail detail = new OrderDetail();
@@ -149,29 +163,27 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 									.get(8));
 							detail.step = Integer.parseInt(list.get(rowCount)
 									.get(9));
-							if (list.get(rowCount).get(10) == null) {
-								// 納品日がnull（未納品）の場合
-								detail.deliveredDate = null;
-							} else {
-								detail.deliveredDate = new CalendarByKoki(list
-										.get(rowCount).get(10));
-							}
 							detail.productDeliveredFlg = Integer.parseInt(list
 									.get(rowCount).get(11));
 							detail.note = list.get(rowCount).get(12);
-							stockOrderList2.orderDetails.add(detail);
-							if (rowCount+1 == list.size()) {
+
+							if (rowCount == list.size()-1) {
 								// 最後の行処理
 								stockOrderList2.orderDetails.add(detail);
 								break details;
 							}
+							stockOrderList2.orderDetails.add(detail);
 							rowCount++;
 						}
 						stockOrderLists.add(stockOrderList2);
+						if(rowCount==list.size()-1){
+							break stock;
+						}
 					}
 				} catch (Exception e) {
 					// 格納失敗
 					e.printStackTrace();
+					//message.doErrer("01");
 				}
 				if(stockOrderLists.size()>0){
 					//リクエスト格納
@@ -181,12 +193,15 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 		} catch (SQLException e) {
 			// SQLエラー
 			e.printStackTrace();
+			//message.doErrer();
 		} catch (ClassNotFoundException e) {
 			// ロードエラー
 			e.printStackTrace();
+			//message.doErrer();
 		} catch (Exception e) {
 			// どうしようもないエラー
 			e.printStackTrace();
+			//message.doErrer();
 		}finally{
 			//フォワード処理
 			constants.forward(request, response);

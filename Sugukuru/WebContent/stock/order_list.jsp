@@ -62,7 +62,7 @@
 				</button>
 
 				<!-- タイトルなどのテキスト -->
-				<a class="navbar-brand" href="#"><%=constants.getConstant("01").value %></a>
+				<a class="navbar-brand" href="#"><%=Constants.getCommon("01").value %></a>
 			</div>
 
 			<!-- グローバルナビの中身 -->
@@ -227,7 +227,8 @@
 						<td><%=recodeList.customerId %></td>
 						<td><%=recodeList.customerName %></td>
 						<td><%=recodeList.getDeliveryDate() %></td>
-						<td></td>
+						<td><%=recodeList.stepParsent() %></td>
+						<td><%=recodeList.getState() %></td>
 					</tr>
 					<%}} %>
 				</tbody>

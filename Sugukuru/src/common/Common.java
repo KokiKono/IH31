@@ -64,4 +64,28 @@ public interface Common {
 	 * @param STEP3 int
 	 */
 	int STEP3=3;
+	/**
+	 * システムエラーコード
+	 * どうしようもないエラー
+	 * @auther 浩生
+	 * 2016/11/09
+	 * @param EXECPTION int
+	 */
+	int EXECPTION=1;
+	/**
+	 * システムエラーコード
+	 * SQLエラー
+	 * @auther 浩生
+	 * 2016/11/09
+	 * @param SQLEXCEPTION int
+	 */
+	int SQLEXCEPTION=2;
+	/**
+	 * システムエラーコード
+	 * DBが読み込めない
+	 * @auther 浩生
+	 * 2016/11/09
+	 * @param CLASSNOTFOUNTEXCEPTION int
+	 */
+	int CLASSNOTFOUNTEXCEPTION=3;
 }
