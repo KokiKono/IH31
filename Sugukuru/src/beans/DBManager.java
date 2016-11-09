@@ -550,6 +550,7 @@ public class DBManager {
 			if(this.sql.indexOf(";")==-1){
 				this.sql=this.sql+";";
 			}
+			clean();
 			this.sql=this.sql.replaceAll("WHERE\\s*HAVING", HAVING);
 			this.sql=this.sql.replaceAll("WHERE\\s*;", ";");
 			this.sql=this.sql.replaceAll("HAVING\\s*;",";");
