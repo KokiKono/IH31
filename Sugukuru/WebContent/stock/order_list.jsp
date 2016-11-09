@@ -1,3 +1,4 @@
+<%@page import="beans.Message"%>
 <%@page import="dtd.StockOrderList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -14,6 +15,9 @@
 	//検索結果の取得
 	ArrayList<StockOrderList> list=(ArrayList<StockOrderList>)request.getAttribute("stockOrderList");
 	if(list==null)list=new ArrayList<StockOrderList>();
+	//メッセージを取得
+	Message message=(Message)request.getAttribute("message");
+
 
 %>
 <!DOCTYPE html>
@@ -170,7 +174,11 @@
 				</ul>
 
 			</div>
-			<div class="content-message content">メッセージ</div>
+			<div class="content-message content">メッセージ
+			<%if(message!=null){ %>
+			<%=message.getMessageArrayToStr("<span style=\"color:red\">", "</span>") %>
+			<%} %>
+			</div>
 			<div class="content-search content">
 				検索
 				<form class="search_form"

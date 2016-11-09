@@ -8,6 +8,8 @@ package beans;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import beans.DBManager.PreparedStatementByKoki;
 import beans.Message.MessageInterface.MODE;
@@ -24,9 +26,9 @@ public class Message implements Database{
 	 * 2016/11/09
 	 * @param keys ArrayList<String>
 	 */
-	private ArrayList<String[]> keys;
+	private ArrayList<ArrayList<String>> keys;
 	{
-		this.keys=new ArrayList<String[]>();
+		this.keys=new ArrayList<ArrayList<String>>();
 		this.messageInterface=new Information();
 	}
 	/**
@@ -188,12 +190,11 @@ public class Message implements Database{
 	 * 登録したキーのメッセージリストを取得するには?
 	 * @see Message#getMessageArray(String, String)
 	 */
-	public void doWarnig(String constantId,String messageId){
+	public void doWarnig(String messageId,String... constantId){
 		if(nowMode()!=MODE.WARNIG){
-			this.keys=new ArrayList<String[]>();
+			this.keys=new ArrayList<ArrayList<String>>();
 		}
-		String[] keys=new String[2];
-		setKeys(keys);
+		setKeys(messageId,constantId);
 		this.messageInterface=new Warning();
 	}
 	/**
@@ -206,12 +207,11 @@ public class Message implements Database{
 	 * 登録したキーのメッセージリストを取得するには?
 	 * @see Message#getMessageArray(String, String)
 	 */
-	public void doInfomation(String constantId,String messageId){
+	public void doInfomation(String messageId,String... constantId){
 		if(nowMode()!=MODE.INFORMATION){
-			this.keys=new ArrayList<String[]>();
+			this.keys=new ArrayList<ArrayList<String>>();
 		}
-		String[] keys=new String[2];
-		setKeys(keys);
+		setKeys(messageId, constantId);
 		this.messageInterface=new Information();
 	}
 	/**
@@ -224,12 +224,11 @@ public class Message implements Database{
 	 * 登録したキーのメッセージリストを取得するには?
 	 * @see Message#getMessageArray(String, String)
 	 */
-	public void doErrer(String constantId,String messageId){
+	public void doErrer(String messageId,String... constantId){
 		if(nowMode()!=MODE.INFORMATION){
-			this.keys=new ArrayList<String[]>();
+			this.keys=new ArrayList<ArrayList<String>>();
 		}
-		String[] keys=new String[2];
-		setKeys(keys);
+		setKeys(messageId,constantId);
 		this.messageInterface=new Information();
 	}
 	/**
@@ -254,6 +253,7 @@ public class Message implements Database{
 	 */
 	private MessageBox findMessage(String messageId){
 		for(MessageBox box:this.messageInterface.message()){
+			String t=box.messageID.substring(2, 4);
 			if(box.messageID.substring(2, 4).equals(messageId)){
 				return box;
 			}
@@ -341,13 +341,16 @@ public class Message implements Database{
 		return this.messageInterface.nowMode();
 	}
 	/**
-	 * 表示するキーを登録する事が出来ます。
+	 * 表示するキーをフィールド用に変換し格納する。
 	 * @auther 浩生
 	 * 2016/11/09
 	 * @param keys
 	 */
-	private void setKeys(String[] keys){
-		this.keys.add(keys);
+	private void setKeys(String messageId,String...constantId){
+		List list=Arrays.asList(constantId);
+		ArrayList<String> row=new ArrayList<String>(list);
+		row.add(0, messageId);
+		this.keys.add(row);
 	}
 	/**
 	 * 現行モードで登録したキーに対応するメッセージを一覧を取得します。
@@ -365,9 +368,18 @@ public class Message implements Database{
 	public ArrayList<String> getMessageArray(String start,String end){
 		if(this.keys.isEmpty()==true)return null;
 		ArrayList<String> list=new ArrayList<String>();
-		for(String[] key:this.keys){
-			list.add(start+getMassage(key[0], key[1])+end);
+		for(ArrayList<String> row:this.keys){
+			String messageId=row.get(0);
+			row.remove(0);
+			list.add(start+getMassage(messageId, (String[])row.toArray(new String[0]))+end);
 		}
 		return list;
+	}
+	public String getMessageArrayToStr(String start,String end){
+		StringBuffer buffer=new StringBuffer();
+		for(String str:getMessageArray(start, end)){
+			buffer.append(str);
+		}
+		return buffer.toString();
 	}
 }

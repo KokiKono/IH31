@@ -51,8 +51,7 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Constants constants=new Constants(this,request);
-		constants.forward(request, response);
+		doPost(request, response);
 	}
 
 	/**
@@ -68,7 +67,7 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 		StockOrderList stockOrderList = new StockOrderList();
 		// 検索条件の取得
 		stockOrderList = (StockOrderList) constants
-				.decodeRequest(stockOrderList);
+				.superDecodeRequest(stockOrderList);
 		DBManager dbManager = null;
 		try {
 			dbManager = new DBManager(DBName);
@@ -88,7 +87,7 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 					statementByKoki.setInt("ORDER_ID",
 							Integer.parseInt(stockOrderList.rOrderId));
 				} catch (NumberFormatException e) {
-					message.doWarnig("08","04");
+					message.doWarnig("02","08","08");
 					statementByKoki.toNull("ORDER_ID");
 				}
 			}
@@ -104,7 +103,7 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 				} catch (NumberFormatException e) {
 					//顧客ID不整値
 					e.printStackTrace();
-					message.doWarnig("02","04");
+					message.doWarnig("04","02");
 					statementByKoki.toNull("CUSTOMER_ID");
 				}
 			}
@@ -203,9 +202,9 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 			e.printStackTrace();
 			//message.doErrer();
 		}finally{
-			//フォワード処理
-			constants.forward(request, response);
-		}
 
+		}
+//フォワード処理
+			constants.forward(request, response);
 	}
 }
