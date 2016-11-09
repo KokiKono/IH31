@@ -64,10 +64,12 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 		request.setCharacterEncoding("UTF-8");
 		Constants constants = new Constants(this, request);
 		Message message = new Message(constants);
-		StockOrderList stockOrderList = new StockOrderList();
+		StockOrderList search = new StockOrderList();
 		// 検索条件の取得
-		stockOrderList = (StockOrderList) constants
-				.superDecodeRequest(stockOrderList);
+		search = (StockOrderList) constants
+				.superDecodeRequest(search);
+		//検索条件の格納
+		request.setAttribute("search", search);
 		DBManager dbManager = null;
 		PreparedStatementByKoki statementByKoki=null;
 		try {
@@ -79,14 +81,14 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 			// 入力チェック
 			// --------------------
 			// 受注ID
-			if (stockOrderList.rOrderId == null) {
+			if (search.rOrderId == null) {
 				// 受注ID取得不能
 				statementByKoki.toNull("ORDER_ID");
-			} else if (stockOrderList.rOrderId.isEmpty() == false) {
+			} else if (search.rOrderId.isEmpty() == false) {
 				// 受注ID不正値
 				try {
 					statementByKoki.setInt("ORDER_ID",
-							Integer.parseInt(stockOrderList.rOrderId));
+							Integer.parseInt(search.rOrderId));
 				} catch (NumberFormatException e) {
 					message.doWarnig("02", "08", "08");
 					statementByKoki.toNull("ORDER_ID");
@@ -96,14 +98,14 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 				statementByKoki.toNull("ORDER_ID");
 			}
 			// 顧客ID
-			if (stockOrderList.customerId == null) {
+			if (search.customerId == null) {
 				// 顧客ID取得ID
 				statementByKoki.toNull("CUSTOMER_ID");
-			} else if (stockOrderList.customerId.isEmpty() == false) {
+			} else if (search.customerId.isEmpty() == false) {
 				try {
-					Integer.parseInt(stockOrderList.customerId);
+					Integer.parseInt(search.customerId);
 					statementByKoki.setString("CUSTOMER_ID",
-							stockOrderList.customerId);
+							search.customerId);
 				} catch (NumberFormatException e) {
 					// 顧客ID不整値
 					e.printStackTrace();
@@ -114,20 +116,23 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 				//顧客IDが空白
 				statementByKoki.toNull("CUSTOMER_ID");
 			}
+			/*
+			 * 顧客名はLIKE　％が日本語に対応出来ないので削除
 			if(stockOrderList.customerName==null){
 				//顧客名取得不能
 				statementByKoki.toNull("USER_NAME");
 			}else{
 				statementByKoki.setString("USER_NAME", stockOrderList.customerName+"%");
 			}
+			*/
 			// 出荷日時
-			if (stockOrderList.shipmentYear.isEmpty() == false
-					&& stockOrderList.shipmentMonth.isEmpty() == false
-					&& stockOrderList.shipmentYear.isEmpty() == false) {
+			if (search.shipmentYear.isEmpty() == false
+					&& search.shipmentMonth.isEmpty() == false
+					&& search.shipmentYear.isEmpty() == false) {
 				CalendarByKoki shipmentCalendar = CalendarByKoki.newInstance(
-						stockOrderList.shipmentYear,
-						stockOrderList.shipmentMonth,
-						stockOrderList.shipmentDay);
+						search.shipmentYear,
+						search.shipmentMonth,
+						search.shipmentDay);
 				if (shipmentCalendar == null) {
 					// 出荷日生成エラー
 					message.doWarnig("04", "04");

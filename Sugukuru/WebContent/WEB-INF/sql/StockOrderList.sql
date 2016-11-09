@@ -58,9 +58,6 @@ SELECT
 /*if(DELIVERY_DATE)start*/
  order_table.delivery_date = DELIVERY_DATE
 /*if(DELIVERY_DATE)end*/
- HAVING
- /*if(USER_NAME)start*/
- 	user_name LIKE USER_NAME
- /*if(USER_NAME)end*/
+
 
 ;

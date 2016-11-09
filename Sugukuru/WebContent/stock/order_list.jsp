@@ -17,6 +17,9 @@
 	if(list==null)list=new ArrayList<StockOrderList>();
 	//メッセージを取得
 	Message message=(Message)request.getAttribute("message");
+	//検索条件の取得
+	StockOrderList search=(StockOrderList)request.getAttribute("search");
+	if(search==null)search=new StockOrderList();
 
 
 %>
@@ -187,21 +190,33 @@
 					<div class="search_content">
 						<span><%=constants.getConstant("08").value %></span>
 						<input type="text"
-							name="<%=constants.getConstant("08").pgName %>" size="10" class="input-text form-input">
+							name="<%=constants.getConstant("08").pgName %>" size="10" class="input-text form-input" value="<%=search.rOrderId%>">
 					</div>
 					<div class="member_id search_content">
 						<span class="member_id_text"><%=constants.getConstant("02").value %></span> <input type="text"
-							name="<%=constants.getConstant("02").pgName %>" size="10" class="input-text form-input">
+							name="<%=constants.getConstant("02").pgName %>" size="10" class="input-text form-input" value="<%=search.customerId%>">
 					</div>
-					<div class="member_name search_content">
+					<%-- <div class="member_name search_content">
 						<span class="member_name_text"><%=constants.getConstant("03").value %></span> <input type="text"
 							name="<%=constants.getConstant("03").pgName %>" class="input-text form-input">
-					</div>
+					</div> --%>
 					<div class="create_date search_content">
-						<span><%=constants.getConstant("04").value %></span> <input type="text" size="4" placeholder="2016"
-							name="<%=constants.getConstant("05").pgName %>" class="form-input"><span><%=constants.getConstant("05").value %></span> <input type="text"
+						<span><%=constants.getConstant("04").value %></span> <input type="text" size="4" placeholder="2016" value="<%=search.shipmentYear %>"
+							name="<%=constants.getConstant("05").pgName %>" class="form-input"><span><%=constants.getConstant("05").value %></span> <input type="text" value="<%=search.shipmentMonth %>"
 							size="2" placeholder="2" name="<%=constants.getConstant("06").pgName %>" class="form-input"><span><%=constants.getConstant("06").value %></span>
-						<input type="text" size="2" placeholder="2" name="<%=constants.getConstant("07").pgName %>" class="form-input"><span><%=constants.getConstant("07").value %></span>
+						<input type="text" size="2" placeholder="2" name="<%=constants.getConstant("07").pgName %>" class="form-input" value="<%=search.shipmentDay%>"><span><%=constants.getConstant("07").value %></span>
+					</div>
+					<div class="search_content">
+						<span><%=constants.getConstant("11").value %></span>
+						<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group">
+										<div class="col-xs-3">
+											<%=search.getStateHtml(constants.getConstant("11")) %>
+										</div>
+									</div>
+								</div>
+							</div>
 					</div>
 					<div class="search_submit">
 						<button class="btn btn btn-primary">検索</button>
@@ -228,7 +243,9 @@
 						<td colspan="7">検索結果がありませんでした。</td>
 					</tr>
 				<%}else{ %>
-					<%int count=1; for(StockOrderList recodeList:list){ %>
+					<%int count=1; list:for(StockOrderList recodeList:list){ %>
+					<%System.out.println(recodeList.ifDelFlgShow(search)); %>
+					<% if(recodeList.ifDelFlgShow(search).equals("no") ) continue list;%>
 					<tr>
 						<td><%=count++ %></td>
 						<td><%=recodeList.orderId %></td>
