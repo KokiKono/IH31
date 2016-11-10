@@ -1,7 +1,12 @@
 package local.hal.st32.android.sugukuruandroid;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.ListActivity;
+import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.util.Log;
 import android.widget.SimpleAdapter;
@@ -31,6 +36,9 @@ public class SugukuruActivity extends ListActivity {
     static List<Map<String, String>> pickList;
     private static final String _URL = "";
     private String SQL = "";
+    private String[] mPlanetTitles;
+    private ListView mDrawerList;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,16 @@ public class SugukuruActivity extends ListActivity {
         setContentView(R.layout.activity_sugukuru);
 
         _list = getListView();
+
+//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+//        mPlanetTitles = getResources().getStringArray(R.array.planets_array);
+//        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+
+        // Set the adapter for the list view
+//        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
+//        // Set the list's click listener
+//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
     }
 
@@ -92,7 +110,11 @@ public class SugukuruActivity extends ListActivity {
 
         @Override
         public void onPostExecute(String result) {
-            pickList = pauseJson(result);
+            Replace re = new Replace();
+            re.setRequestId("pickId", "productId", "productName", "rackNumber", "needs", "pickNum", "pickState");
+            re.setResponseId("pickID", "productID", "productName", "rackNumber", "needs", "pickNum", "state");
+            re.setTableName("PickingList");
+            pickList = re.json(result);
             preview();
         }
 
@@ -115,41 +137,22 @@ public class SugukuruActivity extends ListActivity {
             return sb.toString();
         }
 
-        private List<Map<String, String>> pauseJson(String result) {
-            List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-            try {
 
-                Map<String, String> map = new HashMap<String, String>();
-                JSONObject rootJSON = new JSONObject(result);
-                JSONArray arrayJson = rootJSON.getJSONArray("pickingList");
-                for (int i = 0; i < arrayJson.length(); i++) {
-                    JSONObject data = arrayJson.getJSONObject(i);
-                    map.put("pickID", data.getString("pickId"));
-                    map.put("productID", data.getString("productId"));
-                    map.put("productName", data.getString("productName"));
-                    map.put("rackNumber", data.getString("rackNumber"));
-                    map.put("needs", data.getString("needs"));
-                    map.put("pickNum", data.getString("pickNum"));
-                    map.put("state", data.getString("pickState"));
-                    list.add(map);
-                }
-
-
-            } catch (JSONException ex) {
-                Log.e(DEBUG_TAG, "JSON解析失敗", ex);
-            }
-            return list;
-        }
     }
 
-
     public void preview(){
-        String[] from = {"title", "pubDateStr"};
-        int[] to = {android.R.id.text1,android.R.id.text2};
+        String[] from = {"pickID", "productID", "productName", "rackNumber", "needs", "pickNum", "state"};
+        int[] to = {R.id.clShape, R.id.clProductNumber, R.id.clProductName, R.id.clRackNumber, R.id.clNeeds, R.id.clPicking, R.id.clState};
         SimpleAdapter adapter = new SimpleAdapter(SugukuruActivity.this, SugukuruActivity.pickList, R.layout.row, from, to);
         setListAdapter(adapter);
     }
 
+    public void intentOrder(View view){
+        Intent intent = new Intent(SugukuruActivity.this, SugukuruOrderActivity.class);
+        //移動処理
+        startActivity(intent);
+        finish();
+    }
 
-
+    public void intentPicking(View view){}
 }
