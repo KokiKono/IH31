@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">倉庫部</string>
     <string name="tv_title_picking">ピッキングリスト</string>
-    <string name="tv_title_order">出荷状況</string>
+    <string name="tv_title_order">小分状況</string>
     <string name="bt_show">個別表示</string>
     <string name="bt_show2">全体表示</string>
     <string name="ch_incomplete">未完了のみ</string>
