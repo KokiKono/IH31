@@ -38,6 +38,7 @@ public class PikingListServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json;charset=utf-8");
+		
 		String SQL = "SELECT * from category_master";
 //		String SQL = request.getParameter("sql");
 		ArrayList<ArrayList<String>> list;
