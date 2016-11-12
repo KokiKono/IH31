@@ -1,22 +1,13 @@
 package local.hal.st32.android.sugukuruandroid;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.app.ListActivity;
-import android.support.v4.widget.DrawerLayout;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.util.Log;
-import android.widget.SimpleAdapter;
-
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,38 +16,25 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SugukuruActivity extends ListActivity {
+/**
+ * Created by Tester on 2016/11/10.
+ */
+
+public class SugukuruOrderActivity extends ListActivity {
 
     private ListView _list;
     static List<Map<String, String>> pickList;
     private static final String _URL = "";
     private String SQL = "";
-    private String[] mPlanetTitles;
-    private ListView mDrawerList;
-    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sugukuru);
-
+        setContentView(R.layout.activity_sugukuru_order);
         _list = getListView();
-
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-//        mPlanetTitles = getResources().getStringArray(R.array.planets_array);
-//        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        // Set the adapter for the list view
-//        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
-//        // Set the list's click listener
-//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
     }
 
     @Override
@@ -66,7 +44,7 @@ public class SugukuruActivity extends ListActivity {
         access.execute(_URL, SQL);
     }
 
-    private class RestAccess extends AsyncTask<String, Void, String>{
+    private class RestAccess extends AsyncTask<String, Void, String> {
         private static final String DEBUG_TAG = "RestAccess";
         String result;
 
@@ -111,9 +89,9 @@ public class SugukuruActivity extends ListActivity {
         @Override
         public void onPostExecute(String result) {
             Replace re = new Replace();
-            re.setRequestId("pickId", "productId", "productName", "rackNumber", "needs", "pickNum", "pickState");
-            re.setResponseId("pickID", "productID", "productName", "rackNumber", "needs", "pickNum", "state");
-            re.setTableName("PickingList");
+            re.setRequestId("orderId", "customerName", "customerNameKana", "orderDate", "state");
+            re.setResponseId("orderID", "customerName", "customerNameKana", "orderDate", "state");
+            re.setTableName("Order");
             pickList = re.json(result);
             preview();
         }
@@ -137,22 +115,21 @@ public class SugukuruActivity extends ListActivity {
             return sb.toString();
         }
 
-
     }
 
     public void preview(){
-        String[] from = {"pickID", "productID", "productName", "rackNumber", "needs", "pickNum", "state"};
-        int[] to = {R.id.clShape, R.id.clProductNumber, R.id.clProductName, R.id.clRackNumber, R.id.clNeeds, R.id.clPicking, R.id.clState};
-        SimpleAdapter adapter = new SimpleAdapter(SugukuruActivity.this, SugukuruActivity.pickList, R.layout.row, from, to);
+        String[] from = {"orderID", "customerName", "customerNameKana", "orderDate", "state"};
+        int[] to = {R.id.clOrderId, R.id.clCustomerName, R.id.clCustomerNakeKana, R.id.clOrderState};
+        SimpleAdapter adapter = new SimpleAdapter(SugukuruOrderActivity.this, pickList, R.layout.order_row, from, to);
         setListAdapter(adapter);
     }
 
-    public void intentOrder(View view){
-        Intent intent = new Intent(SugukuruActivity.this, SugukuruOrderActivity.class);
+    public void intentOrder(View view){}
+
+    public void intentPicking(View view){
+        Intent intent = new Intent(SugukuruOrderActivity.this, SugukuruActivity.class);
         //移動処理
         startActivity(intent);
         finish();
     }
-
-    public void intentPicking(View view){}
 }
