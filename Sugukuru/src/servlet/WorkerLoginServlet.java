@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.Constants;
 import beans.LoginEmployment;
 import dao.LoginDao.LoginException;
 
@@ -50,7 +51,7 @@ public class WorkerLoginServlet extends HttpServlet {
 		if(session.getAttribute("LoginDao.session")==null){
 			//ログイン処理
 			try {
-				session.setAttribute("LoginDao.session", new LoginEmployment(this,"test","test"));
+				LoginEmployment loginEmployment=new LoginEmployment(this,(String)request.getParameter(Constants.LOGIN_ID),(String)request.getParameter(Constants.PASSWORD));
 			} catch (LoginException e) {
 				// TODO 自動生成された catch ブロック
 			}

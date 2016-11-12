@@ -17,7 +17,7 @@ div.navbar-header{
 /*左メニューの設定*/
 .left-menu{
 	width: 15%;
-	height: 100vh;
+	height: 850px;
 	border: 1px solid #e7e7e7;
 	background-color: #f8f8f8;
 	float: left;
@@ -25,6 +25,7 @@ div.navbar-header{
 	padding-top: 10px;
 }
 div.left-menu .accordion-group{
+
 }
 /* メインの基本設定 */
 .center-content {
@@ -140,3 +141,4 @@ table td{
 .btn-place{
 	width: 100%;
 }
+
