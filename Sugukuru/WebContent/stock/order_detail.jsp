@@ -160,22 +160,7 @@
 	<div class="center-content">
 		<div class="center-content-header">
 			<div class="center-content-title">
-				<h2>受注書一覧</h2>
-				<ul class="text-pager">
-					<li class="text-page texter">1</li>
-					<li class="text-par texter">/</li>
-					<li class="text-all texter">24</li>
-				</ul>
-				<ul class="content-paging">
-					<li class="paging-prev texter"><<</li>
-					<li class="texter"></li>
-					<li class="texter">1</li>
-					<li class="texter">2</li>
-					<li class="texter">3</li>
-					<li class="texter">></li>
-					<li class="paging-next texter">>></li>
-				</ul>
-
+				<h2>受注書詳細</h2>
 			</div>
 			<div class="content-message content">メッセージ
 			<%if(message!=null){ %>
@@ -183,45 +168,7 @@
 			<%} %>
 			</div>
 			<div class="content-search content">
-				検索
-				<form class="search_form"
-					action="<%=constants.getServletUrl() %>"
-					method="post">
-					<div class="search_content">
-						<span><%=constants.getConstant("08").value %></span>
-						<input type="text"
-							name="<%=constants.getConstant("08").pgName %>" size="10" class="input-text form-input" value="<%=search.rOrderId%>">
-					</div>
-					<div class="member_id search_content">
-						<span class="member_id_text"><%=constants.getConstant("02").value %></span> <input type="text"
-							name="<%=constants.getConstant("02").pgName %>" size="10" class="input-text form-input" value="<%=search.customerId%>">
-					</div>
-					<%-- <div class="member_name search_content">
-						<span class="member_name_text"><%=constants.getConstant("03").value %></span> <input type="text"
-							name="<%=constants.getConstant("03").pgName %>" class="input-text form-input">
-					</div> --%>
-					<div class="create_date search_content">
-						<span><%=constants.getConstant("04").value %></span> <input type="text" size="4" placeholder="2016" value="<%=search.shipmentYear %>"
-							name="<%=constants.getConstant("05").pgName %>" class="form-input"><span><%=constants.getConstant("05").value %></span> <input type="text" value="<%=search.shipmentMonth %>"
-							size="2" placeholder="2" name="<%=constants.getConstant("06").pgName %>" class="form-input"><span><%=constants.getConstant("06").value %></span>
-						<input type="text" size="2" placeholder="2" name="<%=constants.getConstant("07").pgName %>" class="form-input" value="<%=search.shipmentDay%>"><span><%=constants.getConstant("07").value %></span>
-					</div>
-					<div class="search_content">
-						<span><%=constants.getConstant("11").value %></span>
-						<div class="row">
-								<div class="col-lg-12">
-									<div class="form-group">
-										<div class="col-xs-3">
-											<%=search.getStateHtml(constants.getConstant("11")) %>
-										</div>
-									</div>
-								</div>
-							</div>
-					</div>
-					<div class="search_submit">
-						<button class="btn btn btn-primary">検索</button>
-					</div>
-				</form>
+
 			</div>
 		</div>
 		<div class="container">

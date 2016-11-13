@@ -240,7 +240,7 @@ CREATE TABLE maker_master
 
 CREATE TABLE messages_master
 (
-	message_id char(3) NOT NULL,
+	message_id char(4) NOT NULL,
 	message text NOT NULL,
 	PRIMARY KEY (message_id),
 	UNIQUE (message_id)
@@ -478,7 +478,7 @@ ALTER TABLE earnings_table
 
 
 ALTER TABLE estimates_table
-	ADD FOREIGN KEY (approvaled_customer_id)
+	ADD FOREIGN KEY (customer_id)
 	REFERENCES customers_distinction_master (customer_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
@@ -486,7 +486,7 @@ ALTER TABLE estimates_table
 
 
 ALTER TABLE estimates_table
-	ADD FOREIGN KEY (customer_id)
+	ADD FOREIGN KEY (approvaled_customer_id)
 	REFERENCES customers_distinction_master (customer_id)
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT

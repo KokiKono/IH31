@@ -36,6 +36,8 @@ SELECT
 ,order_table.delivery_date												/* 納品日 */
 ,order_details_table.product_delivered_flg								/* 納品受領フラグ */
 ,order_details_table.note												/* 備考 */
+,DATE_FORMAT(order_table.order_date,'%Y-%m-%d %k:%i:%s')				/* 受注日時 */
+,DATE_FORMAT(order_table.shipment_date,'%Y-%m-%d %k:%i:%s')				/* 出荷日時 */
  FROM
  order_table
  INNER JOIN order_details_table
@@ -44,17 +46,14 @@ SELECT
 /*if(ORDER_ID)start*/
  order_table.order_id = ORDER_ID
 /*if(ORDER_ID)end*/
-/*if(ORDER_ID_AND)start*/
  AND
-/*if(ORDER_ID_AND)end*/
 /*if(CUSTOMER_ID)start*/
  order_table.customer_id = CUSTOMER_ID
 /*if(CUSTOMER_ID)end*/
-/*if(CUSTOMER_ID_AND)start*/
  AND
-/*if(CUSTOMER_ID_AND)end*/
 /*if(DELIVERY_DATE)start*/
  order_table.delivery_date = DELIVERY_DATE
 /*if(DELIVERY_DATE)end*/
+
 
 ;

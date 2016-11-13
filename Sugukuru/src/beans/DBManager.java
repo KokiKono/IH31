@@ -439,7 +439,6 @@ public class DBManager {
 			if (startIndex == -1 || endIndex == -1) {
 				return -1;
 			}
-			System.out.println("削除");
 			// 削除処理
 			String start = this.sql.substring(0, startIndex);
 			String end = this.sql.substring(endIndex, this.sql.length());
@@ -551,18 +550,40 @@ public class DBManager {
 			if(this.sql.indexOf(";")==-1){
 				this.sql=this.sql+";";
 			}
+			clean();
+			this.sql=this.sql.replaceAll("WHERE\\s*HAVING", HAVING);
 			this.sql=this.sql.replaceAll("WHERE\\s*;", ";");
 			this.sql=this.sql.replaceAll("HAVING\\s*;",";");
 		}
-		private final String[] havings={"OR\\s*WHERE","AND\\s*WHERE","WHERE\\s*AND","WHERE\\s*OR","HAVING\\s*AND","HAVING\\s*OR","WHERE\\s*HAVING","AND\\s*;","OR\\s*;","WHEREHAVING","AND\\s*HAVING","OR\\s*HAVING"};
+
+		private final String[] flushs={"AND\\s*;","OR\\s*;"};
+		private final String[] havings={"HAVING\\s*AND","HAVING\\s*OR","AND\\s*HAVING","OR\\s*HAVING"};
+		private final String[] wheres={"OR\\s*WHERE","AND\\s*WHERE","WHERE\\s*AND","WHERE\\s*OR"};
+		private final String ands="AND\\s*AND";
+		private final String ors="OR\\s*OR";
 		private int clean(){
 			int count=0;
+
+			for(String where:wheres){
+				if(this.sql.indexOf(where)>0){
+					count++;
+				}
+				this.sql=this.sql.replaceAll(where, WHERE);
+			}
 			for(String having:havings){
 				if(this.sql.indexOf(having)>0){
 					count++;
 				}
-				this.sql=this.sql.replaceAll(having, "HAVING");
+				this.sql=this.sql.replaceAll(having, HAVING);
 			}
+			for(String flush:flushs){
+				if(this.sql.indexOf(flush)>0)count++;
+				this.sql=this.sql.replaceAll(flush, "");
+			}
+			if(this.sql.indexOf(ands)>0)count++;
+			this.sql=this.sql.replaceAll(ands, AND);
+			if(this.sql.indexOf(ors)>0)count++;
+			this.sql=this.sql.replaceAll(ors, OR);
 			return count;
 		}
 		/**

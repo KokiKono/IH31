@@ -23,6 +23,7 @@ import beans.DBManager.PreparedStatementByKoki;
 import common.Database;
 
 import dtd.Request;
+import dtd.RequestArray;
 
 
 public class Constants implements Database{
@@ -32,6 +33,9 @@ public class Constants implements Database{
 	 *
 	 */
 	public enum Page{
+		EstimatesNewCreating_jsp("estimates_new_creating.jsp","EstimatesNewCreatingServlet","03"),
+		EstimatesNewCreating_ser("EstimatesNewCreatingServlet","estimates_new_creating.jsp","03"),
+		Common("common","common","00"),
 		OrderList_jsp("order_list.jsp","StockOrderListServlet","02"),
 		OrderList_ser("StockOrderListServlet","stock/order_list.jsp","02"),
 		OrderRecodeList_jsp("order_recode_list.jsp","OrderRecodeListServlet","01"),
@@ -121,8 +125,9 @@ public class Constants implements Database{
 		//requestからPage.fromを取得しindex、toを取得します。
 		this.page=Page.indexOf(getPage(request.getRequestURI()));
 		//DBから値を取得し、コンスタントリストに格納する。
-		getConstants();
+		getConstants(InspectionValue.readSql(this.servlet, "SelectConstants.sql"));
 	}
+
 	/**
 	 * xxxx/xxx/xxで示されたURIの末尾を返します。
 	 * @param uri
@@ -135,10 +140,10 @@ public class Constants implements Database{
 	/**
 	 * DBからコンスタントリストを取得しフィールドに格納します。
 	 */
-	private void getConstants(){
+	private void getConstants(String sql){
 		try{
 			DBManager dbManager=new DBManager(DBName);
-			PreparedStatementByKoki statementByKoki=dbManager.getStatementByKoki(InspectionValue.readSql(this.servlet, "SelectConstants.sql"));
+			PreparedStatementByKoki statementByKoki=dbManager.getStatementByKoki(sql);
 			statementByKoki.setString("CONSTANT_ID", this.page.index+"%");
 			for(ArrayList<String> row:statementByKoki.select()){
 				Constant constant=new Constant();
@@ -219,9 +224,9 @@ public class Constants implements Database{
 	 */
 	private Object settingField(Object object,Field[] fields){
 		for(Field field:fields){
+			//単一取得フィールドの時
 			if(field.getAnnotation(Request.class)!=null){
 				for(Constant constant:this.constantList){
-					System.out.println(constant.pgName+"=="+field.getName());
 					if(constant.pgName.equals(field.getName())){
 						field.setAccessible(true);
 						try {
@@ -230,6 +235,19 @@ public class Constants implements Database{
 								| IllegalAccessException e) {
 							// TODO 自動生成された catch ブロック
 							e.printStackTrace();
+						}
+					}
+				}
+			}
+			//複数取得フィールドの時
+			if(field.getAnnotation(RequestArray.class)!=null){
+				for(Constant constant:this.constantList){
+					if(constant.pgName.equals(field.getName())){
+						field.setAccessible(true);
+						try{
+							field.set(object, (String[])this.request.getParameterValues(constant.pgName));
+						}catch(IllegalAccessException exception){
+							exception.printStackTrace();
 						}
 					}
 				}
@@ -262,6 +280,48 @@ public class Constants implements Database{
 	 */
 	public String getServletUrl() throws UnknownHostException{
 		return "http://"+InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort()+request.getContextPath()+"/"+this.page.to;
+	}
+	public static final String LOGIN_ID="login_id";
+	public static final String PASSWORD="password";
+	/**
+	 * このクラスで定義されているHttpSerletを取得する。
+	 * @auther 浩生
+	 * 2016/11/09
+	 * @return
+	 */
+	public HttpServlet getServlet(){
+		return this.servlet;
+	}
+	/**
+	 * このクラスで定義されているコンスタントリストのサイズを取得します。
+	 * @auther 浩生
+	 * 2016/11/09
+	 * @return
+	 */
+	public int size(){
+		return this.constantList.size();
+	}
+	private Constants(){
+		this.constantList=new ArrayList<Constants.Constant>();
+		this.page=Page.indexOf("common");
+		getConstants("SELECT * FROM constants_master WHERE constant_id LIKE '00%'");
+	}
+	/**
+	 * 各ページで共通するConstantsクラス。
+	 * @auther 浩生
+	 * 2016/11/09
+	 * @param CONSTANTS Constants
+	 */
+	public static final Constants CONSTANTS=new Constants();
+	/**
+	 * 各ページで共通するコンスタントを取得します。
+	 * @auther 浩生
+	 * 2016/11/09
+	 * @param constantID 下２桁
+	 * @return
+	 */
+	public static final Constant getCommon(String constantID){
+		return CONSTANTS.getConstant(constantID);
 	}
 
 }

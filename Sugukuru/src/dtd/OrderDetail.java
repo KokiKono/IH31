@@ -10,9 +10,11 @@
  * *************************/
 package dtd;
 
-import beans.CalendarByKoki;
+import common.Common;
 
-public class OrderDetail {
+
+
+public class OrderDetail implements Common{
 	/**
 	 * @auther Tester
 	 * 2016/11/02
@@ -96,13 +98,13 @@ public class OrderDetail {
 	 */
 	public String stepStr(){
 		switch(this.step){
-			case 0:
+			case STEP0:
 				return "未作業";
-			case 1:
+			case STEP1:
 				return "ピッキング作業";
-			case 2:
+			case STEP2:
 				return "検品済み";
-			case 3:
+			case STEP3:
 				return "小分け済み";
 			default:
 				return "";
@@ -114,7 +116,7 @@ public class OrderDetail {
 	 * 2016/11/08
 	 * @param deliveredDate CalendarByKoki
 	 */
-	public CalendarByKoki deliveredDate;
+	//public CalendarByKoki deliveredDate;
 
 	/**
 	 * この受注詳細の進捗状態を％データで取得する。
@@ -123,7 +125,6 @@ public class OrderDetail {
 	 * @return
 	 */
 	public int stepPar(){
-		if(this.deliveredDate!=null)return 100;
 		return this.step*30;
 	}
 
