@@ -18,9 +18,9 @@ import java.util.Map;
 
 public class Replace {
 
-    static ArrayList<String> requestId = new ArrayList<String>();
+    private ArrayList<String> requestId = new ArrayList<String>();
 
-    static ArrayList<String> responseId = new ArrayList<String>();
+    private ArrayList<String> responseId = new ArrayList<String>();
 
     static String tableName;
 
@@ -50,8 +50,8 @@ public class Replace {
                 map = new HashMap<String, String>();
 
                 for(int x = 0; x < requestId.size(); x++) {
-                    map.put(responseId.get(x), data.getString(requestId.get(x)));
-                    Log.e("map", responseId.get(x)+":"+data.getString(requestId.get(x)));
+                    map.put(requestId.get(x), data.getString(requestId.get(x)));
+                    Log.e("map", requestId.get(x)+":"+data.getString(requestId.get(x)));
                 }
                 list.add(map);
             }
