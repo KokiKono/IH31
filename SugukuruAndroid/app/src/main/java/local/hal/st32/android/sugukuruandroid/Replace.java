@@ -18,24 +18,20 @@ import java.util.Map;
 
 public class Replace {
 
-    private static ArrayList<String> requestId;
+    static ArrayList<String> requestId = new ArrayList<String>();
 
-    private static ArrayList<String> responseId;
+    static ArrayList<String> responseId = new ArrayList<String>();
 
-    private static String tableName;
+    static String tableName;
 
     private static final String DEBUG_TAG = "replaseJson";
 
-    public void setRequestId(String... id){
-        for(String date:id){
-            requestId.add(date);
-        }
+    public void setRequestId(String date){
+        requestId.add(date);
     }
 
-    public void setResponseId(String... id){
-        for(String date: id){
-            responseId.add(date);
-        }
+    public void setResponseId(String date){
+        responseId.add(date);
     }
 
     public void setTableName(String name){
@@ -48,16 +44,17 @@ public class Replace {
 
             Map<String, String> map = new HashMap<String, String>();
             JSONObject rootJSON = new JSONObject(result);
-            JSONArray arrayJson = rootJSON.getJSONArray(tableName);
+            JSONArray arrayJson = rootJSON.getJSONArray("date");
             for (int i = 0; i < arrayJson.length(); i++) {
                 JSONObject data = arrayJson.getJSONObject(i);
+                map = new HashMap<String, String>();
 
                 for(int x = 0; x < requestId.size(); x++) {
                     map.put(responseId.get(x), data.getString(requestId.get(x)));
+                    Log.e("map", responseId.get(x)+":"+data.getString(requestId.get(x)));
                 }
-
+                list.add(map);
             }
-            list.add(map);
         } catch (JSONException ex) {
             Log.e(DEBUG_TAG, "JSON解析失敗", ex);
         }
