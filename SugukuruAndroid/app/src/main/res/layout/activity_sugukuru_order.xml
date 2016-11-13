@@ -68,26 +68,7 @@
                 android:text="全9999件"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/maximumNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="999"
-                android:textSize="15sp"
-                android:layout_marginLeft="15dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="/"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/minimumNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="999"
-                android:textSize="15sp" />
         </LinearLayout>
 
         <Spinner
