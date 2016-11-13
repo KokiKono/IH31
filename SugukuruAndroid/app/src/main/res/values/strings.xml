@@ -2,6 +2,7 @@
     <string name="app_name">倉庫部</string>
     <string name="tv_title_picking">ピッキングリスト</string>
     <string name="tv_title_order">小分状況</string>
+    <string name="tv_title_order_detail">小分詳細</string>
     <string name="bt_show">個別表示</string>
     <string name="bt_show2">全体表示</string>
     <string name="ch_incomplete">未完了のみ</string>
@@ -37,4 +38,8 @@
     <string name="lv_completed">完了状態</string>
     <string name="com_yes">完了</string>
     <string name="com_no">未完了</string>
+    
+    <!--出荷詳細リスト-->
+    <string name="lv_amount">数量</string>
+    <string name="lv_step">作業ステップ</string>
 </resources>
