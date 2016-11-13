@@ -42,17 +42,19 @@ public class PikingListServlet extends HttpServlet {
 		response.setContentType("application/json;charset=utf-8");
 		
 		String SQL = "";
-//		String SQL = request.getParameter("sql");
+		String value = "";
+		value = request.getParameter("value");
 		String method = "order";//request.getParameter("method");
 		ArrayList<ArrayList<String>> list;
 		PickingList pick = new PickingList();
 		Subdivision sub = new Subdivision();
-		ArrayList<PickingList> returnPick = new ArrayList<PickingList>();
-		ArrayList<Subdivision> returnSub = new ArrayList<Subdivision>();
 		HashMap<String, ArrayList<Subdivision>> date = new HashMap<String, ArrayList<Subdivision>>();
+		
+		
 		switch(method){
 			case "picking":
 				SQL = "";
+				ArrayList<PickingList> returnPick = new ArrayList<PickingList>();
 				try{
 					
 					DBManager db = new DBManager(Database.DBName);
@@ -72,6 +74,7 @@ public class PikingListServlet extends HttpServlet {
 				break;
 			case "order":
 				SQL = "select order_id,costomer_name,order_date FROM order_table";
+				ArrayList<Subdivision> returnSub = new ArrayList<Subdivision>();
 				try{
 					DBManager db = new DBManager(Database.DBName);
 					list = db.runSelect(SQL);
@@ -95,6 +98,33 @@ public class PikingListServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
+			case "orderDetail":
+				SQL = "select num, product_id, product_name, amount, step from order_details_table where order_id = "+value+"";
+				
+				try{
+					DBManager db = new DBManager(Database.DBName);
+					list = db.runSelect(SQL);
+					for(ArrayList<String> row:list){
+						sub = new Subdivision();
+						sub.orderId = row.get(0);
+						System.out.println(row.get(0));
+						sub.customreName = row.get(1);
+						System.out.println(row.get(1));
+//						sub.customerNameKana = row.get(2);
+//						System.out.println(row.get(2));
+						sub.orderDate = row.get(2);
+						System.out.println(row.get(2));
+//						sub.orderState = 1;
+//						System.out.println(row.get(4));
+						returnSub.add(sub);
+						
+					}
+					date.put("date", returnSub);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				break;
+				
 		}
 		
 		
@@ -103,7 +133,6 @@ public class PikingListServlet extends HttpServlet {
 		out.println(json.encode(date));
 		out.flush();
 		out.close();
-		
 	}
 
 	/**
