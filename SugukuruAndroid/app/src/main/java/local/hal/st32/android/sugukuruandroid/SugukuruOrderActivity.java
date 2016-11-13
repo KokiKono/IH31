@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,6 +17,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +30,7 @@ public class SugukuruOrderActivity extends ListActivity {
 
     private ListView _list;
     static List<Map<String, String>> pickList;
-    private static final String _URL = "";
+    private static final String _URL = net.ipAddress;
     private String SQL = "";
 
     @Override
@@ -35,6 +38,10 @@ public class SugukuruOrderActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sugukuru_order);
         _list = getListView();
+        TextView realTime = (TextView) findViewById(R.id.datetime);
+        Calendar ca = new GregorianCalendar();
+        String strRealTime = ca.get(Calendar.YEAR) + "/" + (ca.get(Calendar.MONTH)+1) + "/" + ca.get(Calendar.DAY_OF_MONTH) + "　" + ca.get(Calendar.HOUR_OF_DAY) + "時" +ca.get(Calendar.MINUTE)+"分現在";
+        realTime.setText(strRealTime);
     }
 
     @Override
@@ -60,7 +67,7 @@ public class SugukuruOrderActivity extends ListActivity {
             HttpURLConnection con = null;
             InputStream is = null;
             try {
-                URL url = new URL(urlStr + "?sql=" + strSQL);
+                URL url = new URL(urlStr);
                 con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
                 con.connect();
@@ -89,10 +96,16 @@ public class SugukuruOrderActivity extends ListActivity {
         @Override
         public void onPostExecute(String result) {
             Replace re = new Replace();
-            re.setRequestId("orderId", "customerName", "customerNameKana", "orderDate", "state");
-            re.setResponseId("orderID", "customerName", "customerNameKana", "orderDate", "state");
+
+            re.setRequestId("orderId");
+            re.setRequestId("customreName");
+            re.setRequestId("orderDate");
+            re.setResponseId("orderID");
+            re.setResponseId("customerName");
+            re.setResponseId("orderDate");
             re.setTableName("Order");
             pickList = re.json(result);
+            Log.e("", ""+pickList);
             preview();
         }
 
@@ -119,9 +132,15 @@ public class SugukuruOrderActivity extends ListActivity {
 
     public void preview(){
         String[] from = {"orderID", "customerName", "customerNameKana", "orderDate", "state"};
-        int[] to = {R.id.clOrderId, R.id.clCustomerName, R.id.clCustomerNameKana, R.id.clOrderState};
+        int[] to = {R.id.clOrderId, R.id.clCustomerName, R.id.clCustomerNameKana, R.id.clOrderDate, R.id.clOrderState};
         SimpleAdapter adapter = new SimpleAdapter(SugukuruOrderActivity.this, pickList, R.layout.order_row, from, to);
         setListAdapter(adapter);
+        numberOfCase();
+    }
+
+    public void numberOfCase(){
+        TextView num = (TextView)findViewById(R.id.allNumber);
+        num.setText("全"+(pickList.size())+"件");
     }
 
     public void intentOrder(View view){}
@@ -129,6 +148,17 @@ public class SugukuruOrderActivity extends ListActivity {
     public void intentPicking(View view){
         Intent intent = new Intent(SugukuruOrderActivity.this, SugukuruActivity.class);
         //移動処理
+        startActivity(intent);
+        finish();
+    }
+
+    public void onListItemClick(ListView listView, View view, int position, long id){
+        super.onListItemClick(listView, view, position, id);
+
+        Map<String, String> item = pickList.get(position);
+        String orderId = item.get("orderID");
+        Intent intent = new Intent(SugukuruOrderActivity.this, SugukuruOrderDetailActivity.class);
+        intent.putExtra("id", orderId);
         startActivity(intent);
         finish();
     }
