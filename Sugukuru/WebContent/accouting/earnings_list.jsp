@@ -162,7 +162,7 @@
 	<div class="center-content">
 		<div class="center-content-header">
 			<div class="center-content-title">
-				<h2>受注書一覧</h2>
+				<h2>売上一覧</h2>
 				<ul class="text-pager">
 					<li class="text-page texter">1</li>
 					<li class="text-par texter">/</li>

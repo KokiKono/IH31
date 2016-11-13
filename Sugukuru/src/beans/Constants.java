@@ -33,6 +33,8 @@ public class Constants implements Database{
 	 *
 	 */
 	public enum Page{
+		EarningsList_ser("EarningsListServlet","earnings_list.jsp","04"),
+		EarningsList_jsp("earnings_list.jsp","EarningsListServlet","04"),
 		EstimatesNewCreating_jsp("estimates_new_creating.jsp","EstimatesNewCreatingServlet","03"),
 		EstimatesNewCreating_ser("EstimatesNewCreatingServlet","estimates_new_creating.jsp","03"),
 		Common("common","common","00"),
