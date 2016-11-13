@@ -119,7 +119,7 @@ public class SugukuruOrderActivity extends ListActivity {
 
     public void preview(){
         String[] from = {"orderID", "customerName", "customerNameKana", "orderDate", "state"};
-        int[] to = {R.id.clOrderId, R.id.clCustomerName, R.id.clCustomerNakeKana, R.id.clOrderState};
+        int[] to = {R.id.clOrderId, R.id.clCustomerName, R.id.clCustomerNameKana, R.id.clOrderState};
         SimpleAdapter adapter = new SimpleAdapter(SugukuruOrderActivity.this, pickList, R.layout.order_row, from, to);
         setListAdapter(adapter);
     }
