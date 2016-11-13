@@ -30,11 +30,28 @@ public class SubdivisionDetail {
 	 * 2016/11/14
 	 * @param Amount String　商品数量
 	 */
-	public String Amount;
+	public String amount;
 	/**
 	 * @auther Tester
 	 * 2016/11/14
 	 * @param step String　作業ステップ
 	 */
 	public String step;
+	
+	public void setStep(String value){
+		switch(value){
+			case "0":
+				step = "未作業";
+				break;
+			case "1":
+				step = "ピッキング済";
+				break;
+			case "2":
+				step = "検品済";
+				break;
+			case "3":
+				step = "小分済";
+				break;
+		}
+	}
 }
