@@ -13,6 +13,7 @@ import android.widget.SimpleAdapter;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +27,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,9 +39,6 @@ public class SugukuruActivity extends ListActivity {
     static List<Map<String, String>> pickList;
     private static final String _URL = "";
     private String SQL = "";
-    private String[] mPlanetTitles;
-    private ListView mDrawerList;
-    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,24 +46,17 @@ public class SugukuruActivity extends ListActivity {
         setContentView(R.layout.activity_sugukuru);
 
         _list = getListView();
-
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-//        mPlanetTitles = getResources().getStringArray(R.array.planets_array);
-//        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        // Set the adapter for the list view
-//        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mPlanetTitles));
-//        // Set the list's click listener
-//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
+        TextView realTime = (TextView) findViewById(R.id.datetime);
+        Calendar ca = new GregorianCalendar();
+        String strRealTime = ca.get(Calendar.YEAR) + "/" + (ca.get(Calendar.MONTH)+1) + "/" + ca.get(Calendar.DAY_OF_MONTH) + "　" + ca.get(Calendar.HOUR_OF_DAY) + "時" +ca.get(Calendar.MINUTE)+"分現在";
+        realTime.setText(strRealTime);
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        RestAccess access = new RestAccess(_list);
-        access.execute(_URL, SQL);
+//        RestAccess access = new RestAccess(_list);
+//        access.execute(_URL, SQL);
     }
 
     private class RestAccess extends AsyncTask<String, Void, String>{
@@ -111,8 +104,8 @@ public class SugukuruActivity extends ListActivity {
         @Override
         public void onPostExecute(String result) {
             Replace re = new Replace();
-            re.setRequestId("pickId", "productId", "productName", "rackNumber", "needs", "pickNum", "pickState");
-            re.setResponseId("pickID", "productID", "productName", "rackNumber", "needs", "pickNum", "state");
+//            re.setRequestId("pickId", "productId", "productName", "rackNumber", "needs", "pickNum", "pickState");
+//            re.setResponseId("pickID", "productID", "productName", "rackNumber", "needs", "pickNum", "state");
             re.setTableName("PickingList");
             pickList = re.json(result);
             preview();
