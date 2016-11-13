@@ -6,15 +6,13 @@
  * *************************/
 package dtd;
 
-import beans.CalendarByKoki;
-
 public class Subdivision {
 	/**
 	 * @auther Tester
 	 * 2016/11/10
 	 * @param orderId int 受注ID
 	 */
-	public int orderId;
+	public String orderId;
 	/**
 	 * @auther Tester
 	 * 2016/11/10
@@ -32,11 +30,11 @@ public class Subdivision {
 	 * 2016/11/10
 	 * @param orderDate CalendarByKoki 受注日時
 	 */
-	public CalendarByKoki orderDate;
+	public String orderDate;
 	/**
 	 * @auther Tester
 	 * 2016/11/10
 	 * @param orderState String 完了状態
 	 */
-	public String orderState;
+	public int orderState;
 }
