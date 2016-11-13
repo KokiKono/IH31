@@ -70,4 +70,7 @@ public class Order {
 	 * @param shipmentDate CalendarByKoki
 	 */
 	public CalendarByKoki shipmentDate;
+	{
+		customerId=new String();
+	}
 }

@@ -1,9 +1,9 @@
+<%@page import="beans.InspectionValue"%>
+<%@page import="dtd.Earnings"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@page import="beans.Message"%>
 <%@page import="dtd.StockOrderList"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dtd.OrderRecodeList"%>
 <%@page import="beans.Constants.Page"%>
@@ -15,15 +15,13 @@
 	//コンスタント作成。
 	Constants constants=new Constants(this,request);
 	//検索結果の取得
-	ArrayList<StockOrderList> list=(ArrayList<StockOrderList>)request.getAttribute("stockOrderList");
-	if(list==null)list=new ArrayList<StockOrderList>();
+	ArrayList<Earnings> list=(ArrayList<Earnings>)request.getAttribute("earningsList");
+	if(list==null)list=new ArrayList<Earnings>();
 	//メッセージを取得
 	Message message=(Message)request.getAttribute("message");
 	//検索条件の取得
 	StockOrderList search=(StockOrderList)request.getAttribute("search");
 	if(search==null)search=new StockOrderList();
-
-
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -31,20 +29,25 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><%=constants.getConstant("01").value %></title>
+<title><%=constants.getConstant("01").value%></title>
 <!-- BootstrapのCSS読み込み -->
-<link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/bootstrap.min.css"
+	rel="stylesheet">
 <!-- jQuery読み込み -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- BootstrapのJS読み込み -->
-<script src="<%=request.getContextPath() %>/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
 <!-- テンプレート用CSSの読み込み -->
-<link href="<%=request.getContextPath() %>/css/template.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/template.css"
+	rel="stylesheet">
 <!-- サブメニュー用CSSの読み込み -->
-<link href="<%=request.getContextPath() %>/css/dropdowns-enhancement.css" rel="stylesheet">
-<script src="<%=request.getContextPath() %>/js/dropdowns-enhancement.js"></script>
-<link href="<%=request.getContextPath() %>/stock/css/index.css" rel="stylesheet">
+<link
+	href="<%=request.getContextPath()%>/css/dropdowns-enhancement.css"
+	rel="stylesheet">
+<script src="<%=request.getContextPath()%>/js/dropdowns-enhancement.js"></script>
+<link href="<%=request.getContextPath()%>/stock/css/index.css"
+	rel="stylesheet">
 <script>
 	$(document).ready(function() {
 		$(".dropdown-menu").click(function(e) {
@@ -71,7 +74,7 @@
 				</button>
 
 				<!-- タイトルなどのテキスト -->
-				<a class="navbar-brand" href="#"><%=Constants.getCommon("02").value %></a>
+				<a class="navbar-brand" href="#"><%=Constants.getCommon("02").value%></a>
 			</div>
 
 			<!-- グローバルナビの中身 -->
@@ -179,30 +182,42 @@
 				</ul>
 
 			</div>
-			<div class="content-message content">メッセージ
-			<%if(message!=null){ %>
-			<%=message.getMessageArrayToStr("<span style=\"color:red\">", "</span>") %>
-			<%} %>
+			<div class="content-message content">
+				メッセージ
+				<%
+				if (message != null) {
+			%>
+				<%=message.getMessageArrayToStr(
+						"<span style=\"color:red\">", "</span>")%>
+				<%
+					}
+				%>
 			</div>
 			<div class="content-search content">
 				検索
-				<form class="search_form"
-					action="<%=constants.getServletUrl() %>"
+				<form class="search_form" action="<%=constants.getServletUrl()%>"
 					method="post">
 					<div class="search_content">
-						<span><%=constants.getConstant("08").value %></span>
-						<input type="text"
-							name="<%=constants.getConstant("08").pgName %>" size="10" class="input-text form-input" value="<%=search.rOrderId%>">
+						<span><%=constants.getConstant("08").value%></span> <input
+							type="text" name="<%=constants.getConstant("08").pgName%>"
+							size="10" class="input-text form-input"
+							value="<%=search.rOrderId%>">
 					</div>
 					<div class="member_id search_content">
-						<span class="member_id_text"><%=constants.getConstant("02").value %></span> <input type="text"
-							name="<%=constants.getConstant("02").pgName %>" size="10" class="input-text form-input" value="<%=search.customerId%>">
+						<span class="member_id_text"><%=constants.getConstant("02").value%></span>
+						<input type="text" name="<%=constants.getConstant("02").pgName%>"
+							size="10" class="input-text form-input"
+							value="<%=search.customerId%>">
 					</div>
 					<div class="create_date search_content">
-						<span><%=constants.getConstant("04").value %></span> <input type="text" size="4" placeholder="2016" value="<%=search.shipmentYear %>"
-							name="<%=constants.getConstant("05").pgName %>" class="form-input"><span><%=constants.getConstant("05").value %></span> <input type="text" value="<%=search.shipmentMonth %>"
-							size="2" placeholder="2" name="<%=constants.getConstant("06").pgName %>" class="form-input"><span><%=constants.getConstant("06").value %></span>
-						<input type="text" size="2" placeholder="2" name="<%=constants.getConstant("07").pgName %>" class="form-input" value="<%=search.shipmentDay%>"><span><%=constants.getConstant("07").value %></span>
+						<span><%=constants.getConstant("04").value%></span> <input
+							type="text" size="4" placeholder="2016"
+							value="<%=search.shipmentYear%>"
+							name="<%=constants.getConstant("05").pgName%>"
+							class="form-input"><span><%=constants.getConstant("05").value%></span>
+						<input type="text" value="<%=search.shipmentMonth%>" size="2"
+							placeholder="2" name="<%=constants.getConstant("06").pgName%>"
+							class="form-input"><span><%=constants.getConstant("06").value%></span>
 					</div>
 
 					<div class="search_submit">
@@ -211,38 +226,49 @@
 				</form>
 			</div>
 		</div>
-		<div class="container">
+		<div class="container div-scroll">
 			<table class="table table-striped table-bordered">
 				<thead>
 					<tr>
 						<th>#</th>
-						<th><%=constants.getConstant("08").value %></th>
-						<th><%=constants.getConstant("02").value %></th>
-						<th><%=constants.getConstant("03").value %></th>
-						<th><%=constants.getConstant("09").value %></th>
-						<th><%=constants.getConstant("10").value %></th>
-						<th><%=constants.getConstant("11").value %></th>
+						<th><%=constants.getConstant("08").value%></th>
+						<th><%=constants.getConstant("02").value%></th>
+						<th><%=constants.getConstant("03").value%></th>
+						<th><%=constants.getConstant("09").value%></th>
+						<th><%=constants.getConstant("10").value%></th>
+						<th><%=constants.getConstant("11").value%></th>
+						<th><%=constants.getConstant("12").value%></th>
 					</tr>
 				</thead>
 				<tbody>
-				<%if(list.size()==0){ %>
+					<%
+						if (list.size() == 0) {
+					%>
 					<tr>
-						<td colspan="7">検索結果がありませんでした。</td>
+						<td colspan="8">検索結果がありませんでした。</td>
 					</tr>
-				<%}else{ %>
-					<%int count=1; list:for(StockOrderList recodeList:list){ %>
-					<%System.out.println(recodeList.ifDelFlgShow(search)); %>
-					<% if(recodeList.ifDelFlgShow(search).equals("no") ) continue list;%>
+					<%
+						} else {
+					%>
+					<%
+						int count = 1;
+							list: for (Earnings recodeList : list) {
+					%>
 					<tr>
-						<td><%=count++ %></td>
-						<td><%=recodeList.orderId %></td>
-						<td><%=recodeList.customerId %></td>
-						<td><%=recodeList.customerName %></td>
-						<td><%=recodeList.getDeliveryDate() %></td>
-						<td><%=recodeList.stepParsent() %></td>
-						<td><%=recodeList.getState() %></td>
+						<td><%=count++%></td>
+						<td><%=recodeList.orderId%></td>
+						<td><%=recodeList.customerId%></td>
+						<td><%=recodeList.customerName%></td>
+						<td><%=recodeList.shipmentDate.outOfJP()%></td>
+						<td><%=recodeList.employmentId%></td>
+						<td><%=InspectionValue
+							.doLocaleJP(recodeList.noTaxTotalFee)%></td>
+						<td><%=InspectionValue.doLocaleJP(recodeList.taxFee)%></td>
 					</tr>
-					<%}} %>
+					<%
+						}
+						}
+					%>
 				</tbody>
 			</table>
 		</div>

@@ -33,6 +33,8 @@ public class Constants implements Database{
 	 *
 	 */
 	public enum Page{
+		DoClaim_ser("DoClaimServlet","do_claim.jsp","05"),
+		DoClaim_jsp("do_claim.jsp","DoClaimServlet","05"),
 		EarningsList_ser("EarningsListServlet","earnings_list.jsp","04"),
 		EarningsList_jsp("earnings_list.jsp","EarningsListServlet","04"),
 		EstimatesNewCreating_jsp("estimates_new_creating.jsp","EstimatesNewCreatingServlet","03"),
@@ -325,5 +327,55 @@ public class Constants implements Database{
 	public static final Constant getCommon(String constantID){
 		return CONSTANTS.getConstant(constantID);
 	}
+	/**
+	 * フォーム内のモードを列挙する。
+	 * @author 浩生
+	 *
+	 */
+	public enum Action{
+		List
+		,Search
+		,Insert
+		,Update;
+		public static final Action indexOf(String name){
+			for(Action action:Action.values()){
+				if(name.equals(action.name())){
+					return action;
+				}
+			}
+			return null;
+		}
+	}
+	/**
+	 * このフォームのアクション
+	 * <input type="hidden value=Action/>で決定できます。
+	 * これはフォームごとに実行したい処理が異なる場合は
+	 * Pageを登録しないといけませんが、同一ページで
+	 * 複数の処理分岐がある場合、
+	 * 例えば、検索と登録処理を同じページで行いたい場合に所謂、
+	 * モードを分けたい時と一致します。
+	 * サーブレット内でモードは下記のgetMode()でActionを取得できます。
+	 * なお、このメソッドは一つのフォームの中で一度のみ使う事をが出来ます。
+	 * @auther 浩生
+	 * 2016/11/13
+	 * @param action
+	 * @return
+	 */
+	public static final String getAction(Action action){
+		return "<input type=\"hidden\" value=\""+action.name()+"\" name=\"constantMode\"/>";
+	}
+	/**
+	 * リクエストで送られてきたモードを取得します。
+	 * @auther 浩生
+	 * 2016/11/13
+	 * @return
+	 */
+	public Action getMode(){
+		String modeName=(String)this.request.getParameter("constantMode");
+		return Action.indexOf(modeName);
+	}
+
+
+
 
 }
