@@ -29,9 +29,10 @@ import java.util.Map;
 public class SugukuruOrderActivity extends ListActivity {
 
     private ListView _list;
-    static List<Map<String, String>> pickList;
+    private List<Map<String, String>> pickList;
     private static final String _URL = net.ipAddress;
     private String SQL = "";
+    private static final String method = "order";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class SugukuruOrderActivity extends ListActivity {
         ListView _list;
         public RestAccess(ListView list) {
             _list = list;
+            result = "";
         }
 
         @Override
@@ -67,7 +69,7 @@ public class SugukuruOrderActivity extends ListActivity {
             HttpURLConnection con = null;
             InputStream is = null;
             try {
-                URL url = new URL(urlStr);
+                URL url = new URL(urlStr+"?method=" + method);
                 con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
                 con.connect();
@@ -89,6 +91,7 @@ public class SugukuruOrderActivity extends ListActivity {
                     }
                 }
             }
+            con.disconnect();
             return result;
 
         }
@@ -100,10 +103,6 @@ public class SugukuruOrderActivity extends ListActivity {
             re.setRequestId("orderId");
             re.setRequestId("customreName");
             re.setRequestId("orderDate");
-            re.setResponseId("orderID");
-            re.setResponseId("customerName");
-            re.setResponseId("orderDate");
-            re.setTableName("Order");
             pickList = re.json(result);
             Log.e("", ""+pickList);
             preview();
@@ -131,7 +130,7 @@ public class SugukuruOrderActivity extends ListActivity {
     }
 
     public void preview(){
-        String[] from = {"orderID", "customerName", "customerNameKana", "orderDate", "state"};
+        String[] from = {"orderId", "customreName", "customerNameKana", "orderDate", "state"};
         int[] to = {R.id.clOrderId, R.id.clCustomerName, R.id.clCustomerNameKana, R.id.clOrderDate, R.id.clOrderState};
         SimpleAdapter adapter = new SimpleAdapter(SugukuruOrderActivity.this, pickList, R.layout.order_row, from, to);
         setListAdapter(adapter);
@@ -156,7 +155,7 @@ public class SugukuruOrderActivity extends ListActivity {
         super.onListItemClick(listView, view, position, id);
 
         Map<String, String> item = pickList.get(position);
-        String orderId = item.get("orderID");
+        String orderId = item.get("orderId");
         Intent intent = new Intent(SugukuruOrderActivity.this, SugukuruOrderDetailActivity.class);
         intent.putExtra("id", orderId);
         startActivity(intent);
