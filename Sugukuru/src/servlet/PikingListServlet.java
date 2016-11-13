@@ -15,6 +15,7 @@ import beans.DBManager;
 import common.Database;
 import dtd.PickingList;
 import dtd.Subdivision;
+import dtd.SubdivisionDetail;
 import net.arnx.jsonic.JSON;;
 
 /**
@@ -44,17 +45,18 @@ public class PikingListServlet extends HttpServlet {
 		String SQL = "";
 		String value = "";
 		value = request.getParameter("value");
-		String method = "order";//request.getParameter("method");
+		String method = request.getParameter("method");
 		ArrayList<ArrayList<String>> list;
-		PickingList pick = new PickingList();
-		Subdivision sub = new Subdivision();
 		HashMap<String, ArrayList<Subdivision>> date = new HashMap<String, ArrayList<Subdivision>>();
-		
+		HashMap<String, ArrayList<SubdivisionDetail>> date2 = new HashMap<String, ArrayList<SubdivisionDetail>>();
+		JSON json = new JSON();
+		PrintWriter out=response.getWriter();
 		
 		switch(method){
 			case "picking":
 				SQL = "";
 				ArrayList<PickingList> returnPick = new ArrayList<PickingList>();
+				PickingList pick = new PickingList();
 				try{
 					
 					DBManager db = new DBManager(Database.DBName);
@@ -75,6 +77,8 @@ public class PikingListServlet extends HttpServlet {
 			case "order":
 				SQL = "select order_id,costomer_name,order_date FROM order_table";
 				ArrayList<Subdivision> returnSub = new ArrayList<Subdivision>();
+				Subdivision sub = new Subdivision();
+				date = new HashMap<String, ArrayList<Subdivision>>();
 				try{
 					DBManager db = new DBManager(Database.DBName);
 					list = db.runSelect(SQL);
@@ -97,40 +101,35 @@ public class PikingListServlet extends HttpServlet {
 				}catch(Exception e){
 					e.printStackTrace();
 				}
+				out.println(json.encode(date));
 				break;
 			case "orderDetail":
-				SQL = "select num, product_id, product_name, amount, step from order_details_table where order_id = "+value+"";
-				
+				SQL = "select num, puroduct_id, puroduct_name, amount, step from order_details_table where order_id = "+value+"";
+				ArrayList<SubdivisionDetail> returnSubDeti = new ArrayList<SubdivisionDetail>();
+				SubdivisionDetail subde = new SubdivisionDetail();
 				try{
 					DBManager db = new DBManager(Database.DBName);
 					list = db.runSelect(SQL);
 					for(ArrayList<String> row:list){
-						sub = new Subdivision();
-						sub.orderId = row.get(0);
-						System.out.println(row.get(0));
-						sub.customreName = row.get(1);
-						System.out.println(row.get(1));
-//						sub.customerNameKana = row.get(2);
-//						System.out.println(row.get(2));
-						sub.orderDate = row.get(2);
-						System.out.println(row.get(2));
-//						sub.orderState = 1;
-//						System.out.println(row.get(4));
-						returnSub.add(sub);
+						subde = new SubdivisionDetail();
+						subde.num = row.get(0);
+						subde.productNumber = row.get(1);
+						subde.productName = row.get(2);
+						subde.amount = row.get(3);
+						subde.setStep(row.get(4));
+						returnSubDeti.add(subde);
 						
 					}
-					date.put("date", returnSub);
+					date2.put("date", returnSubDeti);
 				}catch(Exception e){
 					e.printStackTrace();
 				}
+				out.println(json.encode(date2));
 				break;
-				
+
 		}
 		
 		
-		JSON json = new JSON();
-		PrintWriter out=response.getWriter();
-		out.println(json.encode(date));
 		out.flush();
 		out.close();
 	}
