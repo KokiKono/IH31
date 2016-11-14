@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -49,13 +50,11 @@ public class SugukuruOrderDetailActivity extends ListActivity {
 
         _list = getListView();
 
-        spinner = (Spinner)findViewById(R.id.spRefinement);
-        spinner.setOnItemSelectedListener(new SpinnerSelectedListener());
-
         TextView realTime = (TextView) findViewById(R.id.datetime);
         Calendar ca = new GregorianCalendar();
         String strRealTime = ca.get(Calendar.YEAR) + "/" + (ca.get(Calendar.MONTH)+1) + "/" + ca.get(Calendar.DAY_OF_MONTH) + "　" + ca.get(Calendar.HOUR_OF_DAY) + "時" +ca.get(Calendar.MINUTE)+"分現在";
         realTime.setText(strRealTime);
+        setSpinner();
     }
 
     @Override
@@ -163,19 +162,39 @@ public class SugukuruOrderDetailActivity extends ListActivity {
         finish();
     }
 
+    /**
+     * スピナーに値を入れるメソッド
+     */
+    private void setSpinner(){
+        String[] labels = getResources().getStringArray(R.array.arr_order);
+        spinner = (Spinner)findViewById(R.id.spRefinement);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new SpinnerSelectedListener());
+        spinner.setFocusable(false);
+    }
+
+    /**
+     * スピナーを押された時のリスナーメソッド
+     */
     public class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener{
         public void onItemSelected(AdapterView parent, View view, int position, long id) {
+            if (spinner.isFocusable() == false) {
+                spinner.setFocusable(true);
+                return;
+            }
             // Spinner を取得
-            spinner = (Spinner) parent;
+            Spinner spinner1 = (Spinner) parent;
             // 選択されたアイテムのテキストを取得
-            String str = spinner.getSelectedItem().toString();
+            String str = spinner1.getSelectedItem().toString();
             Log.e("spinner", str);
-
         }
 
         // 何も選択されなかった時の動作
         public void onNothingSelected(AdapterView parent) {}
     }
+
+
 
 
 
