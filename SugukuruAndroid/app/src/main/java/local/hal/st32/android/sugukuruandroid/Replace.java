@@ -1,5 +1,6 @@
 package local.hal.st32.android.sugukuruandroid;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -7,9 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Tester on 2016/11/10.
@@ -59,5 +62,19 @@ public class Replace {
             Log.e(DEBUG_TAG, "JSON解析失敗", ex);
         }
         return list;
+    }
+
+    public Map<String, String> jsonOne(String result) {
+        Map<String, String> map = new HashMap<String, String>();
+        try {
+            JSONObject rootJSON = new JSONObject(result);
+            for(int x=0; x<requestId.size();x++){
+                map.put(requestId.get(x),rootJSON.getString(requestId.get(x)));
+            }
+
+        } catch (JSONException ex) {
+            Log.e(DEBUG_TAG, "JSON解析失敗", ex);
+        }
+        return map;
     }
 }
