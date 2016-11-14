@@ -24,10 +24,9 @@
     <string name="state_package">小分け済み</string>
 
     <string-array name="arr_picking">
-        <item>A型</item>
-        <item>B型</item>
-        <item>O型</item>
-        <item>AB型</item>
+        <item>全件</item>
+        <item>ピッキング済</item>
+        <item>未着手</item>
     </string-array>
     
     <!--出荷一覧リスト-->
