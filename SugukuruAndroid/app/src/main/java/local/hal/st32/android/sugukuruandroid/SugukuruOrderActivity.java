@@ -6,8 +6,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -33,16 +36,20 @@ public class SugukuruOrderActivity extends ListActivity {
     private static final String _URL = net.ipAddress;
     private String SQL = "";
     private static final String method = "order";
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sugukuru_order);
+
         _list = getListView();
+
         TextView realTime = (TextView) findViewById(R.id.datetime);
         Calendar ca = new GregorianCalendar();
         String strRealTime = ca.get(Calendar.YEAR) + "/" + (ca.get(Calendar.MONTH)+1) + "/" + ca.get(Calendar.DAY_OF_MONTH) + "　" + ca.get(Calendar.HOUR_OF_DAY) + "時" +ca.get(Calendar.MINUTE)+"分現在";
         realTime.setText(strRealTime);
+        setSpinner();
     }
 
     @Override
@@ -129,6 +136,9 @@ public class SugukuruOrderActivity extends ListActivity {
 
     }
 
+    /**
+     * 検索項目をListViewに表示するメソッド
+     */
     public void preview(){
         String[] from = {"orderId", "customreName", "customerNameKana", "orderDate", "state"};
         int[] to = {R.id.clOrderId, R.id.clCustomerName, R.id.clCustomerNameKana, R.id.clOrderDate, R.id.clOrderState};
@@ -137,6 +147,9 @@ public class SugukuruOrderActivity extends ListActivity {
         numberOfCase();
     }
 
+    /**
+     * 検索して取得した件数表示用メソッド
+     */
     public void numberOfCase(){
         TextView num = (TextView)findViewById(R.id.allNumber);
         num.setText("全"+(pickList.size())+"件");
@@ -151,6 +164,13 @@ public class SugukuruOrderActivity extends ListActivity {
         finish();
     }
 
+    /**
+     * ListViewのアイテムが押された時のメソッド
+     * @param listView
+     * @param view
+     * @param position
+     * @param id
+     */
     public void onListItemClick(ListView listView, View view, int position, long id){
         super.onListItemClick(listView, view, position, id);
 
@@ -160,5 +180,37 @@ public class SugukuruOrderActivity extends ListActivity {
         intent.putExtra("id", orderId);
         startActivity(intent);
         finish();
+    }
+
+    /**
+     * スピナーに値を入れるメソッド
+     */
+    private void setSpinner(){
+        String[] labels = getResources().getStringArray(R.array.arr_order);
+        spinner = (Spinner)findViewById(R.id.spRefinement);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new SpinnerSelectedListener());
+        spinner.setFocusable(false);
+    }
+
+    /**
+     * スピナーを押された時のリスナーメソッド
+     */
+    public class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener{
+        public void onItemSelected(AdapterView parent, View view, int position, long id) {
+            if (spinner.isFocusable() == false) {
+                spinner.setFocusable(true);
+                return;
+            }
+            // Spinner を取得
+            Spinner spinner1 = (Spinner) parent;
+            // 選択されたアイテムのテキストを取得
+            String str = spinner1.getSelectedItem().toString();
+            Log.e("spinner", str);
+        }
+
+        // 何も選択されなかった時の動作
+        public void onNothingSelected(AdapterView parent) {}
     }
 }

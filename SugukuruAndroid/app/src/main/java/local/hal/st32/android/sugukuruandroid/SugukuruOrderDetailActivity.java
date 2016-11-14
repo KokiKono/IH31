@@ -6,8 +6,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -33,6 +35,7 @@ public class SugukuruOrderDetailActivity extends ListActivity {
     private static final String _URL = net.ipAddress;
     private String orderId;
     private static final String method = "orderDetail";
+    private Spinner spinner;
 
 
     @Override
@@ -43,7 +46,12 @@ public class SugukuruOrderDetailActivity extends ListActivity {
         Intent intent = getIntent();
         orderId = intent.getStringExtra("id");
         Log.e("orderId",orderId);
+
         _list = getListView();
+
+        spinner = (Spinner)findViewById(R.id.spRefinement);
+        spinner.setOnItemSelectedListener(new SpinnerSelectedListener());
+
         TextView realTime = (TextView) findViewById(R.id.datetime);
         Calendar ca = new GregorianCalendar();
         String strRealTime = ca.get(Calendar.YEAR) + "/" + (ca.get(Calendar.MONTH)+1) + "/" + ca.get(Calendar.DAY_OF_MONTH) + "　" + ca.get(Calendar.HOUR_OF_DAY) + "時" +ca.get(Calendar.MINUTE)+"分現在";
@@ -154,5 +162,21 @@ public class SugukuruOrderDetailActivity extends ListActivity {
         startActivity(intent);
         finish();
     }
+
+    public class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener{
+        public void onItemSelected(AdapterView parent, View view, int position, long id) {
+            // Spinner を取得
+            spinner = (Spinner) parent;
+            // 選択されたアイテムのテキストを取得
+            String str = spinner.getSelectedItem().toString();
+            Log.e("spinner", str);
+
+        }
+
+        // 何も選択されなかった時の動作
+        public void onNothingSelected(AdapterView parent) {}
+    }
+
+
 
 }
