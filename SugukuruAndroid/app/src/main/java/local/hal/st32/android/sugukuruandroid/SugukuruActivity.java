@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.ListActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.SimpleAdapter;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -37,8 +39,10 @@ public class SugukuruActivity extends ListActivity {
 
     private ListView _list;
     static List<Map<String, String>> pickList;
-    private static final String _URL = "";
+    private static final String _URL = net.ipAddress;
     private String SQL = "";
+    private static final String  method = "picking";
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class SugukuruActivity extends ListActivity {
         Calendar ca = new GregorianCalendar();
         String strRealTime = ca.get(Calendar.YEAR) + "/" + (ca.get(Calendar.MONTH)+1) + "/" + ca.get(Calendar.DAY_OF_MONTH) + "　" + ca.get(Calendar.HOUR_OF_DAY) + "時" +ca.get(Calendar.MINUTE)+"分現在";
         realTime.setText(strRealTime);
+        setSpinner();
     }
 
     @Override
@@ -75,7 +80,7 @@ public class SugukuruActivity extends ListActivity {
             HttpURLConnection con = null;
             InputStream is = null;
             try {
-                URL url = new URL(urlStr + "?sql=" + strSQL);
+                URL url = new URL(urlStr+"?method=" + method);
                 con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
                 con.connect();
@@ -148,4 +153,36 @@ public class SugukuruActivity extends ListActivity {
     }
 
     public void intentPicking(View view){}
+
+    /**
+     * スピナーに値を入れるメソッド
+     */
+    private void setSpinner(){
+        String[] labels = getResources().getStringArray(R.array.arr_picking);
+        spinner = (Spinner)findViewById(R.id.spRefinement);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new SpinnerSelectedListener());
+        spinner.setFocusable(false);
+    }
+
+    /**
+     * スピナーを押された時のリスナーメソッド
+     */
+    public class SpinnerSelectedListener implements AdapterView.OnItemSelectedListener{
+        public void onItemSelected(AdapterView parent, View view, int position, long id) {
+            if (spinner.isFocusable() == false) {
+                spinner.setFocusable(true);
+                return;
+            }
+            // Spinner を取得
+            Spinner spinner1 = (Spinner) parent;
+            // 選択されたアイテムのテキストを取得
+            String str = spinner1.getSelectedItem().toString();
+            Log.e("spinner", str);
+        }
+
+        // 何も選択されなかった時の動作
+        public void onNothingSelected(AdapterView parent) {}
+    }
 }
