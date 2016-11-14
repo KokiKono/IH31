@@ -23,12 +23,12 @@
     <string name="state_inspect">検品済み</string>
     <string name="state_package">小分け済み</string>
 
-    <string-array name="list">
-    <item>A型</item>
-    <item>B型</item>
-    <item>O型</item>
-    <item>AB型</item>
-</string-array>
+    <string-array name="arr_picking">
+        <item>A型</item>
+        <item>B型</item>
+        <item>O型</item>
+        <item>AB型</item>
+    </string-array>
     
     <!--出荷一覧リスト-->
     <string name="lv_orderId">受注ID</string>
@@ -38,8 +38,20 @@
     <string name="lv_completed">完了状態</string>
     <string name="com_yes">完了</string>
     <string name="com_no">未完了</string>
+    <string-array name="arr_order">
+        <item>全件</item>
+        <item>出荷準備完了</item>
+        <item>未完了</item>
+    </string-array>
     
     <!--出荷詳細リスト-->
     <string name="lv_amount">数量</string>
     <string name="lv_step">作業ステップ</string>
+    <string-array name="arr_order_detail">
+        <item>全件</item>
+        <item>未着手</item>
+        <item>ピッキング済</item>
+        <item>検品済</item>
+        <item>小分済</item>
+    </string-array>
 </resources>
