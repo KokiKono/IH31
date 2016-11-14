@@ -33,9 +33,9 @@ public class Constants implements Database{
 	 *
 	 */
 	public enum Page{
-		DoClaim_ser("DoClaimServlet","do_claim.jsp","05"),
+		DoClaim_ser("DoClaimServlet","accouting/do_claim.jsp","05"),
 		DoClaim_jsp("do_claim.jsp","DoClaimServlet","05"),
-		EarningsList_ser("EarningsListServlet","earnings_list.jsp","04"),
+		EarningsList_ser("EarningsListServlet","accouting/earnings_list.jsp","04"),
 		EarningsList_jsp("earnings_list.jsp","EarningsListServlet","04"),
 		EstimatesNewCreating_jsp("estimates_new_creating.jsp","EstimatesNewCreatingServlet","03"),
 		EstimatesNewCreating_ser("EstimatesNewCreatingServlet","estimates_new_creating.jsp","03"),
@@ -360,6 +360,7 @@ public class Constants implements Database{
 	 * 2016/11/13
 	 * @param action
 	 * @return
+	 * @see Constants#getMode()
 	 */
 	public static final String getAction(Action action){
 		return "<input type=\"hidden\" value=\""+action.name()+"\" name=\"constantMode\"/>";
@@ -374,7 +375,25 @@ public class Constants implements Database{
 		String modeName=(String)this.request.getParameter("constantMode");
 		return Action.indexOf(modeName);
 	}
-
+	/**
+	 * コンスタントに設定されている
+	 * HttpServletRequestを取得します。
+	 * @auther 浩生
+	 * 2016/11/14
+	 * @return
+	 */
+	public HttpServletRequest getRequest(){
+		return this.request;
+	}
+	/**
+	 * jspからpageContextを使用してサーブレットに返す場合
+	 * @auther 浩生
+	 * 2016/11/14
+	 * @return
+	 */
+	public String getPageContextServlet(){
+		return "/"+this.page.to;
+	}
 
 
 

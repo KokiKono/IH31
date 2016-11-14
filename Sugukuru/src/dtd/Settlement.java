@@ -44,5 +44,4 @@ public class Settlement {
 	 */
 	public int consumptionTax;
 
-
 }

@@ -555,10 +555,11 @@ public class DBManager {
 			this.sql=this.sql.replaceAll("WHERE\\s*;", ";");
 			this.sql=this.sql.replaceAll("HAVING\\s*;",";");
 		}
-
+		private static final String GROUP="GROUP";
 		private final String[] flushs={"AND\\s*;","OR\\s*;"};
 		private final String[] havings={"HAVING\\s*AND","HAVING\\s*OR","AND\\s*HAVING","OR\\s*HAVING"};
 		private final String[] wheres={"OR\\s*WHERE","AND\\s*WHERE","WHERE\\s*AND","WHERE\\s*OR"};
+		private final String[] groups={"OR\\sGROUP","AND\\sGROUP","WHERE\\sGROUP"};
 		private final String ands="AND\\s*AND";
 		private final String ors="OR\\s*OR";
 		private int clean(){
@@ -575,6 +576,10 @@ public class DBManager {
 					count++;
 				}
 				this.sql=this.sql.replaceAll(having, HAVING);
+			}
+			for(String group:groups){
+				if(this.sql.indexOf(group)>0)count++;
+				this.sql=this.sql.replaceAll(group, GROUP);
 			}
 			for(String flush:flushs){
 				if(this.sql.indexOf(flush)>0)count++;

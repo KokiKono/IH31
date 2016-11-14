@@ -72,4 +72,16 @@ public class Earnings {
 	 * @param customerName String
 	 */
 	public String customerName;
+
+	/**
+	 * 決算ID
+	 * DBがデフォルトNullなのでここでは文字列として使う。
+	 * このフィールドに入るのは、決済DTDと同等の数字文字列
+	 * を入れる。
+	 * @auther 浩生
+	 * 2016/11/14
+	 * @param settlementId String
+	 * @see Settlement#settlementId
+	 */
+	public String settlementId;
 }

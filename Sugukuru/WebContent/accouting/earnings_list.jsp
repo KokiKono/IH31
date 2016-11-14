@@ -221,7 +221,7 @@
 					</div>
 
 					<div class="search_submit">
-						<button class="btn btn btn-primary">検索</button>
+						<button class="btn btn-primary">検索</button>
 					</div>
 				</form>
 			</div>
