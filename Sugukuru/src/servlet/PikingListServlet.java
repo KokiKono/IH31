@@ -44,8 +44,11 @@ public class PikingListServlet extends HttpServlet {
 		
 		String SQL = "";
 		String value = "";
+		String sort = "";
 		value = request.getParameter("value");
 		String method = request.getParameter("method");
+		sort = request.getParameter("sort");
+		System.out.println(sort);
 		ArrayList<ArrayList<String>> list;
 		HashMap<String, ArrayList<Subdivision>> date = new HashMap<String, ArrayList<Subdivision>>();
 		HashMap<String, ArrayList<SubdivisionDetail>> date2 = new HashMap<String, ArrayList<SubdivisionDetail>>();
@@ -104,7 +107,11 @@ public class PikingListServlet extends HttpServlet {
 				out.println(json.encode(date));
 				break;
 			case "orderDetail":
-				SQL = "select num, puroduct_id, puroduct_name, amount, step from order_details_table where order_id = "+value+"";
+				SQL = "select num, puroduct_id, puroduct_name, amount, step from order_details_table where order_id = "+value+" ";
+				if(!("".equals(sort))){
+					SQL += "AND step ="+sort+"";
+				}
+				System.out.println(SQL);
 				ArrayList<SubdivisionDetail> returnSubDeti = new ArrayList<SubdivisionDetail>();
 				SubdivisionDetail subde = new SubdivisionDetail();
 				try{
