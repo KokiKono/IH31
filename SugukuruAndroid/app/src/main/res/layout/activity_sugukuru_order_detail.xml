@@ -12,12 +12,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <ImageButton
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:src="@android:drawable/ic_delete"
+            android:background="#f3f3f3"
+            android:onClick="backIntent"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tv_title_order_detail"
             android:textSize="25sp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="10dp"/>
 
         <TextView
@@ -27,7 +36,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="250dp"
             android:background="@drawable/simple_border"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:text=""
             android:textSize="20dp"
             android:paddingLeft="10px"
             android:paddingTop="10dp"
@@ -80,7 +89,13 @@
             android:layout_marginRight="10dp">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/simple_border"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"/>
+            <TextView
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="@string/lv_shape"
                 android:textSize="15sp"
