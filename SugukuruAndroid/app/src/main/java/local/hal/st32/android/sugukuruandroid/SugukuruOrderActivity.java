@@ -37,11 +37,16 @@ public class SugukuruOrderActivity extends ListActivity {
     private String SQL = "";
     private static final String method = "order";
     private Spinner spinner;
+    private String sort = "0";
+    private TextView message;
+    private String msg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sugukuru_order);
+        message = (TextView)findViewById(R.id.message);
 
         _list = getListView();
 
@@ -72,11 +77,11 @@ public class SugukuruOrderActivity extends ListActivity {
         @Override
         public String doInBackground(String... params) {
             String urlStr = params[0];
-            String strSQL = params[1];
+
             HttpURLConnection con = null;
             InputStream is = null;
             try {
-                URL url = new URL(urlStr+"?method=" + method);
+                URL url = new URL(urlStr+"?method=" + method + "&sort="+sort);
                 con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
                 con.connect();
@@ -84,8 +89,10 @@ public class SugukuruOrderActivity extends ListActivity {
                 result = is2String(is);
             } catch (MalformedURLException ex) {
                 Log.e(DEBUG_TAG, "URL変換失敗", ex);
+                msg = "URLが違いますよ";
             } catch (IOException ex) {
                 Log.e(DEBUG_TAG, "通信失敗", ex);
+                msg = "ネットワークに繋がっていませんよ";
             } finally {
                 if (con != null) {
                     con.disconnect();
@@ -98,21 +105,21 @@ public class SugukuruOrderActivity extends ListActivity {
                     }
                 }
             }
-            con.disconnect();
             return result;
-
         }
 
         @Override
         public void onPostExecute(String result) {
             Replace re = new Replace();
-
             re.setRequestId("orderId");
             re.setRequestId("customreName");
+            re.setRequestId("customerNameKana");
             re.setRequestId("orderDate");
+            re.setRequestId("orderState");
             pickList = re.json(result);
             Log.e("", ""+pickList);
             preview();
+            message.setText(msg);
         }
 
         /**
@@ -140,7 +147,7 @@ public class SugukuruOrderActivity extends ListActivity {
      * 検索項目をListViewに表示するメソッド
      */
     public void preview(){
-        String[] from = {"orderId", "customreName", "customerNameKana", "orderDate", "state"};
+        String[] from = {"orderId", "customreName", "customerNameKana", "orderDate", "orderState"};
         int[] to = {R.id.clOrderId, R.id.clCustomerName, R.id.clCustomerNameKana, R.id.clOrderDate, R.id.clOrderState};
         SimpleAdapter adapter = new SimpleAdapter(SugukuruOrderActivity.this, pickList, R.layout.order_row, from, to);
         setListAdapter(adapter);
@@ -179,7 +186,6 @@ public class SugukuruOrderActivity extends ListActivity {
         Intent intent = new Intent(SugukuruOrderActivity.this, SugukuruOrderDetailActivity.class);
         intent.putExtra("id", orderId);
         startActivity(intent);
-        finish();
     }
 
     /**
@@ -206,8 +212,21 @@ public class SugukuruOrderActivity extends ListActivity {
             // Spinner を取得
             Spinner spinner1 = (Spinner) parent;
             // 選択されたアイテムのテキストを取得
-            String str = spinner1.getSelectedItem().toString();
-            Log.e("spinner", str);
+            sort = spinner1.getSelectedItem().toString();
+            switch (sort){
+                case "全件":
+                    sort = "0";
+                    break;
+                case "出荷準備完了":
+                    sort = "1";
+                    break;
+                case "未完了":
+                    sort = "2";
+                    break;
+            }
+            RestAccess access = new RestAccess(_list);
+
+            access.execute(_URL);
         }
 
         // 何も選択されなかった時の動作
