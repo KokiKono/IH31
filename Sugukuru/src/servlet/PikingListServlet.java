@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.DBManager;
+import beans.DBManager.PreparedStatementByKoki;
+import beans.InspectionValue;
 import common.Database;
 import dtd.PickingList;
 import dtd.Subdivision;
@@ -78,27 +80,50 @@ public class PikingListServlet extends HttpServlet {
 				}
 				break;
 			case "order":
-				SQL = "select order_id,costomer_name,order_date FROM order_table";
+				System.out.println(SQL);
 				ArrayList<Subdivision> returnSub = new ArrayList<Subdivision>();
 				Subdivision sub = new Subdivision();
 				date = new HashMap<String, ArrayList<Subdivision>>();
 				try{
 					DBManager db = new DBManager(Database.DBName);
-					list = db.runSelect(SQL);
+					PreparedStatementByKoki statementByKoki=null;
+					statementByKoki = db.getStatementByKoki(InspectionValue.readSql(this,"AndroidOrderList.sql"));
+					
+					list = statementByKoki.select();
 					for(ArrayList<String> row:list){
 						sub = new Subdivision();
 						sub.orderId = row.get(0);
 						System.out.println(row.get(0));
 						sub.customreName = row.get(1);
 						System.out.println(row.get(1));
-//						sub.customerNameKana = row.get(2);
-//						System.out.println(row.get(2));
-						sub.orderDate = row.get(2);
+						sub.customerNameKana = row.get(2);
 						System.out.println(row.get(2));
-//						sub.orderState = 1;
-//						System.out.println(row.get(4));
+						sub.orderDate = row.get(3);
+						System.out.println(row.get(3));
+						sub.setOrderState("1");
+						ArrayList<ArrayList<String>> step = db.runSelect("select step from order_details_table where order_id = "+sub.orderId+"");
+						System.out.println(step);
+						switch(sort){
+						case "0":
+							sort = "全件";
+							break;
+						case "1":
+							sort = "出荷準備完了";
+							break;
+						case "2":
+							sort = "未完了";
+							break;
+						}
+						for(ArrayList<String> stepNum: step){
+							for(String x: stepNum){
+								if(!("3").equals(x)){
+									sub.setOrderState("0");
+								}
+							}
+						}
+						if("全件".equals(sort) || sub.orderState.equals(sort)){
 						returnSub.add(sub);
-						
+						}
 					}
 					date.put("date", returnSub);
 				}catch(Exception e){
@@ -133,7 +158,20 @@ public class PikingListServlet extends HttpServlet {
 				}
 				out.println(json.encode(date2));
 				break;
-
+				
+			case "stepUpdate":
+				String num = request.getParameter("num");
+				
+				SQL = "UPDATE order_details_table SET step = 3 where order_id = "+value+" AND num = "+num+"";
+				System.out.println("stepUpdate: "+SQL);
+				
+				try{
+					DBManager db = new DBManager(Database.DBName);
+					int x = db.update(SQL);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				break;
 		}
 		
 		
