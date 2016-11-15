@@ -26,7 +26,8 @@
     <string-array name="arr_picking">
         <item>全件</item>
         <item>ピッキング済</item>
-        <item>未着手</item>
+        <item>検品済</item>
+        <item>未作業</item>
     </string-array>
     
     <!--出荷一覧リスト-->
@@ -48,7 +49,7 @@
     <string name="lv_step">作業ステップ</string>
     <string-array name="arr_order_detail">
         <item>全件</item>
-        <item>未着手</item>
+        <item>未作業</item>
         <item>ピッキング済</item>
         <item>検品済</item>
         <item>小分済</item>
