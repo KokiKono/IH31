@@ -37,6 +37,7 @@ public class SugukuruOrderDetailActivity extends ListActivity {
     private String orderId;
     private static final String method = "orderDetail";
     private Spinner spinner;
+    private String sort = "";
 
 
     @Override
@@ -81,7 +82,7 @@ public class SugukuruOrderDetailActivity extends ListActivity {
             InputStream is = null;
             try {
                 Log.e("",orderId);
-                URL url = new URL(urlStr+"?method=" + method + "&value=" + orderId);
+                URL url = new URL(urlStr+"?method=" + method + "&value=" + orderId +"&sort="+sort);
                 con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
                 con.connect();
@@ -166,7 +167,7 @@ public class SugukuruOrderDetailActivity extends ListActivity {
      * スピナーに値を入れるメソッド
      */
     private void setSpinner(){
-        String[] labels = getResources().getStringArray(R.array.arr_order);
+        String[] labels = getResources().getStringArray(R.array.arr_order_detail);
         spinner = (Spinner)findViewById(R.id.spRefinement);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, labels);
         spinner.setAdapter(adapter);
@@ -186,8 +187,24 @@ public class SugukuruOrderDetailActivity extends ListActivity {
             // Spinner を取得
             Spinner spinner1 = (Spinner) parent;
             // 選択されたアイテムのテキストを取得
-            String str = spinner1.getSelectedItem().toString();
-            Log.e("spinner", str);
+            sort = spinner1.getSelectedItem().toString();
+            switch (sort){
+                case "未作業":
+                    sort = "0";
+                    break;
+                case "ピッキング済":
+                    sort = "1";
+                    break;
+                case "検品済":
+                    sort = "2";
+                    break;
+                case "小分済":
+                    sort = "3";
+                    break;
+            }
+            RestAccess access = new RestAccess(_list);
+            access.execute(_URL);
+            Log.e("spinner", sort);
         }
 
         // 何も選択されなかった時の動作
