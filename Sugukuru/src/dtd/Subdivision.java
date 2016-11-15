@@ -36,5 +36,15 @@ public class Subdivision {
 	 * 2016/11/10
 	 * @param orderState String 完了状態
 	 */
-	public int orderState;
+	public String orderState;
+	
+	public void setOrderState(String state){
+		switch(state){
+		case "0":
+			orderState = "未完了";
+			break;
+		case "1":
+			orderState = "出荷準備完了";
+		}
+	}
 }
