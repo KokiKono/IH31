@@ -90,7 +90,7 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 					statementByKoki.setInt("ORDER_ID",
 							Integer.parseInt(search.rOrderId));
 				} catch (NumberFormatException e) {
-					message.doWarnig("02", "08", "08");
+					message.doWarnig("04", "08");
 					statementByKoki.toNull("ORDER_ID");
 				}
 			}else{
@@ -135,7 +135,7 @@ public class StockOrderListServlet extends HttpServlet implements Database {
 						search.shipmentDay);
 				if (shipmentCalendar == null) {
 					// 出荷日生成エラー
-					message.doWarnig("04", "04");
+					message.doWarnig("03", "04");
 					statementByKoki.toNull("DELIVERY_DATE");
 				} else {
 					statementByKoki.setString("DELIVERY_DATE",

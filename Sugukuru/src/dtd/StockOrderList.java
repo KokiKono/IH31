@@ -155,6 +155,11 @@ public class StockOrderList extends Order {
 		html.append("</select>");
 		return html.toString();
 	}
+	/**
+	 * リストの一行ごとに検索結果にそぐわないものかを判断します。
+	 * @param search
+	 * @return
+	 */
 	public String ifDelFlgShow(StockOrderList search){
 		if(search.delFlg==null)return "yes";
 		if(search.delFlg.equals("-1"))return "yes";

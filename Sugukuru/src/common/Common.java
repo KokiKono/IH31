@@ -88,4 +88,23 @@ public interface Common {
 	 * @param CLASSNOTFOUNTEXCEPTION int
 	 */
 	int CLASSNOTFOUNTEXCEPTION=3;
+
+	public enum RecallManner{
+		BILL(2,"手形");
+		public int code;
+		public String value;
+		private RecallManner(int code,String value) {
+			// TODO 自動生成されたコンストラクター・スタブ
+			this.code=code;
+			this.value=value;
+		}
+		public static RecallManner indexOf(int code){
+			for(RecallManner manner:RecallManner.values()){
+				if(manner.code==code){
+					return manner;
+				}
+			}
+			return null;
+		}
+	}
 }

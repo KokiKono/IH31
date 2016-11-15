@@ -141,4 +141,34 @@ table td{
 .btn-place{
 	width: 100%;
 }
+.div-scroll {
+	height: 450px;
+	overflow: auto;
+	position: relative;
+	top: 27px;
+}
+input.class2.form-control{
+  height: 22px;
+  font-size: 8px;
+  width: 35px;
+}
+input.class3.form-control{
+  height: 22px;
+  font-size: 8px;
+  width: 50px;
+}
+input.class1.form-control{
+  height: 22px;
+  font-size: 8px;
+}
+
+button.btn.btn-default{
+  padding: 3px 10px;
+  font-size: 10px;
+  margin-left: 10px;
+}
+
+.print {
+  float: right;
+}
 
