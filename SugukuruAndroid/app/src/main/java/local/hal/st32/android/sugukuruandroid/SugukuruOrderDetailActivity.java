@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -104,7 +105,6 @@ public class SugukuruOrderDetailActivity extends ListActivity {
                     }
                 }
             }
-            con.disconnect();
             return result;
 
         }
@@ -123,17 +123,17 @@ public class SugukuruOrderDetailActivity extends ListActivity {
             preview();
         }
 
-        private String is2String(InputStream is) throws IOException {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            StringBuffer sb = new StringBuffer();
-            char[] b = new char[1024];
-            int line;
-            while (0 <= (line = reader.read(b))) {
-                sb.append(b, 0, line);
-            }
-            return sb.toString();
-        }
+    }
 
+    private String is2String(InputStream is) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+        StringBuffer sb = new StringBuffer();
+        char[] b = new char[1024];
+        int line;
+        while (0 <= (line = reader.read(b))) {
+            sb.append(b, 0, line);
+        }
+        return sb.toString();
     }
 
     public void preview(){
@@ -201,8 +201,12 @@ public class SugukuruOrderDetailActivity extends ListActivity {
                 case "小分済":
                     sort = "3";
                     break;
+                case "全件":
+                    sort = "";
+                    break;
             }
             RestAccess access = new RestAccess(_list);
+
             access.execute(_URL);
             Log.e("spinner", sort);
         }
@@ -210,6 +214,71 @@ public class SugukuruOrderDetailActivity extends ListActivity {
         // 何も選択されなかった時の動作
         public void onNothingSelected(AdapterView parent) {}
     }
+
+    public void onListItemClick(ListView listView, View view, int position, long id){
+        super.onListItemClick(listView, view, position, id);
+        Map<String, String> item = pickList.get(position);
+
+        String num = item.get("num");
+        String step = item.get("step");
+        if("検品済".equals(step)) {
+            stepUpdate update = new stepUpdate();
+            update.execute(_URL, num);
+            item.put("step", "小分済");
+            pickList.set(position, item);
+            preview();
+        }
+    }
+
+
+
+    private class stepUpdate extends AsyncTask<String, Void, String>{
+        private static final String DEBUG_TAG = "stepUpdate";
+        String result;
+        @Override
+        public String doInBackground(String... params) {
+            String num = params[1];
+            String urlStr = params[0];
+            HttpURLConnection con = null;
+            InputStream is = null;
+            try {
+                Log.e("",orderId);
+                URL url = new URL(urlStr+"?method=" + "stepUpdate" + "&value=" + orderId + "&num="+ num);
+                con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+                con.connect();
+                is = con.getInputStream();
+                result = is2String(is);
+            } catch (MalformedURLException ex) {
+                Log.e(DEBUG_TAG, "URL変換失敗", ex);
+            } catch (IOException ex) {
+                Log.e(DEBUG_TAG, "通信失敗", ex);
+            } finally {
+                if (con != null) {
+                    con.disconnect();
+                }
+                if (is != null) {
+                    try {
+                        is.close();
+                    } catch (IOException ex) {
+                        Log.e(DEBUG_TAG, "InputStream解放失敗", ex);
+                    }
+                }
+            }
+            return result;
+        }
+
+        @Override
+        public void onPostExecute(String result) {
+
+        }
+
+    }
+
+    public void backIntent(View view){
+        finish();
+    }
+
 
 
 
