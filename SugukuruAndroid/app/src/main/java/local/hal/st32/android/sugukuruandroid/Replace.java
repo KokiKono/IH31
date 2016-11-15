@@ -68,8 +68,10 @@ public class Replace {
         Map<String, String> map = new HashMap<String, String>();
         try {
             JSONObject rootJSON = new JSONObject(result);
+            JSONArray arrayJson = rootJSON.getJSONArray("date");
+            JSONObject data = arrayJson.getJSONObject(0);
             for(int x=0; x<requestId.size();x++){
-                map.put(requestId.get(x),rootJSON.getString(requestId.get(x)));
+                map.put(requestId.get(x),data.getString(requestId.get(x)));
             }
 
         } catch (JSONException ex) {
