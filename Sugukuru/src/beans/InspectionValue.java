@@ -641,6 +641,15 @@ public class InspectionValue {
 	public static String readSql(HttpServlet servlet,String path){
 		return readSql(servlet, path,"");
 	}
+	/**
+	 * WEB-INF/sql配下にあるsqlファイルを読み込む
+	 * @auther 浩生
+	 * 2016/11/5
+	 * @param servlet
+	 * @param path
+	 * @param line
+	 * @return
+	 */
 	public static String readSql(HttpServlet servlet,String path,String line){
 		path=servlet.getServletContext().getRealPath("/WEB-INF/sql/"+path);
 		StringBuilder builder=new StringBuilder();

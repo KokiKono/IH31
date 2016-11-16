@@ -1,3 +1,9 @@
+/***************************
+ * 学籍番号:40313
+ * 作成者　:k.koki
+ * 作成日　:2016/11/06
+ * 内容　　:倉庫部の受注一覧を生成するクラス。
+ * *************************/
 package servlet;
 
 import java.io.IOException;
@@ -170,14 +176,5 @@ public class OrderRecodeListServlet extends HttpServlet implements Database {
 
 	}
 
-	private class ErrMessage {
-		public String customerID;
-		public String customerName;
-		public String createYear;
-		public String createMonth;
-		public String createDay;
-		public String dispatchState;
-		public String claimState;
-	}
 
 }

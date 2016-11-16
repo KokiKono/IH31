@@ -8,7 +8,9 @@ package dtd;
 
 import beans.CalendarByKoki;
 
-public class Settlement {
+import common.Common.RecallManner;
+
+public class Settlement extends CorporationCustomer{
 	/**
 	 * @auther Tester
 	 * 2016/11/05
@@ -44,4 +46,56 @@ public class Settlement {
 	 */
 	public int consumptionTax;
 
+	/**
+	 * リクエスト用請求年
+	 * @auther 浩生
+	 * 2016/11/16
+	 * @param settleYear String
+	 */
+	public String settleYear;
+	/**
+	 * リクエスト用請求月
+	 * @auther 浩生
+	 * 2016/11/16
+	 * @param settleMonth String
+	 */
+	public String settleMonth;
+	/**
+	 * リクエスト用請求日
+	 * @auther 浩生
+	 * 2016/11/16
+	 * @param settleDay String
+	 */
+	public String settleDay;
+
+	public CalendarByKoki paymentDate;
+	{
+		this.settleYear=new String();
+		this.settleMonth=new String();
+		this.settleDay=new String();
+	}
+	/**
+	 * 回収方法を表示用で取得する。
+	 *
+	 * @auther 浩生 2016/11/14
+	 * @return
+	 */
+	public String getRecallManner() {
+		RecallManner manner = RecallManner.indexOf(String.valueOf(this.recallManner));
+		if (manner == null)
+			return "登録されてない回収方法";
+		return manner.value;
+	}
+
+	/**
+	 * 入金日を取得する。
+	 * 入金されてない場合、未入金と返す。
+	 * @auther 浩生
+	 * 2016/11/16
+	 * @return
+	 */
+	public String getPaymentDate(){
+		if(this.paymentDate==null)return "未入金";
+		return this.paymentDate.outOfJP();
+	}
 }

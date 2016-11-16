@@ -32,9 +32,7 @@
 	if(list==null)list=new ArrayList<DoClaim>();
 	//メッセージを取得
 	Message message=(Message)request.getAttribute("message");
-	//検索条件の取得
-	StockOrderList search=(StockOrderList)request.getAttribute("search");
-	if(search==null)search=new StockOrderList();
+
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -474,12 +472,12 @@
 			</div>
 		</div>
 		<div class="container">
-		<form action="<%=constants.getServletUrl()%>">
+		<form action="<%=constants.getServletUrl()%>" method="post">
 			<%=constants.getAction(Action.Insert) %>
 			<table class="table table-striped table-bordered">
 				<thead>
 					<tr>
-						<th><input type="checkbox" name="name" value=""></th>
+						<th><input type="checkbox"></th>
 						<th>顧客ID</th>
 						<th>顧客名</th>
 						<th>締日</th>
@@ -502,12 +500,11 @@
 						} else {
 					%>
 					<%
-						int count = 1;
-							list: for (DoClaim recodeList : list) {
+						for (DoClaim recodeList : list) {
 					%>
 					<tr>
 						<td>
-							<input type="checkbox" name="settlmentFlg">
+							<input type="checkbox" name="<%=constants.getConstant("05").pgName %>" value="<%=recodeList.customerId%>">
 						</td>
 						<td><%=recodeList.customerId%></td>
 						<td><%=recodeList.customerName%></td>

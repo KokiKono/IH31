@@ -89,18 +89,25 @@ public interface Common {
 	 */
 	int CLASSNOTFOUNTEXCEPTION=3;
 
+	/**
+	 * 支払種別
+	 * @author 浩生
+	 *
+	 */
 	public enum RecallManner{
-		BILL(2,"手形");
-		public int code;
+		CARD("0","カード"),
+		CASH("1","現金"),
+		BILL("2","手形");
+		public String code;
 		public String value;
-		private RecallManner(int code,String value) {
+		private RecallManner(String code,String value) {
 			// TODO 自動生成されたコンストラクター・スタブ
 			this.code=code;
 			this.value=value;
 		}
-		public static RecallManner indexOf(int code){
+		public static RecallManner indexOf(String code){
 			for(RecallManner manner:RecallManner.values()){
-				if(manner.code==code){
+				if(manner.code.equals(code)){
 					return manner;
 				}
 			}

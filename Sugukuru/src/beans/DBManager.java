@@ -551,17 +551,19 @@ public class DBManager {
 				this.sql=this.sql+";";
 			}
 			clean();
-			this.sql=this.sql.replaceAll("WHERE\\s*HAVING", HAVING);
+			this.sql=this.sql.replaceAll("WHERE\\s*HAVING\\s+", HAVING);
 			this.sql=this.sql.replaceAll("WHERE\\s*;", ";");
 			this.sql=this.sql.replaceAll("HAVING\\s*;",";");
 		}
 		private static final String GROUP="GROUP";
 		private final String[] flushs={"AND\\s*;","OR\\s*;"};
-		private final String[] havings={"HAVING\\s*AND","HAVING\\s*OR","AND\\s*HAVING","OR\\s*HAVING"};
-		private final String[] wheres={"OR\\s*WHERE","AND\\s*WHERE","WHERE\\s*AND","WHERE\\s*OR"};
-		private final String[] groups={"OR\\sGROUP","AND\\sGROUP","WHERE\\sGROUP"};
-		private final String ands="AND\\s*AND";
-		private final String ors="OR\\s*OR";
+		private final String[] havings={"HAVING\\s*AND\\s+","HAVING\\s*OR\\s+","AND\\s*HAVING\\s+","OR\\s*HAVING\\s+"};
+		private final String[] wheres={"OR\\s*WHERE\\s+","AND\\s*WHERE\\s+","WHERE\\s*AND\\s+","WHERE\\s*OR\\s+"};
+		private final String[] groups={"OR\\s*GROUP\\s+","AND\\s*GROUP\\s+","WHERE\\s*GROUP\\s+"};
+		private final String[] orders={"AND\\s*ORDER BY\\+","OR\\*ORDER BY\\s+","WHERE\\s*ORDER\\s+BY\\+","WHEREORDER\\s+BY"};
+		private final String ands="AND\\s*AND\\s+";
+		private final String ors="OR\\s*OR\\s+";
+		private static final String ORDER_BY="ORDER BY";
 		private int clean(){
 			int count=0;
 
@@ -580,6 +582,10 @@ public class DBManager {
 			for(String group:groups){
 				if(this.sql.indexOf(group)>0)count++;
 				this.sql=this.sql.replaceAll(group, GROUP);
+			}
+			for(String order:orders){
+				if(this.sql.indexOf(order)>0)count++;
+				this.sql=this.sql.replaceAll(order,ORDER_BY);
 			}
 			for(String flush:flushs){
 				if(this.sql.indexOf(flush)>0)count++;
