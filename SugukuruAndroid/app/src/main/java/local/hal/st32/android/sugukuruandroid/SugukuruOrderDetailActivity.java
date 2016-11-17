@@ -48,7 +48,6 @@ public class SugukuruOrderDetailActivity extends ListActivity {
 
         Intent intent = getIntent();
         orderId = intent.getStringExtra("id");
-        Log.e("orderId",orderId);
 
         _list = getListView();
 
