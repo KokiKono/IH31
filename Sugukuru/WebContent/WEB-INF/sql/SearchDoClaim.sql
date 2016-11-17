@@ -40,6 +40,7 @@ SELECT
     AND settlement_table.payment_date IS NULL
 
  ),0) AS over_price												/*繰り越し金*/
+ ,corporation_customer_master.corporation_name						/*正式法人顧客名*/
  FROM
  earnings_table
  INNER JOIN corporation_customer_master
@@ -59,8 +60,8 @@ SELECT
 /*if(CUSTOMER_ID)start*/
  earnings_table.customer_id = CUSTOMER_ID
 /*if(CUSTOMER_ID)end*/
- AND
 /*if(CUT_DATE)start*/
+  AND
  corporation_customer_master.cut_off_date = CUT_DATE
 /*if(CUT_DATE)end*/
 

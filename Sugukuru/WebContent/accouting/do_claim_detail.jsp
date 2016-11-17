@@ -1,5 +1,13 @@
+<%@page import="dtd.EarningsDetail"%>
+<%@page import="beans.InspectionValue"%>
+<%@page import="dtd.DoClaim"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	ArrayList<DoClaim> printList=(ArrayList<DoClaim>)request.getAttribute("printList");
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +32,7 @@
 <link href="<%=request.getContextPath()%>/accouting/css/do_claim_detail.css"
 	rel="stylesheet">
 <title>請求書印刷プレビュー</title>
-<script src="js/printThis.js"></script>
+<script src="<%=request.getContextPath()%>/accouting/js/printThis.js"></script>
 <script type="text/javascript">
 	$(function(){
 		//印刷ボタンを押した時
@@ -37,20 +45,21 @@
 </head>
 <body>
 <!-- 顧客別請求書 -->
+<%for(DoClaim print:printList){ %>
 <article class="sett">
 <section class="claim_parent">
 	<table class="table table-bordered">
 		<tr><th colspan="5">請求書</th>
 			<td rowspan="2">
-				発行日：２０１６年０５月２０日<br>
-				請求No：００００１２<br>
+				発行日：<%=print.printDate.outOfJP() %><br>
+				請求No：<%=print.settlementId %><br>
 				スグクル株式会社<br>
-				　　経理部　河野　浩生<br>
+				　　経理部　河野　浩生固定<br>
 			</td>
 		</tr>
 		<tr>
-			<td class="title">学校法人HAL大阪　御中</td>
-			<td colspan="4" class="title">(2016年５月分)</td>
+			<td class="title"><%=print.customerName %>　御中</td>
+			<td colspan="4" class="title"></td>
 		</tr>
 		<tr>
 			<th>前回請求額</th>
@@ -61,12 +70,12 @@
 			<th>請求額</th>
 		<tr>
 		<tr>
-			<td class="price">3,150,000</td>
-			<td class="price">3,150,000</td>
-			<td class="price">0</td>
-			<td class="price">370,000</td>
-			<td class="price">18,500</td>
-			<td class="price">388,500</td>
+			<td class="price"><%=InspectionValue.doLocaleJP(print.settlementBefore) %></td>
+			<td class="price"><%=InspectionValue.doLocaleJP(print.payment)%></td>
+			<td class="price"><%=InspectionValue.doLocaleJP(print.overPrice) %></td>
+			<td class="price"><%=InspectionValue.doLocaleJP(print.noTaxTotalFee) %></td>
+			<td class="price"><%=InspectionValue.doLocaleJP(print.taxFee) %></td>
+			<td class="price"><%=InspectionValue.doLocaleJP(print.getAllTotal()) %></td>
 		</tr>
 	</table>
 </section>
@@ -77,8 +86,8 @@
 			<th colspan="4">請求の明細は次の通りです。
 			<th colspan="3">請求明細書</th>
 			<td colspan="2">
-				発行日：２０１６年０５月２０日<br>
-				請求No：００００１２<br>
+				発行日：<%=print.printDate.outOfJP() %><br>
+				請求No：<%=print.settlementId %><br>
 			</td>
 		</tr>
 		<tr>
@@ -92,142 +101,23 @@
 			<th>消費税</th>
 			<th>明細計</th>
 		</tr>
+		<%for(EarningsDetail detail:print.details){ %>
 		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>前月繰越</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
+			<td><%=detail.buyDate.getMonth() %></td>
+			<td><%=detail.buyDate.getDay() %></td>
+			<td><%=detail.puroductName %></td>
+			<td><%=detail.orderId %></td>
+			<td><%=detail.soldAmount %></td>
+			<td class="price"><%=detail.price %></td>
+			<td class="price"><%=detail.getNoTaxTotalFee() %></td>
+			<td class="price"><%=detail.getTaxTotal() %></td>
+			<td class="price"><%=detail.getTotalFee() %></td>
 		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>鉛筆</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>シャーペン</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>上島</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>上島</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>上島</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>上島</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>上島</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>上島</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>上島</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>上島</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-		<tr>
-			<td>5</td>
-			<td>1</td>
-			<td>上島</td>
-			<td>100211</td>
-			<td class="price">20</td>
-			<td class="price">18,000</td>
-			<td class="price">360,000</td>
-			<td class="price">18,000</td>
-			<td class="price">378,000</td>
-		</tr>
-
+		<%} %>
 	</table>
 </section>
 </article>
+<%} %>
 <div class="print_button"><input type="button" name="print" class="btn btn-primary" value="印刷"></div>
 </body>
 </html>

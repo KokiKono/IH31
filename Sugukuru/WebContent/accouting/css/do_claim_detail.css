@@ -18,10 +18,10 @@
 .print_button input[type="button"]{
 	width: 400px;
 }
-.sett section{
+section table{
 	page-break-after: always;
 }
-.sett section:last-child{
+/* .sett section:last-child{
 	page-break-after: auto;
-}
+} */
 @page{ size: landscape;}

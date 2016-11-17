@@ -28,6 +28,12 @@ public interface Bank {
 			this.kana = kana;
 			this.code = code;
 		}
+		public static Banks indexOf(String code){
+			for(Banks banks:Banks.values()){
+				if(banks.code.equals(code))return banks;
+			}
+			return null;
+		}
 	}
 
 	public enum Store {
@@ -41,6 +47,12 @@ public interface Bank {
 			this.kana = kana;
 			this.code = code;
 		}
+		public static Store indexOf(String code){
+			for(Store store:Store.values()){
+				if(store.code.equals(code))return store;
+			}
+			return null;
+		}
 	}
 
 	/**
@@ -50,6 +62,7 @@ public interface Bank {
 	 *
 	 */
 	public enum TypeCode {
+
 		/**
 		 * 一括支払
 		 *
@@ -154,7 +167,7 @@ public interface Bank {
 		 * @param code
 		 * @return
 		 */
-		public TypeCode indexOf(String code) {
+		public static TypeCode indexOf(String code) {
 			for (TypeCode typeCode : TypeCode.values()) {
 				if (code.equals(typeCode.code))
 					return typeCode;
@@ -283,65 +296,7 @@ public interface Bank {
 		}
 	}
 
-	public enum Recode {
-		/**
-		 * エンドレコード -----説明------- ファイルの終わりを表す。
-		 *
-		 * @auther 浩生 2016/11/11
-		 * @param End
-		 *            Recode
-		 */
-		End("9", "end"),
-		/**
-		 * トレーラーレコード -------説明------- レコードの終わりを表す。
-		 *
-		 * @auther 浩生 2016/11/11
-		 * @param Triler
-		 *            Recode
-		 */
-		Triler("8", "trailer"),
-		/**
-		 * データレコード ------説明------ 連絡・通知する情報の １単位を表す。
-		 *
-		 * @auther 浩生 2016/11/11
-		 * @param Deta
-		 *            Recode
-		 */
-		Deta("2", "deta"),
-		/**
-		 * ヘッダーレコード -----説明------ データレコードの 開始を表す。
-		 *
-		 * @auther 浩生 2016/11/11
-		 * @param Header
-		 *            Recode
-		 */
-		Header("1", "header");
 
-		public String code;
-		public String pgName;
-
-		private Recode(String code, String pgName) {
-			// TODO 自動生成されたコンストラクター・スタブ
-			this.code = code;
-			this.pgName = pgName;
-		}
-
-		/**
-		 * codeと同等のRecodeを返す。
-		 *
-		 * @auther 浩生 2016/11/11
-		 * @param code
-		 * @return
-		 */
-		public Recode indexOf(String code) {
-			for (Recode recode : Recode.values()) {
-				if (code.equals(recode.code)) {
-					return recode;
-				}
-			}
-			return null;
-		}
-	}
 
 	public enum Ryaku {
 		/**
@@ -789,14 +744,6 @@ public interface Bank {
 		}
 	}
 
-	/**
-	 * 入金を確認するクラス。
-	 * @author 浩生
-	 *
-	 */
-	public class PaymentCheck{
-
-	}
 
 
 }
