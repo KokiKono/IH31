@@ -31,23 +31,30 @@ public class PickingList {
 	/**
 	 * @auther Tester
 	 * 2016/11/07
-	 * @param rackNumber int 棚番号
+	 * @param rackNumber String 棚番号
 	 */
-	public int rackNumber;
+	public String rackNumber;
 	
 	/**
 	 * @auther Tester
 	 * 2016/11/07
-	 * @param needs int 必要数
+	 * @param needs String 必要数
 	 */
-	public int needs;
+	public String needs;
 	
 	/**
 	 * @auther Tester
 	 * 2016/11/07
-	 * @param pickNum int ピッキング数
+	 * @param pickNum String ピッキング数
 	 */
-	public int pickNum;
+	public String pickNum;
+	
+	/**
+	 * @auther Tester
+	 * 2016/11/16
+	 * @param inspectedAmount String 検品数
+	 */
+	public String inspectedAmount;
 	
 	/**
 	 * @auther Tester
