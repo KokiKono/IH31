@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SugukuruOrderActivity" android:screenOrientation="landscape"/>
+        <activity android:name=".SugukuruPickingDetailActivity" android:screenOrientation="landscape"/>
         <activity android:name=".SugukuruOrderDetailActivity"/>
     </application>
 
