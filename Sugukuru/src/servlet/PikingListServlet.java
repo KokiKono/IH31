@@ -51,33 +51,42 @@ public class PikingListServlet extends HttpServlet {
 		String method = request.getParameter("method");
 		sort = request.getParameter("sort");
 		System.out.println(sort);
+		System.out.println(method);
 		ArrayList<ArrayList<String>> list;
 		HashMap<String, ArrayList<Subdivision>> date = new HashMap<String, ArrayList<Subdivision>>();
 		HashMap<String, ArrayList<SubdivisionDetail>> date2 = new HashMap<String, ArrayList<SubdivisionDetail>>();
+		HashMap<String, ArrayList<PickingList>> date3 = new HashMap<String, ArrayList<PickingList>>();
 		JSON json = new JSON();
 		PrintWriter out=response.getWriter();
 		
 		switch(method){
 			case "picking":
-				SQL = "";
 				ArrayList<PickingList> returnPick = new ArrayList<PickingList>();
 				PickingList pick = new PickingList();
 				try{
-					
 					DBManager db = new DBManager(Database.DBName);
-					list = db.runSelect(SQL);
+					PreparedStatementByKoki statementByKoki=null;
+					statementByKoki = db.getStatementByKoki(InspectionValue.readSql(this,"AndroidPickingList.sql"));
+					list = statementByKoki.select();
+					int i = 1;
 					for(ArrayList<String> row:list){
-						pick.pickId = row.get(0);
-						pick.productId = row.get(1);
-						pick.productName = row.get(2);
-						pick.rackNumber = Integer.parseInt(row.get(3));
-						pick.pickNum = Integer.parseInt(row.get(4));
-						pick.pickState = row.get(5);
+						pick = new PickingList();
+						pick.pickId = String.valueOf(i);
+						pick.productId = row.get(0);
+						pick.productName = row.get(1);
+						pick.rackNumber = row.get(2);
+						pick.needs = row.get(3);
+						pick.pickNum = row.get(4);
+						pick.pickState = row.get(6);
+						System.out.println("pick"+pick);
 						returnPick.add(pick);
+						i++;
 					}
+					date3.put("date", returnPick);
 				}catch(Exception e){
 					e.printStackTrace();
 				}
+				out.println(json.encode(date3));
 				break;
 			case "order":
 				System.out.println(SQL);
