@@ -16,5 +16,10 @@ FROM
   working_table a 
  INNER JOIN puroduct_master b ON a.puroduct_id = b.puroduct_id
  INNER JOIN rack_master c ON b.rack_id = c.rack_id
- WHERE a.puroduct_id = PRODUCT_ID AND state = STATE
+/*if(PRODUCT_ID)start*/
+ WHERE a.puroduct_id = PRODUCT_ID
+/*if(PRODUCT_ID)end*/
+/*if(STATE)start*/
+ HAVING state = STATE
+/*if(STATE)end*/
 ;
