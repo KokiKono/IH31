@@ -38,11 +38,11 @@ import java.util.Map;
 public class SugukuruActivity extends ListActivity {
 
     private ListView _list;
-    static List<Map<String, String>> pickList;
+    private List<Map<String, String>> pickList;
     private static final String _URL = net.ipAddress;
     private static final String  method = "picking";
     private Spinner spinner;
-    private String sort;
+    private String sort = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,8 @@ public class SugukuruActivity extends ListActivity {
             HttpURLConnection con = null;
             InputStream is = null;
             try {
-                URL url = new URL(urlStr+"?method=" + method +"&?sort="+sort);
+                URL url = new URL(urlStr+"?method=" + method +"&sort="+sort);
+                Log.e("", ""+ url);
                 con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
                 con.connect();
@@ -144,10 +145,16 @@ public class SugukuruActivity extends ListActivity {
     }
 
     public void preview(){
-        String[] from = {"pickId", "productId", "productName", "rackNumber", "needs", "pickNum", "pickState"};
-        int[] to = {R.id.clShape, R.id.clProductNumber, R.id.clProductName, R.id.clRackNumber, R.id.clNeeds, R.id.clPicking, R.id.clState};
-        SimpleAdapter adapter = new SimpleAdapter(SugukuruActivity.this, SugukuruActivity.pickList, R.layout.row, from, to);
+        String[] from = {"pickId", "productId", "productName", "rackNumber", "needs", "pickNum", "inspectedAmount", "pickState"};
+        int[] to = {R.id.clShape, R.id.clProductNumber, R.id.clProductName, R.id.clRackNumber, R.id.clNeeds, R.id.clPicking, R.id.clInspected, R.id.clState};
+        SimpleAdapter adapter = new SimpleAdapter(SugukuruActivity.this, pickList, R.layout.row, from, to);
         setListAdapter(adapter);
+        numberOfCase();
+    }
+
+    public void numberOfCase(){
+        TextView num = (TextView)findViewById(R.id.allNumber);
+        num.setText("全"+(pickList.size())+"件");
     }
 
     public void intentOrder(View view){
@@ -159,9 +166,17 @@ public class SugukuruActivity extends ListActivity {
 
     public void intentPicking(View view){}
 
-    /**
-     * スピナーに値を入れるメソッド
-     */
+
+    public void onListItemClick(ListView listView, View view, int position, long id){
+        super.onListItemClick(listView, view, position, id);
+
+        Map<String, String> item = pickList.get(position);
+        String productId = item.get("productId");
+        Intent intent = new Intent(SugukuruActivity.this, SugukuruPickingDetailActivity.class);
+        intent.putExtra("productId", productId);
+        startActivity(intent);
+    }
+
     private void setSpinner(){
         String[] labels = getResources().getStringArray(R.array.arr_picking);
         spinner = (Spinner)findViewById(R.id.spRefinement);
@@ -183,21 +198,27 @@ public class SugukuruActivity extends ListActivity {
             // Spinner を取得
             Spinner spinner1 = (Spinner) parent;
             // 選択されたアイテムのテキストを取得
-            String str = spinner1.getSelectedItem().toString();
-            Log.e("spinner", str);
+            sort = spinner1.getSelectedItem().toString();
+            switch (sort){
+                case "全件":
+                    sort = "0";
+                    break;
+                case "ピッキング済":
+                    sort = "1";
+                    break;
+                case "検品済":
+                    sort = "2";
+                    break;
+                case "未作業":
+                    sort = "3";
+                    break;
+            }
+            RestAccess access = new RestAccess(_list);
+
+            access.execute(_URL);
         }
 
         // 何も選択されなかった時の動作
         public void onNothingSelected(AdapterView parent) {}
-    }
-
-    public void onListItemClick(ListView listView, View view, int position, long id){
-        super.onListItemClick(listView, view, position, id);
-
-        Map<String, String> item = pickList.get(position);
-        String productId = item.get("productId");
-        Intent intent = new Intent(SugukuruActivity.this, SugukuruPickingDetailActivity.class);
-        intent.putExtra("productId", productId);
-        startActivity(intent);
     }
 }
