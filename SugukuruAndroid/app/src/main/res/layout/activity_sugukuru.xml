@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,7 +99,7 @@
                 android:paddingBottom="5dp" />
 
             <TextView
-                android:layout_width="200dp"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:text="@string/lv_product_number"
                 android:textSize="15sp"
@@ -118,7 +119,7 @@
                 android:paddingBottom="5dp"/>
 
             <TextView
-                android:layout_width="170dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="@string/lv_rack_number"
                 android:textSize="15sp"
@@ -128,7 +129,7 @@
                 android:paddingBottom="5dp"/>
 
             <TextView
-                android:layout_width="170dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="@string/lv_needs"
                 android:textSize="15sp"
@@ -138,7 +139,7 @@
                 android:paddingBottom="5dp"/>
 
             <TextView
-                android:layout_width="170dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="@string/lv_picking"
                 android:textSize="15sp"
@@ -148,7 +149,17 @@
                 android:paddingBottom="5dp"/>
 
             <TextView
-                android:layout_width="170dp"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="@string/lv_inspected"
+                android:textSize="15sp"
+                android:textAlignment="center"
+                android:background="@drawable/simple_border"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"/>
+
+            <TextView
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="@string/lv_state"
                 android:textSize="15sp"
