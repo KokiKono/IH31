@@ -16,6 +16,7 @@
     <string name="lv_rack_number">棚番号</string>
     <string name="lv_needs">必要数</string>
     <string name="lv_picking">ピッキング数</string>
+    <string name="lv_inspected">検品数</string>
     <string name="lv_state">状態</string>
 
     <string name="state_no_touch">未着手</string>
