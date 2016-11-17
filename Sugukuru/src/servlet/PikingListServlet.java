@@ -50,12 +50,13 @@ public class PikingListServlet extends HttpServlet {
 		value = request.getParameter("value");
 		String method = request.getParameter("method");
 		sort = request.getParameter("sort");
-		System.out.println(sort);
-		System.out.println(method);
+		System.out.println("sort:"+sort);
+		System.out.println("method:"+method);
 		ArrayList<ArrayList<String>> list;
 		HashMap<String, ArrayList<Subdivision>> date = new HashMap<String, ArrayList<Subdivision>>();
 		HashMap<String, ArrayList<SubdivisionDetail>> date2 = new HashMap<String, ArrayList<SubdivisionDetail>>();
 		HashMap<String, ArrayList<PickingList>> date3 = new HashMap<String, ArrayList<PickingList>>();
+		HashMap<String, ArrayList<PickingList>> date4 = new HashMap<String, ArrayList<PickingList>>();
 		JSON json = new JSON();
 		PrintWriter out=response.getWriter();
 		
@@ -67,7 +68,25 @@ public class PikingListServlet extends HttpServlet {
 					DBManager db = new DBManager(Database.DBName);
 					PreparedStatementByKoki statementByKoki=null;
 					statementByKoki = db.getStatementByKoki(InspectionValue.readSql(this,"AndroidPickingList.sql"));
+					
+					statementByKoki.toNull("PRODUCT_ID");
+					switch(sort){
+					case "0":
+						statementByKoki.toNull("STATE");
+						break;
+					case "3":
+						statementByKoki.setString("STATE", "未作業");
+						break;
+					case "1":
+						statementByKoki.setString("STATE", "ピッキング済");
+						break;
+					case "2":
+						statementByKoki.setString("STATE", "検品済");
+						break;
+					}
+					statementByKoki.cleanSql();
 					list = statementByKoki.select();
+					
 					int i = 1;
 					for(ArrayList<String> row:list){
 						pick = new PickingList();
@@ -77,6 +96,7 @@ public class PikingListServlet extends HttpServlet {
 						pick.rackNumber = row.get(2);
 						pick.needs = row.get(3);
 						pick.pickNum = row.get(4);
+						pick.inspectedAmount = row.get(5); 
 						pick.pickState = row.get(6);
 						System.out.println("pick"+pick);
 						returnPick.add(pick);
@@ -181,6 +201,38 @@ public class PikingListServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
+				
+			case "pickingDetail":
+				String productId = request.getParameter("productId");
+				ArrayList<PickingList> returnPick2 = new ArrayList<PickingList>();
+				PickingList pick2 = new PickingList();
+				try{
+					DBManager db = new DBManager(Database.DBName);
+					PreparedStatementByKoki statementByKoki=null;
+					statementByKoki = db.getStatementByKoki(InspectionValue.readSql(this,"AndroidPickingList.sql"));
+					statementByKoki.toNull("STATE");
+					statementByKoki.setString("PRODUCT_ID", productId);
+					list = statementByKoki.select();
+					
+					for(ArrayList<String> row:list){
+						pick2 = new PickingList();
+						pick2.productId = row.get(0);
+						pick2.productName = row.get(1);
+						pick2.rackNumber = row.get(2);
+						pick2.needs = row.get(3);
+						pick2.pickNum = row.get(4);
+						pick2.inspectedAmount = row.get(5); 
+						pick2.pickState = row.get(6);
+						returnPick2.add(pick2);
+					}
+					date4.put("date", returnPick2);
+				
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				out.println(json.encode(date4));
+				break;
+				
 		}
 		
 		
