@@ -40,9 +40,9 @@ public class SugukuruActivity extends ListActivity {
     private ListView _list;
     static List<Map<String, String>> pickList;
     private static final String _URL = net.ipAddress;
-    private String SQL = "";
     private static final String  method = "picking";
     private Spinner spinner;
+    private String sort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +60,15 @@ public class SugukuruActivity extends ListActivity {
     @Override
     protected void onResume(){
         super.onResume();
-//        RestAccess access = new RestAccess(_list);
-//        access.execute(_URL, SQL);
+        RestAccess access = new RestAccess(_list);
+        access.execute(_URL);
     }
 
     private class RestAccess extends AsyncTask<String, Void, String>{
         private static final String DEBUG_TAG = "RestAccess";
         String result;
-
         ListView _list;
+
         public RestAccess(ListView list) {
             _list = list;
         }
@@ -76,11 +76,10 @@ public class SugukuruActivity extends ListActivity {
         @Override
         public String doInBackground(String... params) {
             String urlStr = params[0];
-            String strSQL = params[1];
             HttpURLConnection con = null;
             InputStream is = null;
             try {
-                URL url = new URL(urlStr+"?method=" + method);
+                URL url = new URL(urlStr+"?method=" + method +"&?sort="+sort);
                 con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
                 con.connect();
@@ -109,8 +108,14 @@ public class SugukuruActivity extends ListActivity {
         @Override
         public void onPostExecute(String result) {
             Replace re = new Replace();
-//            re.setRequestId("pickId", "productId", "productName", "rackNumber", "needs", "pickNum", "pickState");
-//            re.setResponseId("pickID", "productID", "productName", "rackNumber", "needs", "pickNum", "state");
+            re.setRequestId("pickId");
+            re.setRequestId("productId");
+            re.setRequestId("productName");
+            re.setRequestId("rackNumber");
+            re.setRequestId("needs");
+            re.setRequestId("pickNum");
+            re.setRequestId("inspectedAmount");
+            re.setRequestId("pickState");
             re.setTableName("PickingList");
             pickList = re.json(result);
             preview();
@@ -139,7 +144,7 @@ public class SugukuruActivity extends ListActivity {
     }
 
     public void preview(){
-        String[] from = {"pickID", "productID", "productName", "rackNumber", "needs", "pickNum", "state"};
+        String[] from = {"pickId", "productId", "productName", "rackNumber", "needs", "pickNum", "pickState"};
         int[] to = {R.id.clShape, R.id.clProductNumber, R.id.clProductName, R.id.clRackNumber, R.id.clNeeds, R.id.clPicking, R.id.clState};
         SimpleAdapter adapter = new SimpleAdapter(SugukuruActivity.this, SugukuruActivity.pickList, R.layout.row, from, to);
         setListAdapter(adapter);
@@ -184,5 +189,15 @@ public class SugukuruActivity extends ListActivity {
 
         // 何も選択されなかった時の動作
         public void onNothingSelected(AdapterView parent) {}
+    }
+
+    public void onListItemClick(ListView listView, View view, int position, long id){
+        super.onListItemClick(listView, view, position, id);
+
+        Map<String, String> item = pickList.get(position);
+        String productId = item.get("productId");
+        Intent intent = new Intent(SugukuruActivity.this, SugukuruPickingDetailActivity.class);
+        intent.putExtra("productId", productId);
+        startActivity(intent);
     }
 }
