@@ -84,7 +84,6 @@ public class PikingListServlet extends HttpServlet {
 						statementByKoki.setString("STATE", "検品済");
 						break;
 					}
-					statementByKoki.cleanSql();
 					list = statementByKoki.select();
 					
 					int i = 1;
