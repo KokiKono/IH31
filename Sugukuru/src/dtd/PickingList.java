@@ -37,6 +37,13 @@ public class PickingList {
 	
 	/**
 	 * @auther Tester
+	 * 2016/11/20
+	 * @param stock String　在庫数
+	 */
+	public String stock;
+	
+	/**
+	 * @auther Tester
 	 * 2016/11/07
 	 * @param needs String 必要数
 	 */
@@ -62,4 +69,11 @@ public class PickingList {
 	 * @param pickState String 作業ステップ
 	 */
 	public String pickState;
+	
+	/**
+	 * @auther Tester
+	 * 2016/11/20
+	 * @param unit String 商品単位
+	 */
+	public String unit;
 }
