@@ -5,6 +5,7 @@
     <string name="tv_title_order_detail">小分詳細</string>
     <string name="tv_item_name">項目名</string>
     <string name="tv_item_num">個数</string>
+    <string name="tv_change">個数変更</string>
     <string name="bt_show">個別表示</string>
     <string name="bt_show2">全体表示</string>
     <string name="ch_incomplete">未完了のみ</string>
@@ -15,7 +16,7 @@
     <string name="lv_shape">＃</string>
     <string name="lv_product_number">商品番号</string>
     <string name="lv_product_name">商品名</string>
-    <string name="lv_rack_number">棚番号</string>
+    <string name="lv_rack_number">棚名</string>
     <string name="lv_needs">必要数</string>
     <string name="lv_picking">ピッキング数</string>
     <string name="lv_inspected">検品数</string>
