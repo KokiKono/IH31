@@ -5,5 +5,5 @@ package local.hal.st32.android.sugukuruandroid;
  */
 
 public interface net {
-    public static final String ipAddress = "http://192.168.11.5:8080/Sugukuru/PikingListServlet";
+    public static final String ipAddress = "http://172.20.10.6:8080/Sugukuru/PikingListServlet";
 }

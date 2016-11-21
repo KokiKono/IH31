@@ -93,10 +93,10 @@ public class PikingListServlet extends HttpServlet {
 						pick.productId = row.get(0);
 						pick.productName = row.get(1);
 						pick.rackNumber = row.get(2);
-						pick.needs = row.get(3);
-						pick.pickNum = row.get(4);
-						pick.inspectedAmount = row.get(5); 
-						pick.pickState = row.get(6);
+						pick.needs = row.get(4);
+						pick.pickNum = row.get(5);
+						pick.inspectedAmount = row.get(6); 
+						pick.pickState = row.get(7);
 						System.out.println("pick"+pick);
 						returnPick.add(pick);
 						i++;
@@ -218,20 +218,26 @@ public class PikingListServlet extends HttpServlet {
 						pick2.productId = row.get(0);
 						pick2.productName = row.get(1);
 						pick2.rackNumber = row.get(2);
-						pick2.needs = row.get(3);
-						pick2.pickNum = row.get(4);
-						pick2.inspectedAmount = row.get(5); 
-						pick2.pickState = row.get(6);
+						pick2.stock = row.get(3);
+						pick2.needs = row.get(4);
+						pick2.pickNum = row.get(5);
+						pick2.inspectedAmount = row.get(6); 
+						pick2.pickState = row.get(7);
+						pick2.unit = row.get(8);
 						returnPick2.add(pick2);
+						System.out.println(pick2);
 					}
 					date4.put("date", returnPick2);
-				
 				}catch(Exception e){
 					e.printStackTrace();
 				}
 				out.println(json.encode(date4));
 				break;
-				
+			case "pickUpdate":
+				if("0".equals(value)){
+					
+				}
+			
 		}
 		
 		
