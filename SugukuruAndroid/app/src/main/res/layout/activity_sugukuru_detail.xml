@@ -33,7 +33,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="280dp"
             android:background="@drawable/simple_border"
-            android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            android:text=""
             android:textSize="20dp"
             android:paddingLeft="10px"
             android:paddingTop="10dp"
@@ -69,7 +69,7 @@
                 android:background="@drawable/simple_border" />
 
             <TextView
-                android:id="@+id/dRackNumbers"
+                android:id="@+id/deRackNumbers"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:textSize="20sp"
@@ -99,11 +99,11 @@
                 android:background="@drawable/simple_border"/>
 
             <TextView
-                android:id="@+id/dState"
+                android:id="@+id/deState"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:textSize="20sp"
-                android:text="フラグ"
+                android:text=""
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:textAlignment="center"
@@ -151,7 +151,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/dProductNumber"
+                    android:id="@+id/deProductNumber"
                     android:layout_width="350dp"
                     android:layout_height="70dp"
                     android:text=""
@@ -162,7 +162,7 @@
                     android:background="@drawable/simple_border"/>
 
                 <TextView
-                    android:id="@+id/dProductName"
+                    android:id="@+id/deProductName"
                     android:layout_width="1070dp"
                     android:layout_height="70dp"
                     android:text=""
@@ -176,143 +176,319 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="right"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="340dp">
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="340dp">-->
 
-            <TextView
-                android:layout_width="600dp"
-                android:layout_height="50dp"
-                android:textSize="20sp"
-                android:text="@string/tv_note"
-                android:textAlignment="center"
-                android:background="@drawable/simple_border"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"/>
+            <!--<TextView-->
+                <!--android:layout_width="600dp"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:textSize="20sp"-->
+                <!--android:text="@string/tv_note"-->
+                <!--android:textAlignment="center"-->
+                <!--android:background="@drawable/simple_border"-->
+                <!--android:paddingTop="10dp"-->
+                <!--android:paddingBottom="10dp"/>-->
 
-            <EditText
-                android:id="@+id/dNote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:minLines="9"
-                android:gravity="top|left"
-                android:textSize="15sp"
-                android:background="@drawable/simple_border"
-                android:focusable="false"/>
+            <!--<EditText-->
+                <!--android:id="@+id/dNote"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:inputType="textMultiLine"-->
+                <!--android:minLines="9"-->
+                <!--android:gravity="top|left"-->
+                <!--android:textSize="15sp"-->
+                <!--android:background="@drawable/simple_border"-->
+                <!--android:focusable="false"/>-->
 
-        </LinearLayout>
-
+        <!--</LinearLayout>-->
+        
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="340dp">
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text="@string/tv_item_name"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/simple_border" />
 
                 <TextView
-                    android:layout_width="400dp"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text="@string/tv_item_num"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/simple_border" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text="@string/lv_stock"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/simple_border" />
+
+                <TextView
+                    android:id="@+id/deStock"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/simple_border" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:text="@string/lv_needs"
                     android:textSize="20sp"
                     android:textAlignment="center"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:background="@drawable/simple_border"/>
+                    android:background="@drawable/simple_border" />
 
                 <TextView
-                    android:layout_width="400dp"
+                    android:id="@+id/deNeeds"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/simple_border" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:text="@string/lv_picking"
                     android:textSize="20sp"
                     android:textAlignment="center"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
-                    android:background="@drawable/simple_border"/>
-            </LinearLayout>
+                    android:background="@drawable/simple_border" />
 
+                <TextView
+                    android:id="@+id/dePicking"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text=""
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/simple_border" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text="@string/lv_inspected"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/simple_border" />
 
                 <TextView
-                    android:id="@+id/dNeeds"
-                    android:layout_width="400dp"
-                    android:layout_height="130dp"
-                    android:text="９９９９"
-                    android:textSize="30sp"
+                    android:id="@+id/deInspected"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text=""
+                    android:textSize="20sp"
                     android:textAlignment="center"
-                    android:paddingTop="40dp"
-                    android:background="@drawable/simple_border"/>
-
-                <TextView
-                    android:id="@+id/dPiking"
-                    android:layout_width="400dp"
-                    android:layout_height="130dp"
-                    android:text="9999"
-                    android:textSize="30sp"
-                    android:textAlignment="center"
-                    android:paddingTop="40dp"
-                    android:background="@drawable/simple_border"/>
-
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/simple_border" />
             </LinearLayout>
+            <Spinner
+                android:layout_width="170dp"
+                android:layout_height="30dp"
+                android:id="@+id/spMode" />
+            
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="450dp"
+            android:layout_marginTop="340dp"
+            android:background="@drawable/simple_border"
+            android:orientation="vertical">
+            
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="400dp"
-                    android:layout_height="180dp"
-                    android:orientation="horizontal"
-                    android:padding="10dp"
-                    android:background="@drawable/simple_border">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_flg"
-                        android:textSize="20sp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="400dp"
-                    android:layout_height="180dp"
-                    android:orientation="horizontal"
-                    android:background="@drawable/simple_border"
-                    android:weightSum="1">
-
-                    <Button
-                        android:layout_width="150dp"
-                        android:layout_height="160dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="30dp"
-                        android:text="↓"/>
-
-                    <Button
-                        android:layout_width="150dp"
-                        android:layout_height="160dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="40dp"
-                        android:text="↑" />
-
-                </LinearLayout>
-
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"
+                    android:text="@string/tv_change"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:background="@drawable/simple_border" />
             </LinearLayout>
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="上"
+                android:onClick="pickingUp"/>
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="下"
+                android:onClick="pickingDown"/>
 
         </LinearLayout>
+        
+        
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginTop="340dp">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="400dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:text="@string/lv_needs"-->
+                    <!--android:textSize="20sp"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:paddingTop="10dp"-->
+                    <!--android:paddingBottom="10dp"-->
+                    <!--android:background="@drawable/simple_border"/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="400dp"-->
+                    <!--android:layout_height="50dp"-->
+                    <!--android:text="@string/lv_picking"-->
+                    <!--android:textSize="20sp"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:paddingTop="10dp"-->
+                    <!--android:paddingBottom="10dp"-->
+                    <!--android:background="@drawable/simple_border"/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/dNeeds"-->
+                    <!--android:layout_width="400dp"-->
+                    <!--android:layout_height="130dp"-->
+                    <!--android:text=""-->
+                    <!--android:textSize="30sp"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:paddingTop="40dp"-->
+                    <!--android:background="@drawable/simple_border"/>-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/dPiking"-->
+                    <!--android:layout_width="400dp"-->
+                    <!--android:layout_height="130dp"-->
+                    <!--android:text=""-->
+                    <!--android:textSize="30sp"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:paddingTop="40dp"-->
+                    <!--android:background="@drawable/simple_border"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal">-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="400dp"-->
+                    <!--android:layout_height="180dp"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:background="@drawable/simple_border">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/tv_flg"-->
+                        <!--android:textSize="20sp"/>-->
+
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="400dp"-->
+                    <!--android:layout_height="180dp"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:background="@drawable/simple_border"-->
+                    <!--android:weightSum="1">-->
+
+                    <!--<Button-->
+                        <!--android:layout_width="150dp"-->
+                        <!--android:layout_height="160dp"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:layout_marginLeft="30dp"-->
+                        <!--android:text="↓"/>-->
+
+                    <!--<Button-->
+                        <!--android:layout_width="150dp"-->
+                        <!--android:layout_height="160dp"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:layout_marginLeft="40dp"-->
+                        <!--android:text="↑" />-->
+
+                <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
+
+        <!--</LinearLayout>-->
 
     </FrameLayout>
     <!-- The navigation drawer -->
