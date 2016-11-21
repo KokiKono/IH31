@@ -34,6 +34,11 @@
         <item>検品済</item>
         <item>未作業</item>
     </string-array>
+
+    <string-array name="arr_mode">
+        <item>ピッキング</item>
+        <item>検品</item>
+    </string-array>
     
     <!--出荷一覧リスト-->
     <string name="lv_orderId">受注ID</string>
