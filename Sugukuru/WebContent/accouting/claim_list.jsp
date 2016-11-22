@@ -52,7 +52,27 @@
 		$(".dropdown-menu").click(function(e) {
 			e.stopPropagation();
 		});
-	});
+		$("[name='all_check']").click(function(){
+			$("[name='<%=constants.getConstant("07").pgName%>
+	']")
+													.each(
+															function() {
+																if ($(this)
+																		.prop(
+																				"checked") == true) {
+																	$(this)
+																			.prop(
+																					"checked",
+																					false);
+																} else {
+																	$(this)
+																			.prop(
+																					"checked",
+																					true);
+																}
+															});
+										});
+					});
 </script>
 </head>
 <body>
@@ -449,60 +469,63 @@
 						<input type="text" class="form-control class2" placeholder="月"
 							name="<%=constants.getConstant("05").pgName%>"><%=constants.getConstant("05").value%>
 						<input type="text" class="form-control class2" placeholder="日"
-							name="<%=constants.getConstant("03").pgName%>"><%=constants.getConstant("06").value%>
+							name="<%=constants.getConstant("06").pgName%>"><%=constants.getConstant("06").value%>
 					</div>
 					<button type="submit" class="btn btn-default">検索</button>
 				</form>
 			</div>
 		</div>
 		<div class="container">
-			<table class="table table-striped table-bordered">
-				<thead>
-					<tr>
-						<th><input type="checkbox" name="name" value=""></th>
-						<th>顧客ID</th>
-						<th>顧客名</th>
-						<th>回収方法</th>
-						<th>請求日</th>
-						<th>入金日</th>
-						<th>請求額</th>
-						<th>請求税</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-						if (list.size() == 0) {
-					%>
-					<tr>
-						<td colspan="10">検索結果がありませんでした。</td>
-					</tr>
-					<%
-						} else {
-					%>
-					<%
-						for (Settlement recodeList : list) {
-					%>
-					<tr>
-						<td><input type="checkbox"
-							name="<%=constants.getConstant("05").pgName%>"
-							value="<%=recodeList.customerId%>"></td>
-						<td><%=recodeList.customerId%></td>
-						<td><%=recodeList.customerName%></td>
-						<td><%=recodeList.getRecallManner()%></td>
-						<td><%=recodeList.requestDate.outOfJP()%></td>
-						<td><%=recodeList.getPaymentDate()%></td>
-						<td class="price"><%=InspectionValue.doLocaleJP(recodeList.totalFee)%>円</td>
-						<td class="price"><%=InspectionValue
+			<form action="<%=constants.getServletUrl()%>" method="post">
+				<%=Constants.getAction(Action.Insert)%>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th><input type="checkbox" name="all_check" value=""></th>
+							<th>顧客ID</th>
+							<th>顧客名</th>
+							<th>回収方法</th>
+							<th>請求日</th>
+							<th>入金日</th>
+							<th>請求額</th>
+							<th>請求税</th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							if (list.size() == 0) {
+						%>
+						<tr>
+							<td colspan="10">検索結果がありませんでした。</td>
+						</tr>
+						<%
+							} else {
+						%>
+						<%
+							for (Settlement recodeList : list) {
+						%>
+						<tr>
+							<td><input type="checkbox"
+								name="<%=constants.getConstant("07").pgName%>"
+								value="<%=recodeList.settlementId%>"></td>
+							<td><a href="<%=constants.getPageToUrl(Page.PaymentDetail_jsp,"rSettlementId",String.valueOf(recodeList.settlementId))%>"><%=recodeList.customerId%></a></td>
+							<td><%=recodeList.customerName%></td>
+							<td><%=recodeList.getRecallManner()%></td>
+							<td><%=recodeList.requestDate.outOfJP()%></td>
+							<td><%=recodeList.getPaymentDate()%></td>
+							<td class="price"><%=InspectionValue.doLocaleJP(recodeList.totalFee)%>円</td>
+							<td class="price"><%=InspectionValue
 							.doLocaleJP(recodeList.consumptionTax)%>円</td>
-					</tr>
-					<%
-						}
-						}
-					%>
+						</tr>
+						<%
+							}
+							}
+						%>
 
-				</tbody>
-			</table>
-			<input type="submit" value="選択印刷" class="print">
+					</tbody>
+				</table>
+				<input type="submit" value="選択印刷" class="print">
+			</form>
 		</div>
 	</div>
 

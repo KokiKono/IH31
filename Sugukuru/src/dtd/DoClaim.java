@@ -27,12 +27,21 @@ public class DoClaim extends Earnings {
 
 	/**
 	 * 繰り越し金
-	 *
+	 * 税抜
 	 * @auther 浩生 2016/11/14
 	 * @param over_price
 	 *            int
 	 */
 	public int overPrice;
+
+	/**
+	 * 繰り越し金
+	 * 税
+	 * @auther 浩生
+	 * 2016/11/18
+	 * @param overTax int
+	 */
+	public int overTax;
 
 	/**
 	 * 回収方法

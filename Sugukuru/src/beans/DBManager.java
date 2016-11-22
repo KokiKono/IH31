@@ -368,16 +368,17 @@ public class DBManager {
 	 *
 	 */
 	public class PreparedStatementByKoki {
-		private static final String WHERE = "WHERE";
-		private static final String AND = "AND";
-		private static final String OR = "OR";
-		private static final String HAVING = "HAVING";
+		private static final String WHERE = "WHERE ";
+		private static final String AND = "AND ";
+		private static final String OR = "OR ";
+		private static final String HAVING = "HAVING ";
 		private String sql;
 		/**
 		 * toNull()、toNullAll()を実行したときのkeyログ
-		 * @auther 浩生
-		 * 2016/11/08
-		 * @param toNullKeys ArrayList<String>
+		 *
+		 * @auther 浩生 2016/11/08
+		 * @param toNullKeys
+		 *            ArrayList<String>
 		 */
 		private ArrayList<String> toNullKeys;
 		{
@@ -400,6 +401,10 @@ public class DBManager {
 
 		public void setInt(String key, int val) {
 			this.replace(key, String.valueOf(val));
+		}
+
+		public void setNull(String key) {
+			this.replace(key, "NULL");
 		}
 
 		public ArrayList<ArrayList<String>> select() throws SQLException {
@@ -430,7 +435,7 @@ public class DBManager {
 			// toNullログ
 			if (!this.toNullKeys.contains(key)) {
 				this.toNullKeys.add(key);
-				this.nowIndex=0;
+				this.nowIndex = 0;
 			}
 			String startKey = IF + "(" + key + ")" + START;
 			String endKey = IF + "(" + key + ")" + END;
@@ -505,7 +510,8 @@ public class DBManager {
 		 */
 		public void toNullAll(String key) {
 			int index = 0;
-			while (toNull(key) > 0);
+			while (toNull(key) > 0)
+				;
 
 		}
 
@@ -539,74 +545,92 @@ public class DBManager {
 		}
 
 		/**
-		 * SQLをクリーンする（未実装）
-		 * @auther 浩生
-		 * 2016/11/07
+		 * SQLをクリーンする（未実装） 2016/11/22 非推奨化
+		 * この機能はバグが多いので非推奨にします。
+		 * ANDなどの整合性はLIKE文やコメントifの構成をうまくやって
+		 * いい感じにしてください。
+		 * @auther 浩生 2016/11/07
 		 *
 		 */
+		@Deprecated
 		public void cleanSql() {
-			this.sql=commentDelete();
-			while(clean()>0);
-			if(this.sql.indexOf(";")==-1){
-				this.sql=this.sql+";";
+			this.sql = commentDelete();
+			while (clean() > 0)
+				;
+			if (this.sql.indexOf(";") == -1) {
+				this.sql = this.sql + ";";
 			}
 			clean();
-			this.sql=this.sql.replaceAll("WHERE\\s*HAVING\\s+", HAVING);
-			this.sql=this.sql.replaceAll("WHERE\\s*;", ";");
-			this.sql=this.sql.replaceAll("HAVING\\s*;",";");
+			this.sql = this.sql.replaceAll("WHERE\\s*HAVING\\s+", HAVING);
+			this.sql = this.sql.replaceAll("WHERE\\s*;", ";");
+			this.sql = this.sql.replaceAll("HAVING\\s*;", ";");
 		}
-		private static final String GROUP="GROUP";
-		private final String[] flushs={"AND\\s*;","OR\\s*;"};
-		private final String[] havings={"HAVING\\s*AND\\s+","HAVING\\s*OR\\s+","AND\\s*HAVING\\s+","OR\\s*HAVING\\s+"};
-		private final String[] wheres={"OR\\s*WHERE\\s+","AND\\s*WHERE\\s+","WHERE\\s*AND\\s+","WHERE\\s*OR\\s+"};
-		private final String[] groups={"OR\\s*GROUP\\s+","AND\\s*GROUP\\s+","WHERE\\s*GROUP\\s+"};
-		private final String[] orders={"AND\\s*ORDER BY\\+","OR\\*ORDER BY\\s+","WHERE\\s*ORDER\\s+BY\\+","WHEREORDER\\s+BY"};
-		private final String ands="AND\\s*AND\\s+";
-		private final String ors="OR\\s*OR\\s+";
-		private static final String ORDER_BY="ORDER BY";
-		private int clean(){
-			int count=0;
 
-			for(String where:wheres){
-				if(this.sql.indexOf(where)>0){
+		private static final String GROUP_BY = "GROUP BY ";
+		private final String[] flushs = { "AND\\s*;", "OR\\s*;" };
+		private final String[] havings = { "HAVING\\s*?AND\\s+",
+				"HAVING\\s*?OR\\s+", "AND\\s*?HAVING\\s+", "OR\\s*?HAVING\\s+" };
+		private final String[] wheres = { "OR\\s*?WHERE\\s+",
+				"AND\\s*?WHERE\\s+", "WHERE\\s*?AND\\s+", "WHERE\\s*OR\\s+" };
+		private final String[] groups = { "OR\\s*?GROUP\\s+BY\\s+",
+				"AND\\s*?GROUP\\s+BY\\s+", "WHERE\\s*?GROUP\\s+BY\\s+" };
+		private final String[] orders = { "AND\\s*?ORDER\\s+BY\\+",
+				"OR\\*?ORDER\\s+BY\\s+", "WHERE\\s*?ORDER\\s+BY\\+",
+				"WHEREORDER\\s+BY", "WHERE ORDER BY" };
+		private final String ands = "AND\\s*AND\\s+";
+		private final String ors = "OR\\s*OR\\s+";
+		private static final String ORDER_BY = "ORDER BY ";
+
+		private int clean() {
+			int count = 0;
+
+			for (String where : wheres) {
+				if (this.sql.indexOf(where) > 0) {
 					count++;
 				}
-				this.sql=this.sql.replaceAll(where, WHERE);
+				this.sql = this.sql.replaceAll(where, WHERE);
 			}
-			for(String having:havings){
-				if(this.sql.indexOf(having)>0){
+			for (String having : havings) {
+				if (this.sql.indexOf(having) > 0) {
 					count++;
 				}
-				this.sql=this.sql.replaceAll(having, HAVING);
+				this.sql = this.sql.replaceAll(having, HAVING);
 			}
-			for(String group:groups){
-				if(this.sql.indexOf(group)>0)count++;
-				this.sql=this.sql.replaceAll(group, GROUP);
+			for (String group : groups) {
+				if (this.sql.indexOf(group) > 0)
+					count++;
+				this.sql = this.sql.replaceAll(group, GROUP_BY);
 			}
-			for(String order:orders){
-				if(this.sql.indexOf(order)>0)count++;
-				this.sql=this.sql.replaceAll(order,ORDER_BY);
+			for (String order : orders) {
+				if (this.sql.indexOf(order) > 0)
+					count++;
+				this.sql = this.sql.replaceAll(order, ORDER_BY);
 			}
-			for(String flush:flushs){
-				if(this.sql.indexOf(flush)>0)count++;
-				this.sql=this.sql.replaceAll(flush, "");
+			for (String flush : flushs) {
+				if (this.sql.indexOf(flush) > 0)
+					count++;
+				this.sql = this.sql.replaceAll(flush, "");
 			}
-			if(this.sql.indexOf(ands)>0)count++;
-			this.sql=this.sql.replaceAll(ands, AND);
-			if(this.sql.indexOf(ors)>0)count++;
-			this.sql=this.sql.replaceAll(ors, OR);
+			if (this.sql.indexOf(ands) > 0)
+				count++;
+			this.sql = this.sql.replaceAll(ands, AND);
+			if (this.sql.indexOf(ors) > 0)
+				count++;
+			this.sql = this.sql.replaceAll(ors, OR);
 			return count;
 		}
+
 		/**
 		 * コメント文を全て削除します。
-		 * @auther 浩生
-		 * 2016/11/08
+		 *
+		 * @auther 浩生 2016/11/08
 		 * @return
 		 */
-		private String commentDelete(){
-			String regex="/\\*/?([^/]|[^*]/)*\\*/";
+		private String commentDelete() {
+			String regex = "/\\*/?([^/]|[^*]/)*\\*/";
 			return this.sql.replaceAll(regex, "");
 		}
+
 		/**
 		 * 文字列が半角スペースで構成されているかをチェックします。
 		 *
@@ -622,20 +646,70 @@ public class DBManager {
 			}
 			return true;
 		}
+
 		/**
 		 * 引数配列keyがtoNull()、toNullAll()で使用されたかを検索しbooleanを返します。
-		 * @auther 浩生
-		 * 2016/11/08
+		 *
+		 * @auther 浩生 2016/11/08
 		 * @param keys
 		 * @return
 		 */
-		public boolean ifToNull(String... keys){
-			for(String key:keys){
-				if(!this.toNullKeys.contains(key))return false;
+		public boolean ifToNull(String... keys) {
+			for (String key : keys) {
+				if (!this.toNullKeys.contains(key))
+					return false;
 			}
 			return true;
 		}
+
 		// update k.koki 2016/11/05 end
+		/**
+		 * 引数をyear-month-dayの形式で返します。
+		 * 各引数がnull、空白の場合は%に置き換えて返します。
+		 * @auther 浩生
+		 * 2016/11/22
+		 * @param year
+		 * @param month
+		 * @param day
+		 * @return
+		 */
+		public String dateParam(String year, String month, String day) {
+			String[] param = new String[5];
+			if (year == null) {
+				param[0] = "%";
+			} else if (year.isEmpty() == true) {
+				param[0] = "%";
+			} else {
+				param[0] = year;
+			}
+			param[1] = "-";
+			if (month == null) {
+				param[2] = "%";
+			} else if (month.isEmpty() == true) {
+				param[2] = "%";
+			}else{
+				param[2]=month;
+			}
+			param[3]="-";
+			if(day==null){
+				param[4]="%";
+			}else if(day.isEmpty()==true){
+				param[4]="%";
+			}else{
+				param[4]=day;
+			}
+			return param.toString();
+		}
+		/**
+		 * 指定キーを'%'に置き換えます。
+		 * @auther 浩生
+		 * 2016/11/22
+		 * @param key
+		 */
+		public void setParsent(String key){
+			setString(key, "%");
+		}
+
 	}
 
 	/**

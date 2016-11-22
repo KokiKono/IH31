@@ -6,6 +6,9 @@
  * *************************/
 package common;
 
+import beans.Bank.Banks;
+import beans.Bank.Store;
+
 
 public interface Common {
 	/**
@@ -114,4 +117,25 @@ public interface Common {
 			return null;
 		}
 	}
+	/**
+	 * スグクルの振込口座番号
+	 * @auther 浩生
+	 * 2016/11/20
+	 * @param SUGUKURU_KOZA String
+	 */
+	public static String SUGUKURU_KOZA="1234567";
+	/**
+	 * スグクルの銀行
+	 * @auther 浩生
+	 * 2016/11/20
+	 * @param SUGUKUTU_BANK Banks
+	 */
+	public static Banks SUGUKUTU_BANK=Banks.MIZUHO;
+	/**
+	 * スグクルの銀行支店
+	 * @auther 浩生
+	 * 2016/11/20
+	 * @param SUGUKUTU_STORE Store
+	 */
+	public static Store SUGUKUTU_STORE=Store.MIZU_TOKYO;
 }

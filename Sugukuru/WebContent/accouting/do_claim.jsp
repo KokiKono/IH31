@@ -449,7 +449,7 @@
 			<div class="content-search content">
 				<form class="navbar-form navbar-left" role="search"
 					action="<%=constants.getServletUrl()%>" method="post">
-					<%=constants.getAction(Action.Search)%>
+					<%=Constants.getAction(Action.Search)%>
 					<div class="form-group">
 						<%=constants.getConstant("03").value%><input type="text"
 							class="form-control class1" placeholder="キーワード"
@@ -473,7 +473,7 @@
 		</div>
 		<div class="container">
 		<form action="<%=constants.getServletUrl()%>" method="post">
-			<%=constants.getAction(Action.Insert) %>
+			<%=Constants.getAction(Action.Insert) %>
 			<table class="table table-striped table-bordered">
 				<thead>
 					<tr>

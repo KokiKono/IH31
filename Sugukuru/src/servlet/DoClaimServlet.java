@@ -206,6 +206,7 @@ public class DoClaimServlet extends HttpServlet implements Database {
 		search = (DoClaim) this.constants.superDecodeRequest(search);
 		Message message = new Message(this.constants);
 		HttpServletRequest request = this.constants.getRequest();
+		if(search.rCorporationIds!=null)
 		if (search.rCorporationIds.length == 0) {
 			// 印刷選択なし
 			message.doWarnig("02", "05");
@@ -235,7 +236,6 @@ public class DoClaimServlet extends HttpServlet implements Database {
 						.select();
 				if (dbResult.isEmpty()) {
 					// データ取得失敗。
-					System.out.println("合計金額類無し");
 				} else {
 					claim.customerId = dbResult.get(0).get(0);
 					claim.noTaxTotalFee = Integer.parseInt(dbResult.get(0).get(
@@ -252,9 +252,11 @@ public class DoClaimServlet extends HttpServlet implements Database {
 								"SelectSettleBefore.sql"));
 				// 顧客IDを設定
 				selectSettlementBefore.setString("CUSTOMER_ID", customerId);
+				int settlementBefore=0;
 				for (ArrayList<String> row : selectSettlementBefore.select()) {
 					claim.settlementBefore = Integer.parseInt(row.get(0));
 					claim.payment = Integer.parseInt(row.get(1));
+					settlementBefore=Integer.parseInt(row.get(2));
 				}
 				// 請求データを決済テーブルに保存
 				PreparedStatementByKoki insertClaim = dbManager
@@ -265,8 +267,16 @@ public class DoClaimServlet extends HttpServlet implements Database {
 						new CalendarByKoki().outSQLDate());
 				insertClaim.setInt("TOTAL_FEE", claim.noTaxTotalFee);
 				insertClaim.setInt("TAX", claim.taxFee);
+				insertClaim.setInt("OVER_PRICE", claim.overPrice+claim.overTax);
+				if(settlementBefore>0){
+					insertClaim.setInt("PREV_SETTLEMENT_ID", settlementBefore);
+				}else{
+					insertClaim.setNull("PREV_SETTLEMENT_ID");
+				}
 				// 決済テーブルに登録
 				insertClaim.update();
+
+
 				// 登録された決済テーブルIDを設定
 				PreparedStatementByKoki selectSettlementId = dbManager
 						.getStatementByKoki(InspectionValue.readSql(this,
