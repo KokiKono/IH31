@@ -16,6 +16,7 @@ import beans.DBManager.PreparedStatementByKoki;
 import beans.InspectionValue;
 import common.Database;
 import dtd.PickingList;
+import dtd.ProductNums;
 import dtd.Subdivision;
 import dtd.SubdivisionDetail;
 import net.arnx.jsonic.JSON;;
@@ -233,16 +234,109 @@ public class PikingListServlet extends HttpServlet {
 				}
 				out.println(json.encode(date4));
 				break;
+				
 			case "pickUpdate":
-				if("0".equals(value)){
-					
+				String mode = request.getParameter("mode");
+				String productId2 = request.getParameter("productId");
+				int unit = Integer.parseInt(request.getParameter("unit"));
+				ProductNums pn = new ProductNums();
+				int x;
+				try{
+					DBManager db = new DBManager(Database.DBName);
+					PreparedStatementByKoki statementByKoki=null;
+					statementByKoki = db.getStatementByKoki(InspectionValue.readSql(this,"AndroidProductNum.sql"));
+					statementByKoki.setString("PRODUCT_ID", productId2);
+					list = statementByKoki.select();
+					for(ArrayList<String> row: list){
+						pn.needs = Integer.parseInt(row.get(0));
+						pn.pickNum = Integer.parseInt(row.get(1));
+						pn.inspectedAmount = Integer.parseInt(row.get(2));
+						pn.stock = Integer.parseInt(row.get(3));
+					}
+					if("0".equals(value)){
+						switch(mode){
+						case "0":
+//							pn.needs -= unit;
+							pn.pickNum += unit;
+							pn.stock -= unit;
+							SQL = "UPDATE working_table SET picked_amount = "+pn.pickNum+" WHERE puroduct_id = "+productId2+"";
+							x = db.update(SQL);
+							System.out.println(x);
+							break;
+						case "1":
+							pn.inspectedAmount += unit;
+							SQL = "UPDATE working_table SET inspected_amount = "+pn.inspectedAmount+" WHERE puroduct_id = "+productId2+"";
+							x = db.update(SQL);
+							break;
+						}
+					}else{
+						switch(mode){
+						case "0":
+//							pn.needs += unit;
+							pn.pickNum -= unit;
+							pn.stock += unit;
+							SQL = "UPDATE working_table SET picked_amount = "+pn.pickNum+" WHERE puroduct_id = "+productId2+"";
+							x = db.update(SQL);
+							break;
+						case "1":
+							pn.inspectedAmount -= unit;
+							SQL = "UPDATE working_table set inspected_amount = "+pn.inspectedAmount+" WHERE puroduct_id = "+productId2+"";
+							x = db.update(SQL);
+							break;
+						}
+					}
+				}catch(Exception e){
+					e.printStackTrace();
 				}
+				stepUp(pn, productId2, mode);
 			
 		}
 		
+	
 		
 		out.flush();
 		out.close();
+	}
+
+	private void stepUp(ProductNums pn, String productId, String mode) {
+		String step = "-1";
+		
+		switch(mode){
+			case "0":
+				if(pn.needs <= pn.pickNum){
+					step = "1";
+				}else{
+					step = "0";
+				}
+				break;
+				
+			case "1":
+				if(pn.pickNum <= pn.inspectedAmount){
+					step = "2";
+				}else{
+					step = "1";
+				}
+				break;
+			default:
+				step = "-1";
+		}
+		if(!("-1".equals(step))){
+			try{
+				DBManager db = new DBManager(Database.DBName);
+				PreparedStatementByKoki statementByKoki=null;
+				statementByKoki = db.getStatementByKoki(InspectionValue.readSql(this,"AndroidStepUp.sql"));
+				statementByKoki.setString("STEP", step);
+				statementByKoki.setString("SHIPPING_DATE", "2016-11-12 08:00:00");
+				statementByKoki.setString("PRODUCT_ID", productId);
+				System.out.println(statementByKoki.out());
+				int x = statementByKoki.update();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
 	}
 
 	/**
