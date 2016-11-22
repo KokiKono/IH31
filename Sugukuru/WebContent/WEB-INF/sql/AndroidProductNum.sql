@@ -13,9 +13,9 @@ SELECT
     b.entry_date DESC
   LIMIT 1
 ) stock
-FROM
+ FROM
   working_table a
-WHERE
+ WHERE
 /*if(PRODUCT_ID)start*/
   a.puroduct_id = PRODUCT_ID
 /*if(PRODUCT_ID)end*/
