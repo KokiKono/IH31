@@ -39,7 +39,7 @@ public class SugukuruPickingDetailActivity extends Activity{
     private List<Map<String, String>> pickList;
     private String productId;
     private int unit;
-    private String mode;
+    private String mode = "0";
     private Spinner spinner;
 
     @Override
@@ -199,6 +199,14 @@ public class SugukuruPickingDetailActivity extends Activity{
             Spinner spinner1 = (Spinner) parent;
             // 選択されたアイテムのテキストを取得
             mode = spinner1.getSelectedItem().toString();
+            switch (mode){
+                case "ピッキング":
+                    mode = "0";
+                    break;
+                case "検品":
+                    mode = "1";
+                    break;
+            }
         }
 
         // 何も選択されなかった時の動作
@@ -215,37 +223,39 @@ public class SugukuruPickingDetailActivity extends Activity{
     }
 
     public void updatePreview(int num){
-        Map<String, String> map = new HashMap<String, String>();
-        map = pickList.get(0);
-        int stock = Integer.parseInt(map.get("stock"));
-        int needs = Integer.parseInt(map.get("needs"));
-        int pickNum = Integer.parseInt(map.get("pickNum"));
-        int inspectedAmount = Integer.parseInt(map.get("inspectedAmount"));
-        switch (mode){
-            case "ピッキング":
-                if(num == 0){
-                    stock -= unit;
-                    needs -= unit;
-                    pickNum += unit;
-                }else{
-                    stock += unit;
-                    needs += unit;
-                    pickNum -= unit;
-                }
-                break;
-            case "検品":
-                if(num == 0){
-                    inspectedAmount += unit;
-                }else{
-                    inspectedAmount -= unit;
-                }
-        }
-        map.put("stock", String.valueOf(stock));
-        map.put("needs", String.valueOf(needs));
-        map.put("pickNum", String.valueOf(pickNum));
-        map.put("inspectedAmount", String.valueOf(inspectedAmount));
-        pickList.set(0, map);
-        preview();
+//        Map<String, String> map = new HashMap<String, String>();
+//        map = pickList.get(0);
+//        int stock = Integer.parseInt(map.get("stock"));
+//        int needs = Integer.parseInt(map.get("needs"));
+//        int pickNum = Integer.parseInt(map.get("pickNum"));
+//        int inspectedAmount = Integer.parseInt(map.get("inspectedAmount"));
+//        switch (mode){
+//            case "0":
+//                if(num == 0){
+//                    stock -= unit;
+//                    needs -= unit;
+//                    pickNum += unit;
+//                }else{
+//                    stock += unit;
+//                    needs += unit;
+//                    pickNum -= unit;
+//                }
+//                break;
+//            case "1":
+//                if(num == 0){
+//                    inspectedAmount += unit;
+//                }else{
+//                    inspectedAmount -= unit;
+//                }
+//        }
+//        map.put("stock", String.valueOf(stock));
+//        map.put("needs", String.valueOf(needs));
+//        map.put("pickNum", String.valueOf(pickNum));
+//        map.put("inspectedAmount", String.valueOf(inspectedAmount));
+//        pickList.set(0, map);
+        update up = new update();
+        up.execute(_URL, String.valueOf(num));
+//        preview();
     }
 
     private class update extends AsyncTask<String, Void, String> {
@@ -258,7 +268,7 @@ public class SugukuruPickingDetailActivity extends Activity{
             HttpURLConnection con = null;
             InputStream is = null;
             try {
-                URL url = new URL(urlStr+"?method=" + "pickUpdate" + "&productId=" + productId + "&unit="+unit +"&value=" + num);
+                URL url = new URL(urlStr+"?method=" + "pickUpdate" + "&productId=" + productId + "&unit="+unit +"&value=" + num +"&mode="+ mode);
                 con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
                 con.connect();
@@ -286,7 +296,7 @@ public class SugukuruPickingDetailActivity extends Activity{
 
         @Override
         public void onPostExecute(String result) {
-
+            onResume();
         }
     }
 }
