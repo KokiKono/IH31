@@ -1,14 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@page import="beans.Constants.Action"%>
+<%@page import="common.Common"%>
+<%@page import="dtd.Payment"%>
+<%@page import="dtd.PaymentDetail"%>
 <%@page import="dtd.Settlement"%>
-<%
-	//法人顧客の入金を確認する画面
-%>
-<%@page import="beans.InspectionValue"%>
-<%@page import="dtd.Earnings"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="beans.InspectionValue"%>
+<%@page import="dtd.Earnings"%>
 <%@page import="beans.Message"%>
 <%@page import="dtd.StockOrderList"%>
 <%@page import="java.util.ArrayList"%>
@@ -21,9 +18,13 @@
 <%
 	//コンスタント作成。
 	Constants constants=new Constants(this,request);
-	//検索結果の取得
-	ArrayList<Settlement> list=(ArrayList<Settlement>)request.getAttribute("claimList");
-	if(list==null)list=new ArrayList<Settlement>();
+	//表示オブジェクトの設定
+	PaymentDetail detail=(PaymentDetail)request.getAttribute("paymentDetail");
+	if(detail==null){
+		detail=new PaymentDetail();
+		//決済リストに飛ぶ
+		//Message message=new Message(constants);
+	}
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -417,94 +418,70 @@
 
 	</div>
 	<div class="center-content">
-		<div class="center-content-header">
-			<div class="center-content-title">
-				<h2><%=constants.getConstant("01").value%></h2>
-				<ul class="text-pager">
-					<li class="text-page texter">1</li>
-					<li class="text-par texter">/</li>
-					<li class="text-all texter">24</li>
-				</ul>
-				<ul class="content-paging">
-					<li class="paging-prev texter"><<</li>
-					<li class="texter"><</li>
-					<li class="texter">1</li>
-					<li class="texter">2</li>
-					<li class="texter">3</li>
-					<li class="texter">></li>
-					<li class="paging-next texter">>></li>
-				</ul>
-
-			</div>
-			<div class="content-message content">メッセージ</div>
-			<div class="content-search content">
-				<form class="navbar-form navbar-left" role="search"
-					action="<%=constants.getServletUrl()%>" method="post">
-					<%=Constants.getAction(Action.Search)%>
-					<div class="form-group">
-						<%=constants.getConstant("02").value%><input type="text"
-							class="form-control class1" placeholder="キーワード"
-							name="<%=constants.getConstant("02").pgName%>">
-						<%=constants.getConstant("03").value%><input type="text"
-							class="form-control class3" placeholder="年"
-							name="<%=constants.getConstant("04").pgName%>"><%=constants.getConstant("04").value%>
-						<input type="text" class="form-control class2" placeholder="月"
-							name="<%=constants.getConstant("05").pgName%>"><%=constants.getConstant("05").value%>
-						<input type="text" class="form-control class2" placeholder="日"
-							name="<%=constants.getConstant("03").pgName%>"><%=constants.getConstant("06").value%>
-					</div>
-					<button type="submit" class="btn btn-default">検索</button>
-				</form>
-			</div>
+		<div class="center-content-title">
+			<h2>請求明細</h2>
 		</div>
 		<div class="container">
 			<table class="table table-striped table-bordered">
-				<thead>
-					<tr>
-						<th><input type="checkbox" name="name" value=""></th>
-						<th>顧客ID</th>
-						<th>顧客名</th>
-						<th>回収方法</th>
-						<th>請求日</th>
-						<th>入金日</th>
-						<th>請求額</th>
-						<th>請求税</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-						if (list.size() == 0) {
-					%>
-					<tr>
-						<td colspan="10">検索結果がありませんでした。</td>
-					</tr>
-					<%
-						} else {
-					%>
-					<%
-						for (Settlement recodeList : list) {
-					%>
-					<tr>
-						<td><input type="checkbox"
-							name="<%=constants.getConstant("05").pgName%>"
-							value="<%=recodeList.customerId%>"></td>
-						<td><%=recodeList.customerId%></td>
-						<td><%=recodeList.customerName%></td>
-						<td><%=recodeList.getRecallManner()%></td>
-						<td><%=recodeList.requestDate.outOfJP()%></td>
-						<td><%=recodeList.getPaymentDate()%></td>
-						<td class="price"><%=InspectionValue.doLocaleJP(recodeList.totalFee)%>円</td>
-						<td class="price"><%=InspectionValue
-							.doLocaleJP(recodeList.consumptionTax)%>円</td>
-					</tr>
-					<%
-						}
-						}
-					%>
+				<tr>
+					<th>顧客ID</th>
+					<th colspan="2">顧客名</th>
+					<th>請求ID</th>
+					<th colspan="2">請求日</th>
+				</tr>
+				<tr>
+					<td><%=detail.customerId%></td>
+					<td colspan="2"><%=detail.customerName%></td>
+					<td><%=detail.settlemntId%></td>
+					<td colspan="2"><%=detail.requestDate.outOfJP()%></td>
+				</tr>
+				<tr>
+					<th>請求金額</th>
+					<td class="price"><%=InspectionValue.doLocaleJP(detail.totalFee)%></td>
+					<th>繰り越し金</th>
+					<td class="price"><%=InspectionValue.doLocaleJP(detail.overPrice)%></td>
+					<th>消費税</th>
+					<td class="price"><%=InspectionValue.doLocaleJP(detail.tax)%></td>
+				</tr>
+				<tr>
+					<th>合計金額</th>
+					<td class="price" colspan="5"><%=detail.allFee()%></td>
+				</tr>
 
-				</tbody>
 			</table>
-			<input type="submit" value="選択印刷" class="print">
+			<table class="table table-striped table-bordered">
+				<tr>
+					<td colspan="4">入金一覧</td>
+				</tr>
+				<tr>
+					<th>#</th>
+					<th>入金日</th>
+					<th>入金方法</th>
+					<th>入金額</th>
+				</tr>
+				<%
+					for (Payment payment : detail.payedList) {
+				%>
+				<tr>
+					<td><%=payment.num%></td>
+					<td><%=payment.paymentDate.outOfJP()%></td>
+					<td><%=payment.getPaymentWay()%></td>
+					<td class="price"><%=InspectionValue.doLocaleJP(payment.paidPrice)%></td>
+				</tr>
+				<%
+					}
+				%>
+				<%
+					if (detail.payedList.size() == 0) {
+				%>
+				<tr>
+					<td colspan="4">入金がありません。</td>
+				</tr>
+				<%
+					}
+				%>
+			</table>
+
 		</div>
 	</div>
 

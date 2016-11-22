@@ -33,7 +33,11 @@ public class Constants implements Database{
 	 *
 	 */
 	public enum Page{
-		ClaimList_ser("ClaimListServlet","accouting/claim_list.jsp","05"),
+		PaymentDetail_jsp("claim_list_detail.jsp","PaymentListServlet","08"),
+		PaymentDetail_ser("PaymentListServlet","accouting/claim_list_detail.jsp","08"),
+		PaymentList_ser("PaymentListServlet","accounting/payment_list.jsp","07"),
+		PaymentList_jsp("payment_list.jsp","PaymentListServlet","07"),
+		ClaimList_ser("ClaimListServlet","accouting/claim_list.jsp","06"),
 		ClaimList_jsp("claim_list.jsp","ClaimListServlet","06"),
 		DoClaim_ser("DoClaimServlet","accouting/do_claim.jsp","05"),
 		DoClaim_jsp("do_claim.jsp","DoClaimServlet","05"),
@@ -335,10 +339,11 @@ public class Constants implements Database{
 	 *
 	 */
 	public enum Action{
-		List
-		,Search
-		,Insert
-		,Update;
+		Detail,
+		List,
+		Search,
+		Insert,
+		Update;
 		public static final Action indexOf(String name){
 			for(Action action:Action.values()){
 				if(name.equals(action.name())){
@@ -396,7 +401,46 @@ public class Constants implements Database{
 	public String getPageContextServlet(){
 		return "/"+this.page.to;
 	}
+	/**
+	 * 指定のPage.toのURLを取得する。
+	 * @auther 浩生
+	 * 2016/11/22
+	 * @param page
+	 * @return
+	 * @throws UnknownHostException
+	 */
+	public String getPageToUrl(Page page) throws UnknownHostException{
+		return "http://"+InetAddress.getLocalHost().getHostAddress()+":"+request.getServerPort()+request.getContextPath()+"/"+page.to;
+	}
+	/**
+	 * 末尾にパラメータを設定する。
+	 * paramの構成は
+	 * name,value,name,valueの形式にする。
+	 * @auther 浩生
+	 * 2016/11/22
+	 * @param page
+	 * @param params
+	 * @return
+	 * @throws UnknownHostException
+	 */
+	public String getPageToUrl(Page page,String...params) throws UnknownHostException{
+		StringBuilder sb=new StringBuilder();
+		sb.append(getPageToUrl(page));
+		if(params.length<2){
+			return sb.toString();
+		}else{
+			if(params.length%2>0)return sb.toString();
+		}
+		sb.append("?");
+		for(int count=0;count<params.length;count=count+2){
+			if(count>2){
+				sb.append("&");
+			}
+			sb.append(params[count]+"="+params[count+1]);
+		}
+		return sb.toString();
 
+	}
 
 
 }

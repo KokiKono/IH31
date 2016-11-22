@@ -17,6 +17,7 @@ public interface Bank {
 	 *
 	 */
 	public enum Banks {
+		MIZUHO("みずほ銀行","ﾐｽﾞﾎｷﾞﾝｺｳ","00001"),
 		UFJ("三菱東京UFJ銀行", "ﾐﾂﾋﾞｼﾄｳｷｮｳUFJ", "0005");
 
 		public String name;
@@ -37,15 +38,18 @@ public interface Bank {
 	}
 
 	public enum Store {
-		UFJ_HONTEN("ﾎﾝﾃﾝ", "ﾎﾝﾃﾝ", "001");
+		MIZU_TOKYO("東京営業部","ﾄｳｷﾖｳｴｲｷﾞｮｳﾌﾞ","001",Banks.MIZUHO),
+		UFJ_HONTEN("本店", "ﾎﾝﾃﾝ", "001",Banks.UFJ);
 		public String name;
 		public String kana;
 		public String code;
+		public Banks bank;
 
-		Store(String name, String kana, String code) {
+		Store(String name, String kana, String code,Banks banks) {
 			this.name = name;
 			this.kana = kana;
 			this.code = code;
+			this.bank=banks;
 		}
 		public static Store indexOf(String code){
 			for(Store store:Store.values()){
@@ -287,7 +291,7 @@ public interface Bank {
 		 * @param code
 		 * @return
 		 */
-		public YokinCode indexOf(String code) {
+		public static YokinCode indexOf(String code) {
 			for (YokinCode yokinCode : YokinCode.values()) {
 				if (code.equals(yokinCode.code))
 					return yokinCode;

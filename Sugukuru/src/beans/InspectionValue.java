@@ -40,7 +40,10 @@
 package beans;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
@@ -669,4 +672,29 @@ public class InspectionValue {
 		return builder.toString();
 	}
 	//update k.koki 2016/11/01 end
+	/**
+	 * WEB-INF配下のディレクトリを読み込み、ファイル配列を返す。
+	 * @auther 浩生
+	 * 2016/11/16
+	 * @param servlet
+	 * @param directoryName
+	 * @return
+	 */
+	public static File[] readDirectory(HttpServlet servlet,String directoryName){
+		String path=servlet.getServletContext().getRealPath("/WEB-INF/"+directoryName);
+		File directory=new File(path);
+		return directory.listFiles();
+	}
+	/**
+	 * 指定ファイルを全て読み込み、文字列で返す。
+	 * @auther 浩生
+	 * 2016/11/16
+	 * @param file
+	 * @return
+	 * @throws FileNotFoundException
+	 */
+	public static String readFile(File file) throws FileNotFoundException{
+		return new BufferedReader(new FileReader(file)).toString();
+	}
+
 }

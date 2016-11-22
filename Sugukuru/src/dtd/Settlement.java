@@ -23,6 +23,7 @@ public class Settlement extends CorporationCustomer{
 	 * 2016/11/05
 	 * @param customerId String 顧客ID
 	 */
+	@Request
 	public String customerId;
 
 	/**
@@ -52,6 +53,7 @@ public class Settlement extends CorporationCustomer{
 	 * 2016/11/16
 	 * @param settleYear String
 	 */
+	@Request
 	public String settleYear;
 	/**
 	 * リクエスト用請求月
@@ -59,6 +61,7 @@ public class Settlement extends CorporationCustomer{
 	 * 2016/11/16
 	 * @param settleMonth String
 	 */
+	@Request
 	public String settleMonth;
 	/**
 	 * リクエスト用請求日
@@ -66,6 +69,7 @@ public class Settlement extends CorporationCustomer{
 	 * 2016/11/16
 	 * @param settleDay String
 	 */
+	@Request
 	public String settleDay;
 
 	public CalendarByKoki paymentDate;
@@ -98,4 +102,24 @@ public class Settlement extends CorporationCustomer{
 		if(this.paymentDate==null)return "未入金";
 		return this.paymentDate.outOfJP();
 	}
+
+	/**
+	 * 選択状態
+	 * リクエスト用
+	 * @auther 浩生
+	 * 2016/11/17
+	 * @param settlementIds String[]
+	 */
+	@RequestArray
+	public String[] settlementIds;
+
+	/**
+	 * 請求詳細ID
+	 * リクエスト用
+	 * @auther 浩生
+	 * 2016/11/22
+	 * @param rSettlementId String
+	 */
+	@Request
+	public String rSettlementId;
 }

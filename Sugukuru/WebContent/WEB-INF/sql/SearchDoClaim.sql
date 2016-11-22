@@ -29,17 +29,30 @@ SELECT
 ,corporation_customer_master.abbreviation_name					/*略称*/
 ,corporation_customer_master.cut_off_date						/*締日*/
 ,corporation_customer_master.recall_manner						/*回収方法*/
-,IFNULL(
-(
-    SELECT
-    SUM((total_fee+consumption_tax))
-    FROM
-    settlement_table
-    WHERE
-     settlement_table.customer_id=earnings_table.customer_id
-    AND settlement_table.payment_date IS NULL
-
- ),0) AS over_price												/*繰り越し金*/
+,IFNULL((
+ SELECT
+	IFNULL((settlement_table.total_fee+settlement_table.consumption_tax+settlement_table.over_price),0)
+	-
+	IFNULL(SUM(payment_table.paid_price),0)
+ FROM
+ 	settlement_table
+ LEFT OUTER JOIN payment_table
+ ON payment_table.settlement_id=settlement_table.settlement_id
+ WHERE
+  settlement_table.settlement_id =
+  (SELECT
+   	settlement_table2.settlement_id
+   FROM
+   	settlement_table settlement_table2
+   WHERE
+    settlement_table.customer_id=settlement_table2.customer_id
+   ORDER BY settlement_table2.settlement_id DESC
+   LIMIT 1
+   )
+ AND
+ 	settlement_table.customer_id = earnings_table.customer_id
+ GROUP BY settlement_table.customer_id
+ ),0) AS diffre								/*前回入金額と請求総合計差：所謂*/
  ,corporation_customer_master.corporation_name						/*正式法人顧客名*/
  FROM
  earnings_table
