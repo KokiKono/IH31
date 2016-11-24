@@ -32,7 +32,6 @@
 	if(list==null)list=new ArrayList<DoClaim>();
 	//メッセージを取得
 	Message message=(Message)request.getAttribute("message");
-
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -63,6 +62,26 @@
 		$(".dropdown-menu").click(function(e) {
 			e.stopPropagation();
 		});
+		$("[name='all_check']").click(function(){
+			$("[name='<%=constants.getConstant("05").pgName%>']")
+													.each(
+															function() {
+																if ($(this)
+																		.prop(
+
+																		"checked") == true) {
+																	$(this)
+																			.prop(
+																					"checked",
+																					false);
+																} else {
+																	$(this)
+																			.prop(
+																					"checked",
+																					true);
+																}
+															});
+										});
 	});
 </script>
 </head>
@@ -457,7 +476,7 @@
 							for="cut_of_day"><%=constants.getConstant("04").value%></label> <select
 							name="<%=constants.getConstant("04").pgName%>"
 							class="form-control class1">
-								<option value="">未選択</option>
+							<option value="">未選択</option>
 							<%
 								for (CutDay cutDay : cutDays) {
 							%>
@@ -472,59 +491,61 @@
 			</div>
 		</div>
 		<div class="container">
-		<form action="<%=constants.getServletUrl()%>" method="post">
-			<%=Constants.getAction(Action.Insert) %>
-			<table class="table table-striped table-bordered">
-				<thead>
-					<tr>
-						<th><input type="checkbox"></th>
-						<th>顧客ID</th>
-						<th>顧客名</th>
-						<th>締日</th>
-						<th>回収方法</th>
-						<th>入金日予定日</th>
-						<th>新規請求額（税抜）</th>
-						<th>新規請求額税</th>
-						<th>繰り越し金</th>
-						<th>今回合計請求額</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-						if (list.size() == 0) {
-					%>
-					<tr>
-						<td colspan="10">検索結果がありませんでした。</td>
-					</tr>
-					<%
-						} else {
-					%>
-					<%
-						for (DoClaim recodeList : list) {
-					%>
-					<tr>
-						<td>
-							<input type="checkbox" name="<%=constants.getConstant("05").pgName %>" value="<%=recodeList.customerId%>">
-						</td>
-						<td><%=recodeList.customerId%></td>
-						<td><%=recodeList.customerName%></td>
-						<td><%=recodeList.cutDay.getCutDay()%></td>
-						<td><%=recodeList.getRecallManner()%></td>
-						<td>未定</td>
-						<td class="price"><%=InspectionValue
+			<form action="<%=constants.getServletUrl()%>" method="post">
+				<%=Constants.getAction(Action.Insert)%>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th><input type="checkbox" name="all_check"></th>
+							<th><%=constants.getConstant("06").value%></th>
+							<th><%=constants.getConstant("07").value%></th>
+							<th><%=constants.getConstant("08").value%></th>
+							<th><%=constants.getConstant("09").value%></th>
+							<th><%=constants.getConstant("10").value%></th>
+							<th><%=constants.getConstant("11").value%></th>
+							<th><%=constants.getConstant("12").value%></th>
+							<th><%=constants.getConstant("13").value%></th>
+							<th><%=constants.getConstant("14").value%></th>
+							<th><%=constants.getConstant("15").value%></th>
+						</tr>
+					</thead>
+					<tbody>
+						<%
+							if (list.size() == 0) {
+						%>
+						<tr>
+							<td colspan="10">検索結果がありませんでした。</td>
+						</tr>
+						<%
+							} else {
+						%>
+						<%
+							for (DoClaim recodeList : list) {
+						%>
+						<tr>
+							<td><input type="checkbox"
+								name="<%=constants.getConstant("05").pgName%>"
+								value="<%=recodeList.customerId%>"></td>
+							<td><%=recodeList.customerId%></td>
+							<td><%=recodeList.customerName%></td>
+							<td><%=recodeList.cutDay.getCutDay()%></td>
+							<td><%=recodeList.getRecallManner()%></td>
+							<td>未定</td>
+							<td class="price"><%=InspectionValue
 							.doLocaleJP(recodeList.noTaxTotalFee)%>円</td>
-						<td class="price"><%=InspectionValue.doLocaleJP(recodeList.taxFee)%>円</td>
-						<td class="price"><%=InspectionValue.doLocaleJP(recodeList.overPrice) %>円</td>
-						<td class="price"><%=InspectionValue.doLocaleJP(recodeList.getAllTotal())%>円</td>
-					</tr>
-					<%
-						}
-						}
-					%>
-				</tbody>
-			</table>
-			<input type="submit" value="印刷" class="print">
-		</form>
+							<td class="price"><%=InspectionValue.doLocaleJP(recodeList.taxFee)%>円</td>
+							<td class="price"><%=InspectionValue.doLocaleJP(recodeList.overPrice)%>円</td>
+							<td class="price"><%=InspectionValue.doLocaleJP(recodeList
+							.getAllTotal())%>円</td>
+						</tr>
+						<%
+							}
+							}
+						%>
+					</tbody>
+				</table>
+				<input type="submit" value="印刷" class="print">
+			</form>
 		</div>
 	</div>
 
