@@ -506,7 +506,6 @@
 							<th><%=constants.getConstant("12").value%></th>
 							<th><%=constants.getConstant("13").value%></th>
 							<th><%=constants.getConstant("14").value%></th>
-							<th><%=constants.getConstant("15").value%></th>
 						</tr>
 					</thead>
 					<tbody>

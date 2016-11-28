@@ -1,3 +1,4 @@
+
 <%@page import="beans.Constants.Action"%>
 <%@page import="dtd.Settlement"%>
 <%
@@ -22,6 +23,8 @@
 	//検索結果の取得
 	ArrayList<Settlement> list=(ArrayList<Settlement>)request.getAttribute("claimList");
 	if(list==null)list=new ArrayList<Settlement>();
+	//メッセージの取得
+	Message message=(Message)request.getAttribute("message");
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -53,7 +56,8 @@
 			e.stopPropagation();
 		});
 		$("[name='all_check']").click(function(){
-			$("[name='<%=constants.getConstant("07").pgName%>']")
+			$("[name='<%=constants.getConstant("07").pgName%>
+	']")
 													.each(
 															function() {
 																if ($(this)
@@ -454,7 +458,12 @@
 				</ul>
 
 			</div>
-			<div class="content-message content">メッセージ</div>
+			<div class="content-message content">
+				メッセージ
+				<%if (message != null) {%>
+				<%=message.getMessageArrayToStr("<span style=\"color:red\">", "</span>")%>
+				<%}%>
+			</div>
 			<div class="content-search content">
 				<form class="navbar-form navbar-left" role="search"
 					action="<%=constants.getServletUrl()%>" method="post">
@@ -528,8 +537,8 @@
 
 					</tbody>
 				</table>
-				<input type="submit"
-					value="<%=constants.getConstant("16").value%>" class="print">
+				<input type="submit" value="<%=constants.getConstant("16").value%>"
+					class="print">
 			</form>
 		</div>
 	</div>

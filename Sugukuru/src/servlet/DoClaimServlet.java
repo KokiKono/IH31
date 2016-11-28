@@ -96,7 +96,8 @@ public class DoClaimServlet extends HttpServlet implements Database {
 
 	/**
 	 * 検索モードでの 検索処理
-	 *
+	 * ここでは特にメッセージ出力する内容がないため
+	 * メッセージ生成は行っていない。
 	 * @auther 浩生 2016/11/14
 	 *
 	 */
@@ -106,7 +107,6 @@ public class DoClaimServlet extends HttpServlet implements Database {
 		// 検索条件の取得
 		DoClaim search = new DoClaim();
 		search = (DoClaim) this.constants.superDecodeRequest(search);
-		Message message = new Message(this.constants);
 		try {
 			dbManager = new DBManager(DBName);
 			statementByKoki = dbManager.getStatementByKoki(InspectionValue
@@ -132,6 +132,7 @@ public class DoClaimServlet extends HttpServlet implements Database {
 			} else {
 				statementByKoki.setString("CUT_DATE", search.cutOfDay);
 			}
+
 			statementByKoki.cleanSql();
 			System.out.println(statementByKoki.out());
 			// SQLデータ

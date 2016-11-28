@@ -1,3 +1,4 @@
+<%@page import="beans.Message"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dtd.OrderRecodeList"%>
 <%@page import="beans.Constants.Page"%>
@@ -16,6 +17,8 @@
 	//検索結果の取得
 	ArrayList<OrderRecodeList> list=(ArrayList<OrderRecodeList>)request.getAttribute("order_recode");
 	if(list==null)list=new ArrayList<OrderRecodeList>();
+
+	Message message=(Message)request.getAttribute("message");
 
 %>
 <!DOCTYPE html>
@@ -172,7 +175,11 @@
 				</ul>
 
 			</div>
-			<div class="content-message content">メッセージ</div>
+			<div class="content-message content">
+			メッセージ
+			<%if (message != null) {%>
+			<%=message.getMessageArrayToStr("<span style=\"color:red\">", "</span>")%>
+			<%}%></div>
 			<div class="content-search content">
 				検索
 				<form class="search_form"
@@ -187,7 +194,7 @@
 							name="<%=constants.getConstant("03").pgName %>" class="input-text form-input">
 					</div>
 					<div class="create_date search_content">
-						<span>受注日</span> <input type="text" size="4" placeholder="2016"
+						<span><%=constants.getConstant("05").value %></span> <input type="text" size="4" placeholder="2016"
 							name="<%=constants.getConstant("04").pgName %>" class="form-input"><span><%=constants.getConstant("04").value %></span> <input type="text"
 							size="2" placeholder="2" name="create_month" class="form-input"><span>月</span>
 						<input type="text" size="2" placeholder="2" name="create_day" class="form-input"><span>日</span>

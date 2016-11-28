@@ -21,6 +21,7 @@ import beans.Constants;
 import beans.DBManager;
 import beans.DBManager.PreparedStatementByKoki;
 import beans.InspectionValue;
+import beans.Message;
 
 import common.Database;
 
@@ -73,6 +74,8 @@ public class OrderRecodeListServlet extends HttpServlet implements Database {
 		response.setCharacterEncoding("UTF-8");
 		Constants constants=new Constants(this, request);
 		OrderRecodeList orderRecodeList=new OrderRecodeList();
+		//メッセージの生成
+		Message message=new Message(constants);
 		//検索条件の取得
 		orderRecodeList=(OrderRecodeList) constants.superDecodeRequest(orderRecodeList);
 		DBManager dbManager=null;
@@ -98,6 +101,7 @@ public class OrderRecodeListServlet extends HttpServlet implements Database {
 			} else if (!InspectionValue.inspectionInteger(orderRecodeList.customerId)) {
 				// エラー
 				errFlg = true;
+				message.doWarnig("03", "02");
 			}else{
 				//成功時パラメータをセットする。
 				statementByKoki.setString("CUSTOMER_ID", orderRecodeList.customerId);
@@ -126,6 +130,7 @@ public class OrderRecodeListServlet extends HttpServlet implements Database {
 				}else{
 					//数値以外の値が来た場合、where削除
 					statementByKoki.toNull("ORDER_DATE");
+					message.doWarnig("03", "05");
 				}
 			}
 			//作成年月日の入力チェック終了
@@ -167,6 +172,9 @@ public class OrderRecodeListServlet extends HttpServlet implements Database {
 				e.printStackTrace();
 			}
 		}
+
+		//メッセージを設定
+		request.setAttribute("message", message);
 
 		//検索DTDリクエスト設定
 		request.setAttribute("orderRecodeList", orderRecodeList);
