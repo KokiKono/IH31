@@ -28,18 +28,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><%=constants.getConstant("01").value %></title>
-<!-- BootstrapのCSS読み込み -->
-<link href="../css/bootstrap.min.css" rel="stylesheet">
-<!-- jQuery読み込み -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- BootstrapのJS読み込み -->
-<script src="../js/bootstrap.min.js"></script>
-<!-- テンプレート用CSSの読み込み -->
-<link href="../css/template.css" rel="stylesheet">
-<!-- サブメニュー用CSSの読み込み -->
-<link href="../css/dropdowns-enhancement.css" rel="stylesheet">
-<script src="../js/dropdowns-enhancement.js"></script>
+<%@ include file="../ultimateKokiBaseCssLink.jsp" %>
 <link href="css/index.css" rel="stylesheet">
 <script>
 	$(document).ready(function() {
@@ -108,53 +97,7 @@
 		</div>
 	</nav>
 	<!-- 左側メニューのコンテンツ -->
-	<div class="left-menu">
-		<div class="accordion-group">
-			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse"
-					href="#estimates_1">見積書作成</a>
-			</div>
-			<div id="estimates_1" class="accordion-body collapse">
-				<ul class="accordion-inner">
-					<li>検索</li>
-					<li class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse"
-								href="#estimates_1_1">管理機能</a>
-						</div>
-						<div class="accordion-body collaose" id="estimates_1_1">
-							<ul class="accordion-inner">
-								<li>登録</li>
-								<li>変更</li>
-								<li>削除</li>
-							</ul>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<div class="accordion-heading">
-				<a class="accordion-toggle" data-toggle="collapse" href="#orders_1">受注書作成</a>
-			</div>
-			<div id="orders_1" class="accordion-body collapse">
-				<ul class="accordion-inner">
-					<li>検索</li>
-					<li class="accordion-group">
-						<div class="accordion-heading">
-							<a class="accordion-toggle" data-toggle="collapse"
-								data-parent"#post" href="#orders_1_1">管理機能</a>
-						</div>
-						<div class="accordion-body collaose" id="orders_1_1">
-							<ul class="accordion-inner">
-								<li>登録</li>
-								<li>変更</li>
-								<li>削除</li>
-							</ul>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	<%@ include file="../ultimateTakahiroMenu.jsp" %>
 	<div class="center-content">
 		<div class="center-content-header">
 			<div class="center-content-title">
@@ -189,15 +132,11 @@
 						<span class="member_id_text"><%=constants.getConstant("02").value %></span> <input type="text"
 							name="<%=constants.getConstant("02").pgName %>" size="10" class="input-text form-input">
 					</div>
-					<div class="member_name search_content">
-						<span class="member_name_text"><%=constants.getConstant("03").value %></span> <input type="text"
-							name="<%=constants.getConstant("03").pgName %>" class="input-text form-input">
-					</div>
 					<div class="create_date search_content">
 						<span><%=constants.getConstant("05").value %></span> <input type="text" size="4" placeholder="2016"
 							name="<%=constants.getConstant("04").pgName %>" class="form-input"><span><%=constants.getConstant("04").value %></span> <input type="text"
-							size="2" placeholder="2" name="create_month" class="form-input"><span>月</span>
-						<input type="text" size="2" placeholder="2" name="create_day" class="form-input"><span>日</span>
+							size="2" placeholder="2" name="<%=constants.getConstant("06").pgName %>" class="form-input"><span><%=constants.getConstant("06").value %></span>
+						<input type="text" size="2" placeholder="2" name="<%=constants.getConstant("07").pgName %>" class="form-input"><span><%=constants.getConstant("07").value %></span>
 					</div>
 					<div class="drop_content">
 						<div class="dispatch_state search_content">

@@ -372,7 +372,7 @@ public class Message implements Database{
 	 *
 	 */
 	public ArrayList<String> getMessageArray(String left,String right){
-		if(this.keys.isEmpty()==true)return null;
+		if(this.keys.isEmpty()==true)return new ArrayList<String>();
 		ArrayList<String> list=new ArrayList<String>();
 		for(ArrayList<String> row:this.keys){
 			String messageId=row.get(0);

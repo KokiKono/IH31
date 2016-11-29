@@ -30,22 +30,73 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><%=constants.getConstant("01").value %></title>
-<!-- BootstrapのCSS読み込み -->
-<link href="<%=request.getContextPath() %>/css/bootstrap.min.css" rel="stylesheet">
-<!-- jQuery読み込み -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<!-- BootstrapのJS読み込み -->
-<script src="<%=request.getContextPath() %>/js/bootstrap.min.js"></script>
-<!-- テンプレート用CSSの読み込み -->
-<link href="<%=request.getContextPath() %>/css/template.css" rel="stylesheet">
-<!-- サブメニュー用CSSの読み込み -->
-<link href="<%=request.getContextPath() %>/css/dropdowns-enhancement.css" rel="stylesheet">
-<script src="<%=request.getContextPath() %>/js/dropdowns-enhancement.js"></script>
+<%@ include file="../ultimateKokiBaseCssLink.jsp" %>
 <link href="<%=request.getContextPath() %>/stock/css/index.css" rel="stylesheet">
 </head>
 <body>
+<<<<<<< HEAD
 	<%@ include file = "../ultimateTakahiroMenu.jsp"  %>
+=======
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<!-- スマートフォンサイズで表示されるメニューボタンとテキスト -->
+			<div class="navbar-header">
+				<!--
+        メニューボタン
+        data-toggle : ボタンを押したときにNavbarを開かせるために必要
+        data-target : 複数navbarを作成する場合、ボタンとナビを紐づけるために必要
+		     -->
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#nav-menu-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+
+				<!-- タイトルなどのテキスト -->
+				<a class="navbar-brand" href="#"><%=Constants.getCommon("01").value %></a>
+			</div>
+
+			<!-- グローバルナビの中身 -->
+			<div class="collapse navbar-collapse" id="nav-menu-1">
+
+				<!-- 各ナビゲーションメニュー -->
+				<ul class="nav navbar-nav">
+
+					<!-- 通常のリンク -->
+					<li class="active"><a href="#">経理部からのお知らせ</a></li>
+					<li><a href="#">倉庫部からのお知らせ</a></li>
+					<!-- ドロップダウンのメニューも配置可能 -->
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown">その他<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">その他１</a></li>
+							<li><a href="#">その他２</a></li>
+							<li><a href="#">その他３</a></li>
+							<li class="divider"></li>
+							<li><a href="#">それとも？</a></li>
+							<li class="divider"></li>
+							<li><a href="#">モンスター？</a></li>
+						</ul></li>
+				</ul>
+				<!-- ログイン中のユーザー情報 -->
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown"> 河野浩生<span class="caret"></span>
+					</a> <!-- 1.メニューの配置 -->
+						<ul class="dropdown-menu">
+							<li><a href="#">パスワード変更</a></li>
+							<li class="divider"></li>
+							<li><a
+								href="http://localhost:8080/Sugukuru/SalesIndexServlet">ログアウト</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- 左側メニューのコンテンツ -->
+	<%@ include file="../ultimateTakahiroMenu.jsp" %>
+>>>>>>> da60ce739136e9ec71c518df4f30bb029d410565
 	<div class="center-content">
 		<div class="center-content-header">
 			<div class="center-content-title">

@@ -86,6 +86,7 @@ public class StockOrderList extends Order {
 	 * @return
 	 */
 	public String getState() {
+		if(getStateInt()==0)return "未発送";
 		if(getStateInt()==1)return "<span style=\"color:red\">拒否あり</span>";
 		return "<span style=\"color:green\">受領</span>";
 	}

@@ -14,20 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>営業部</title>
-    <!-- BootstrapのCSS読み込み -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery読み込み -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- BootstrapのJS読み込み -->
-    <script src="../js/bootstrap.min.js"></script>
-    <!-- テンプレート用CSSの読み込み -->
-  	<link href="../css/template.css" rel="stylesheet">
-  	<!-- サブメニュー用CSSの読み込み -->
-  	<link href="../css/dropdowns-enhancement.css" rel="stylesheet">
-  	<script src="../js/dropdowns-enhancement.js"></script>
-  	<link href="css/order_drafting.css" rel="stylesheet">
-  	<!-- bootstrap調整用css読み込み -->
-  	<link href="css/estimates_new_creating.css" rel="stylesheet">
+<%@ include file="../ultimateKokiBaseCssLink.jsp" %>
     </head>
   <body style="font-size: 16px;">
     <nav class="navbar navbar-default" role="navigation">
@@ -91,6 +78,7 @@
 		  </div>
 		</nav>
 		<!-- 左側メニューのコンテンツ -->
+	<%@ include file="../ultimateTakahiroMenu.jsp" %>
 	<div class="left-menu">
 		<div class="accordion-group">
 			<div class="accordion-heading">

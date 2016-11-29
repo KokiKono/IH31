@@ -137,6 +137,7 @@ public class EarningsListServlet extends HttpServlet implements Database {
 				constants.forward(request, response);
 				return;
 			}
+			statementByKoki.cleanSql();
 			// SQL実行
 			ArrayList<Earnings> list = getEarnings(statementByKoki.select());
 			if (list.size() == 0) {

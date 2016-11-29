@@ -14,10 +14,8 @@ SELECT
 				corporation_customer_master.abbreviation_name
 			FROM
 				corporation_customer_master
-/*if(CUSTOMER_ID)start*/
 			WHERE
-				corporation_customer_master.customer_id = CUSTOMER_ID
-/*if(CUSTOMER_ID)end*/
+				corporation_customer_master.customer_id = order_table.customer_id
 			ORDER BY generation DESC
 		)
 	ELSE
@@ -28,45 +26,34 @@ SELECT
 				personal_customer_master.customer_name
 			FROM
 				personal_customer_master
-/*if(CUSTOMER_ID)start*/
+
 			WHERE
-				personal_customer_master.customer_id = CUSTOMER_ID
-/*if(CUSTOMER_ID)end*/
+				personal_customer_master.customer_id = order_table.customer_id
 		)
 END AS user_name
 ,order_table.order_date															/* 受注日時 */
-,shipment_table.shipment_flg   													/* 出荷フラグ */
+,IFNULL(shipment_table.shipment_flg,0)   													/* 出荷フラグ */
 ,settlement_table.settlement_id													/* 請求ID */
-FROM
+ FROM
 	order_table
-LEFT OUTER JOIN
+ LEFT OUTER JOIN
 	shipment_table
-ON order_table.order_id = shipment_table.order_id
-INNER JOIN
+ ON order_table.order_id = shipment_table.order_id
+ INNER JOIN
 	customers_distinction_master
-ON order_table.customer_id = customers_distinction_master.customer_id
+ ON order_table.customer_id = customers_distinction_master.customer_id
 /* log 2016/11/03 決済テーブルは受注テーブルとのリレーションでは？*/
-LEFT OUTER JOIN
+ LEFT OUTER JOIN
 	settlement_table
-ON order_table.order_id = settlement_table.order_id
-/*if(1)start*/
-WHERE
-/*if(1)end*/
+ ON order_table.settlement_id = settlement_table.settlement_id
+ WHERE
 /*if(CUSTOMER_ID)start*/
 	/* 顧客ID */
 	order_table.customer_id = CUSTOMER_ID
-	/*if(CUSTOMER_ID)end*/
-AND
-
+/*if(CUSTOMER_ID)end*/
 /*if(ORDER_DATE)start*/
+ AND
 	/* 受注日時 */
 	order_table.order_date = ORDER_DATE
 /*if(ORDER_DATE)end*/
-/*if(HAVING)start*/
-HAVING
-/*if(HAVING)end*/
-/*if(USER_NAME)start*/
-	/* 顧客名 */
-	user_name LIKE USER_NAME
-/*if(USER_NAME)end*/
 ;
