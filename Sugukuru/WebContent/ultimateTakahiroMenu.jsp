@@ -20,8 +20,8 @@ pageEncoding="UTF-8"%>
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
 					data-target="#nav-menu-1">
 					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
+						class="icon-bar"></span> <span class="icon-bar"></span>
+						 <span class="icon-bar"></span>
 				</button>
 
 				<!-- タイトルなどのテキスト -->
