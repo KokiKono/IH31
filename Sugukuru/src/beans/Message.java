@@ -183,6 +183,7 @@ public class Message implements Database{
 	 * このとき、このモードで取得できるメッセージ文字列のキーを
 	 * 登録します。
 	 * この登録リストは他のモードに変更した場合、リセットされます。
+	 * コンスタントIDがない場合は空白を指定してください。
 	 * @auther 浩生
 	 * 2016/11/09
 	 * @param constantId
@@ -202,6 +203,7 @@ public class Message implements Database{
 	 * このとき、このモードで取得できるメッセージ文字列のキーを
 	 * 登録します。
 	 * この登録リストは他のモードに変更した場合、リセットされます。
+	 * コンスタントIDがない場合は空白を指定してください。
 	 * @auther 浩生
 	 * 2016/11/09
 	 * 登録したキーのメッセージリストを取得するには?
@@ -219,6 +221,7 @@ public class Message implements Database{
 	 * このとき、このモードで取得できるメッセージ文字列のキーを
 	 * 登録します。
 	 * この登録リストは他のモードに変更した場合、リセットされます。
+	 * コンスタントIDがない場合は空白を指定してください。
 	 * @auther 浩生
 	 * 2016/11/09
 	 * 登録したキーのメッセージリストを取得するには?
@@ -347,6 +350,9 @@ public class Message implements Database{
 	 * @param keys
 	 */
 	private void setKeys(String messageId,String...constantId){
+		if(constantId==null){
+
+		}
 		List list=Arrays.asList(constantId);
 		ArrayList<String> row=new ArrayList<String>(list);
 		row.add(0, messageId);
@@ -356,8 +362,8 @@ public class Message implements Database{
 	 * 現行モードで登録したキーに対応するメッセージを一覧を取得します。
 	 * @auther 浩生
 	 * 2016/11/09
-	 * @param start
-	 * @param end
+	 * @param left 文字列の左側（先頭）に付加します。
+	 * @param right 文字列の右側（末尾）に付加します。
 	 * @return 登録したキーがない場合はnull
 	 * 登録したキーとは?
 	 * @see Message#doWarnig(String, String)
@@ -365,19 +371,29 @@ public class Message implements Database{
 	 * @see Message#doInfomation(String, String)
 	 *
 	 */
-	public ArrayList<String> getMessageArray(String start,String end){
+	public ArrayList<String> getMessageArray(String left,String right){
 		if(this.keys.isEmpty()==true)return null;
 		ArrayList<String> list=new ArrayList<String>();
 		for(ArrayList<String> row:this.keys){
 			String messageId=row.get(0);
 			row.remove(0);
-			list.add(start+getMassage(messageId, (String[])row.toArray(new String[0]))+end);
+			list.add(left+getMassage(messageId, (String[])row.toArray(new String[0]))+right);
 		}
 		return list;
 	}
-	public String getMessageArrayToStr(String start,String end){
+	/**
+	 * 現行モードで登録したキーに対応するメッセージを一行で取得します。
+	 * 引数の説明は下記を参照
+	 * @auther 浩生
+	 * 2016/11/25
+	 * @param left
+	 * @param right
+	 * @return
+	 * @see Message#getMessageArray(String, String)引数の説明
+	 */
+	public String getMessageArrayToStr(String left,String right){
 		StringBuffer buffer=new StringBuffer();
-		for(String str:getMessageArray(start, end)){
+		for(String str:getMessageArray(left, right)){
 			buffer.append(str);
 		}
 		return buffer.toString();

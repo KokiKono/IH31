@@ -138,4 +138,6 @@ public interface Common {
 	 * @param SUGUKUTU_STORE Store
 	 */
 	public static Store SUGUKUTU_STORE=Store.MIZU_TOKYO;
+
+
 }

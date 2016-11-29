@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@page import="beans.Constants.Action"%>
 <%@page import="dtd.Settlement"%>
 <%
 	//法人顧客の入金を確認する画面
+	//作りません。
 %>
 <%@page import="beans.InspectionValue"%>
 <%@page import="dtd.Earnings"%>
@@ -451,7 +450,7 @@
 						<input type="text" class="form-control class2" placeholder="月"
 							name="<%=constants.getConstant("05").pgName%>"><%=constants.getConstant("05").value%>
 						<input type="text" class="form-control class2" placeholder="日"
-							name="<%=constants.getConstant("03").pgName%>"><%=constants.getConstant("06").value%>
+							name="<%=constants.getConstant("06").pgName%>"><%=constants.getConstant("06").value%>
 					</div>
 					<button type="submit" class="btn btn-default">検索</button>
 				</form>
@@ -486,7 +485,7 @@
 					%>
 					<tr>
 						<td><input type="checkbox"
-							name="<%=constants.getConstant("05").pgName%>"
+							name="<%=constants.getConstant("07").pgName%>"
 							value="<%=recodeList.customerId%>"></td>
 						<td><%=recodeList.customerId%></td>
 						<td><%=recodeList.customerName%></td>

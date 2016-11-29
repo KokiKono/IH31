@@ -184,14 +184,9 @@
 			</div>
 			<div class="content-message content">
 				メッセージ
-				<%
-				if (message != null) {
-			%>
-				<%=message.getMessageArrayToStr(
-						"<span style=\"color:red\">", "</span>")%>
-				<%
-					}
-				%>
+				<%if (message != null) {%>
+				<%=message.getMessageArrayToStr("<span style=\"color:red\">", "</span>")%>
+				<%}%>
 			</div>
 			<div class="content-search content">
 				検索

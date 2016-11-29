@@ -3,6 +3,7 @@
  * 作成者　:k.koki
  * 作成日　:2016/11/16
  * 内容　　:入金ファイルを読み込みそれをリスト化、読み込む
+ * 			結局、作りません。
  * *************************/
 package servlet;
 
@@ -20,6 +21,7 @@ import beans.Constants;
 import beans.DBManager;
 import beans.DBManager.PreparedStatementByKoki;
 import beans.InspectionValue;
+import beans.Message;
 import beans.Recode;
 
 import common.Database;
@@ -66,7 +68,9 @@ public class PaymentListServlet extends HttpServlet implements Database{
 		//リクエスト変数
 		PaymentDetail paymentDetail=new PaymentDetail();
 		if(search.rSettlementId==null){
-			//詳細指定なし
+			//詳細指定なし：警告モードにしてpayment_list.jspに戻る
+			Message message=new Message(constants);
+			//message.doWarnig("", constantId);
 		}else if(search.rSettlementId.isEmpty()){
 			//詳細指定なし
 		}else{

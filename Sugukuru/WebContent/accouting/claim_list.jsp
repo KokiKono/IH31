@@ -1,3 +1,4 @@
+
 <%@page import="beans.Constants.Action"%>
 <%@page import="dtd.Settlement"%>
 <%
@@ -22,6 +23,8 @@
 	//検索結果の取得
 	ArrayList<Settlement> list=(ArrayList<Settlement>)request.getAttribute("claimList");
 	if(list==null)list=new ArrayList<Settlement>();
+	//メッセージの取得
+	Message message=(Message)request.getAttribute("message");
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -59,7 +62,8 @@
 															function() {
 																if ($(this)
 																		.prop(
-																				"checked") == true) {
+
+																		"checked") == true) {
 																	$(this)
 																			.prop(
 																					"checked",
@@ -454,7 +458,12 @@
 				</ul>
 
 			</div>
-			<div class="content-message content">メッセージ</div>
+			<div class="content-message content">
+				メッセージ
+				<%if (message != null) {%>
+				<%=message.getMessageArrayToStr("<span style=\"color:red\">", "</span>")%>
+				<%}%>
+			</div>
 			<div class="content-search content">
 				<form class="navbar-form navbar-left" role="search"
 					action="<%=constants.getServletUrl()%>" method="post">
@@ -482,13 +491,14 @@
 					<thead>
 						<tr>
 							<th><input type="checkbox" name="all_check" value=""></th>
-							<th>顧客ID</th>
-							<th>顧客名</th>
-							<th>回収方法</th>
-							<th>請求日</th>
-							<th>入金日</th>
-							<th>請求額</th>
-							<th>請求税</th>
+							<th><%=constants.getConstant("08").value%></th>
+							<th><%=constants.getConstant("09").value%></th>
+							<th><%=constants.getConstant("10").value%></th>
+							<th><%=constants.getConstant("11").value%></th>
+							<th><%=constants.getConstant("12").value%></th>
+							<th><%=constants.getConstant("13").value%></th>
+							<th><%=constants.getConstant("14").value%></th>
+
 						</tr>
 					</thead>
 					<tbody>
@@ -496,7 +506,7 @@
 							if (list.size() == 0) {
 						%>
 						<tr>
-							<td colspan="10">検索結果がありませんでした。</td>
+							<td colspan="10"><%=constants.getConstant("15").value%></td>
 						</tr>
 						<%
 							} else {
@@ -508,7 +518,10 @@
 							<td><input type="checkbox"
 								name="<%=constants.getConstant("07").pgName%>"
 								value="<%=recodeList.settlementId%>"></td>
-							<td><a href="<%=constants.getPageToUrl(Page.PaymentDetail_jsp,"rSettlementId",String.valueOf(recodeList.settlementId))%>"><%=recodeList.customerId%></a></td>
+							<td><a
+								href="<%=constants.getPageToUrl(Page.PaymentDetail_jsp,
+							"rSettlementId",
+							String.valueOf(recodeList.settlementId))%>"><%=recodeList.customerId%></a></td>
 							<td><%=recodeList.customerName%></td>
 							<td><%=recodeList.getRecallManner()%></td>
 							<td><%=recodeList.requestDate.outOfJP()%></td>
@@ -524,7 +537,8 @@
 
 					</tbody>
 				</table>
-				<input type="submit" value="選択印刷" class="print">
+				<input type="submit" value="<%=constants.getConstant("16").value%>"
+					class="print">
 			</form>
 		</div>
 	</div>

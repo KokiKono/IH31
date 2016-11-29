@@ -419,15 +419,15 @@
 	</div>
 	<div class="center-content">
 		<div class="center-content-title">
-			<h2>請求明細</h2>
+			<h2><%=constants.getConstant("03").value %></h2>
 		</div>
 		<div class="container">
 			<table class="table table-striped table-bordered">
 				<tr>
-					<th>顧客ID</th>
-					<th colspan="2">顧客名</th>
-					<th>請求ID</th>
-					<th colspan="2">請求日</th>
+					<th><%=constants.getConstant("04").value %></th>
+					<th colspan="2"><%=constants.getConstant("05").value %></th>
+					<th><%=constants.getConstant("02").value %></th>
+					<th colspan="2"><%=constants.getConstant("06").value %></th>
 				</tr>
 				<tr>
 					<td><%=detail.customerId%></td>
@@ -436,28 +436,28 @@
 					<td colspan="2"><%=detail.requestDate.outOfJP()%></td>
 				</tr>
 				<tr>
-					<th>請求金額</th>
+					<th><%=constants.getConstant("07").value %></th>
 					<td class="price"><%=InspectionValue.doLocaleJP(detail.totalFee)%></td>
-					<th>繰り越し金</th>
+					<th><%=constants.getConstant("08").value %></th>
 					<td class="price"><%=InspectionValue.doLocaleJP(detail.overPrice)%></td>
-					<th>消費税</th>
+					<th><%=constants.getConstant("09").value %></th>
 					<td class="price"><%=InspectionValue.doLocaleJP(detail.tax)%></td>
 				</tr>
 				<tr>
-					<th>合計金額</th>
+					<th><%=constants.getConstant("10").value %></th>
 					<td class="price" colspan="5"><%=detail.allFee()%></td>
 				</tr>
 
 			</table>
 			<table class="table table-striped table-bordered">
 				<tr>
-					<td colspan="4">入金一覧</td>
+					<td colspan="4"><%=constants.getConstant("11").value %></td>
 				</tr>
 				<tr>
-					<th>#</th>
-					<th>入金日</th>
-					<th>入金方法</th>
-					<th>入金額</th>
+					<th><%=constants.getConstant("12").value %></th>
+					<th><%=constants.getConstant("13").value %></th>
+					<th><%=constants.getConstant("14").value %></th>
+					<th><%=constants.getConstant("15").value %></th>
 				</tr>
 				<%
 					for (Payment payment : detail.payedList) {
@@ -475,7 +475,7 @@
 					if (detail.payedList.size() == 0) {
 				%>
 				<tr>
-					<td colspan="4">入金がありません。</td>
+					<td colspan="4"><%=constants.getConstant("16").value %></td>
 				</tr>
 				<%
 					}

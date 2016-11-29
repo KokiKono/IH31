@@ -23,6 +23,7 @@ import beans.DBManager;
 import beans.DBManager.PreparedStatementByKoki;
 import beans.InspectionValue;
 import beans.Message;
+import beans.Message.MessageInterface.MODE;
 
 import common.Database;
 
@@ -88,6 +89,8 @@ public class ClaimListServlet extends HttpServlet implements Database {
 		search = (Settlement) constants.superDecodeRequest(search);
 		HttpServletRequest request = constants.getRequest();
 		DBManager dbManager = null;
+		//メッセージの作成
+		Message message=new Message(this.constants);
 		// 検索条件チェック
 		try {
 			dbManager = new DBManager(DBName);
@@ -98,6 +101,7 @@ public class ClaimListServlet extends HttpServlet implements Database {
 			if (search.customerId == null) {
 				// 顧客IDが取得不能
 				statementByKoki.toNull("CUSTOMER_ID");
+				message.doErrer("02", "");
 			} else if (search.customerId.isEmpty() == true) {
 				// 顧客IDが空白
 				statementByKoki.toNull("CUSTOMER_ID");
@@ -112,14 +116,23 @@ public class ClaimListServlet extends HttpServlet implements Database {
 						.newInstance(search.settleYear, search.settleMonth,
 								search.settleDay);
 				if (shipmentCalendar == null) {
-					// 出荷日生成エラー
+					// 請求日生成エラー
 					statementByKoki.toNull("REQUEST_DATE");
+					message.doWarnig("03", "11");
 				} else {
 					statementByKoki.setString("REQUEST_DATE",
 							shipmentCalendar.outSQLDate());
 				}
 			} else {
 				statementByKoki.toNull("REQUEST_DATE");
+			}
+
+			//メッセージが警告モードの時、
+			//メッセージを設定して処理を終了させる。
+			if(message.nowMode()==MODE.WARNIG){
+				request.setAttribute("message", message);
+				this.constants.forward(request, response);
+				return;
 			}
 
 			// SQLクリーン
@@ -153,17 +166,24 @@ public class ClaimListServlet extends HttpServlet implements Database {
 		constants.forward(request, response);
 	}
 	private void actionPrint(HttpServletResponse response)throws IOException, ServletException{
+		//印刷物取得
 		Settlement settlement=new Settlement();
 		settlement=(Settlement)this.constants.superDecodeRequest(settlement);
+		//メッセージ作成
 		Message message=new Message(this.constants);
 		HttpServletRequest request=this.constants.getRequest();
 		// 印刷データ変数
 		ArrayList<DoClaim> printList = new ArrayList<DoClaim>();
 		//選択のチェック
 		if(settlement.settlementIds==null){
-			//選択取得不能
+			//選択取得不能：異常モードにしてclaim_list.jspに返す。
+			message.doErrer("02", "");
 		}else if(settlement.settlementIds.length==0){
-			//選択なし
+			//選択なし：警告モードにしてclaim_list.jspに返す。
+			message.doWarnig("02", "07");
+			request.setAttribute("message", message);
+			this.constants.forward(request, response);
+			return;
 		}else{
 			DBManager dbManager=null;
 			for(String settlementId:settlement.settlementIds){

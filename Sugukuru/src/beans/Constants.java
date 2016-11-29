@@ -33,6 +33,7 @@ public class Constants implements Database{
 	 *
 	 */
 	public enum Page{
+		DoClaimListDetail_jsp("do_claim_detail.jsp","","09"),
 		PaymentDetail_jsp("claim_list_detail.jsp","PaymentListServlet","08"),
 		PaymentDetail_ser("PaymentListServlet","accouting/claim_list_detail.jsp","08"),
 		PaymentList_ser("PaymentListServlet","accounting/payment_list.jsp","07"),
