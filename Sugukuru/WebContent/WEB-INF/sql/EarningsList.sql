@@ -35,17 +35,16 @@ SELECT
  END AS user_name														/* 顧客名 */
 FROM
  earnings_table
- INNER JOIN
  WHERE
 /*if(ORDER_ID)start*/
  order_id	= ORDER_ID
 /*if(ORDER_ID)end*/
- AND
 /*if(CUSTOMER_ID)start*/
- customer_id = CUSTOMER_ID
-/*if(CUSOMTER_ID)end*/
  AND
+ customer_id = CUSTOMER_ID
+/*if(CUSTOMER_ID)end*/
 /*if(SHIPMENT_DATE)start*/
+ AND
  shipment_date LIKE SHIPMENT_DATE
 /*if(SHIPMENT_DATE)end*/
  ;

@@ -36,7 +36,7 @@ public class Constants implements Database{
 		DoClaimListDetail_jsp("do_claim_detail.jsp","","09"),
 		PaymentDetail_jsp("claim_list_detail.jsp","PaymentListServlet","08"),
 		PaymentDetail_ser("PaymentListServlet","accouting/claim_list_detail.jsp","08"),
-		PaymentList_ser("PaymentListServlet","accounting/payment_list.jsp","07"),
+		PaymentList_ser("PaymentListServlet","accouting/payment_list.jsp","07"),
 		PaymentList_jsp("payment_list.jsp","PaymentListServlet","07"),
 		ClaimList_ser("ClaimListServlet","accouting/claim_list.jsp","06"),
 		ClaimList_jsp("claim_list.jsp","ClaimListServlet","06"),
@@ -50,7 +50,7 @@ public class Constants implements Database{
 		OrderList_jsp("order_list.jsp","StockOrderListServlet","02"),
 		OrderList_ser("StockOrderListServlet","stock/order_list.jsp","02"),
 		OrderRecodeList_jsp("order_recode_list.jsp","OrderRecodeListServlet","01"),
-		OrderRecodeList_ser("OrderRecodeListServlet","sales/order_recode_list","01");
+		OrderRecodeList_ser("OrderRecodeListServlet","sales/order_recode_list.jsp","01");
 		/**
 		 * 呼び出し元ページを示します。
 		 * @auther 浩生

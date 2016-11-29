@@ -439,8 +439,8 @@ public class DBManager {
 			}
 			String startKey = IF + "(" + key + ")" + START;
 			String endKey = IF + "(" + key + ")" + END;
-			int startIndex = endLine(startKey);
-			int endIndex = startLine(endKey);
+			int startIndex = startLine(startKey);
+			int endIndex = endLine(endKey);
 			if (startIndex == -1 || endIndex == -1) {
 				return -1;
 			}
@@ -472,6 +472,7 @@ public class DBManager {
 			endIndex = endIndex + ifcode.length();
 			// 末尾のコメントを求める
 			loop: for (int i = 0; i < maxLine; i++) {
+				if((endIndex+i)>this.sql.length())break loop;
 				if (this.sql.substring(endIndex, endIndex + i).equals("*/")) {
 					// コメント末尾発見
 					endIndex = endIndex + i;
@@ -561,9 +562,9 @@ public class DBManager {
 				this.sql = this.sql + ";";
 			}
 			clean();
-			this.sql = this.sql.replaceAll("WHERE\\s*HAVING\\s+", HAVING);
-			this.sql = this.sql.replaceAll("WHERE\\s*;", ";");
-			this.sql = this.sql.replaceAll("HAVING\\s*;", ";");
+			this.sql = this.sql.replaceAll("WHERE\\s*?HAVING", HAVING);
+			this.sql = this.sql.replaceAll("WHERE\\s*?;", ";");
+			this.sql = this.sql.replaceAll("HAVING\\s*?;", ";");
 		}
 
 		private static final String GROUP_BY = "GROUP BY ";

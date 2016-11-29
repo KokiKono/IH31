@@ -7,17 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>営業部</title>
-    <!-- BootstrapのCSS読み込み -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <!-- jQuery読み込み -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- BootstrapのJS読み込み -->
-    <script src="../js/bootstrap.min.js"></script>
-    <!-- テンプレート用CSSの読み込み -->
-  	<link href="../css/template.css" rel="stylesheet">
-  	<!-- サブメニュー用CSSの読み込み -->
-  	<link href="../css/dropdowns-enhancement.css" rel="stylesheet">
-  	<script src="../js/dropdowns-enhancement.js"></script>
+<%@ include file="../ultimateKokiBaseCssLink.jsp" %>
   	<link href="css/order_drafting.css" rel="stylesheet">
     </head>
   <body>
@@ -82,45 +72,7 @@
 		  </div>
 		</nav>
 		<!-- 左側メニューのコンテンツ -->
-		<div class="left-menu">
-			<div class="accordion-group">
-  				<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" href="#estimates_1">見積書作成</a></div>
-  					<div id="estimates_1" class="accordion-body collapse">
-    					<ul class="accordion-inner">
-    						<li>検索</li>
-    						<li class="accordion-group">
-    							<div class="accordion-heading">
-    								<a class="accordion-toggle" data-toggle="collapse" href="#estimates_1_1">管理機能</a>
-    							</div>
-    							<div class="accordion-body collaose" id="estimates_1_1">
-    								<ul class="accordion-inner">
-    									<li>登録</li>
-    									<li>変更</li>
-    									<li>削除</li>
-    								</ul>
-    							</div>
-    						</li>
-    					</ul>
-  					</div>
-				<div class="accordion-heading"><a class="accordion-toggle" data-toggle="collapse" href="#orders_1">受注書作成</a></div>
-  				<div id="orders_1" class="accordion-body collapse">
-    				<ul class="accordion-inner">
-    					<li>検索</li>
-    					<li class="accordion-group">
-    						<div class="accordion-heading">
-    							<a class="accordion-toggle" data-toggle="collapse" data-parent"#post" href="#orders_1_1">管理機能</a>
-    						</div>
-    						<div class="accordion-body collaose" id="orders_1_1">   								<ul class="accordion-inner">
-   									<li>登録</li>
-   									<li>変更</li>
-   									<li>削除</li>
-   								</ul>
-   							</div>
-   						</li>
-   					</ul>
-				</div>
-			</div>
-		</div>
+		<%@ include file="../ultimateTakahiroMenu.jsp" %>
 		<div class="center-content">
 			<div class="center-content-header">
 				<div class="center-content-title">
