@@ -706,6 +706,10 @@ public class CalendarByKoki {
 			if(time.length!=3){
 				return null;
 			}
+			//timeが00.0に対応→00に変換
+			if(time[2].indexOf(".")>0){
+				time[2]=time[2].substring(0, 2);
+			}
 			return new CalendarByKoki(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]), Integer.parseInt(time[0]), Integer.parseInt(time[1]), Integer.parseInt(time[2]));
 		}
 		return null;
